@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: c101a8201ac511643864eaca3bb0ed27
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Photon/FusionAddons/Physics/Editor/ClientPhysicsSimulationDrawer.cs
+  uploadId: 739890

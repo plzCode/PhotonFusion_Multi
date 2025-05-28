@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2562ff4bafb44b549b9bdc0de26ba288
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/HUD.prefab
+  uploadId: 739890

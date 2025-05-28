@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0d54127b85b6f1f4b8fb0d5a90e19119
+labels:
+- FusionPrefab
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/Room Player.prefab
+  uploadId: 739890

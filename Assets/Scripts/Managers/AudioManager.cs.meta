@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: c56a8733310b168409666df29ef6d3a2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scripts/Managers/AudioManager.cs
+  uploadId: 739890

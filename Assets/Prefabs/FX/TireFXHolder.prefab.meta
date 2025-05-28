@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 77b3503d06bb6f0418ba7f9d968cd2e9
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/FX/TireFXHolder.prefab
+  uploadId: 739890

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5c37bd7b73832b74fb58783754f84d45
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scenes/Track02/Track02_Profiles/Global PP.asset
+  uploadId: 739890

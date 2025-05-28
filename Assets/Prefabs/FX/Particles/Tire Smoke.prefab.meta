@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 767ed60264a1da7429cfe4f0fcf27305
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/FX/Particles/Tire Smoke.prefab
+  uploadId: 739890

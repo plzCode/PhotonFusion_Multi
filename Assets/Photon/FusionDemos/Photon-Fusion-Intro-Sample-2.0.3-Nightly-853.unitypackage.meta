@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 61aaf2bcc0983d94e933d89bc23e12c2
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Photon/FusionDemos/Photon-Fusion-Intro-Sample-2.0.3-Nightly-853.unitypackage
+  uploadId: 739890

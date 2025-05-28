@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: eb398120326fe4249b2a486e0b676aa2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scripts/Triggers/SplashZone.cs
+  uploadId: 739890

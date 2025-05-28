@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d35c5d9ea091e98428e624868430b4e3
+labels:
+- FusionPrefab
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/KartPrefabs/GreenKart.prefab
+  uploadId: 739890

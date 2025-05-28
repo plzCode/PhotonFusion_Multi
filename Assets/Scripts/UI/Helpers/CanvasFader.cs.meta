@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: cac7132d28aca5b479eafdb0d73c8514
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scripts/UI/Helpers/CanvasFader.cs
+  uploadId: 739890

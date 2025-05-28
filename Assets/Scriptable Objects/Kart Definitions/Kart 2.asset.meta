@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b93ea24a71abe01408a5b98e40380be6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scriptable Objects/Kart Definitions/Kart 2.asset
+  uploadId: 739890

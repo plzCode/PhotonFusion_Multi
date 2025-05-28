@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 446d280c9379b214b8c6f62212d103a4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/UI/Animation/TrackIntro-Hide.anim
+  uploadId: 739890

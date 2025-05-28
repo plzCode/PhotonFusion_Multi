@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0e566f8ce0b1c4b4fa2866e0f59b5ae0
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/FX/Particles/Drift Spark.prefab
+  uploadId: 739890

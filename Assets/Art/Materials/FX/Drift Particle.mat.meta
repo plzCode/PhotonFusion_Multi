@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ee1ebb1f7e17f9342955072c4417451e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Materials/FX/Drift Particle.mat
+  uploadId: 739890

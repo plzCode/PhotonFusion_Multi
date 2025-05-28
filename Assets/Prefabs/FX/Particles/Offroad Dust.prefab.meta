@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 99ada8a640c3745498e44d105400dbec
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/FX/Particles/Offroad Dust.prefab
+  uploadId: 739890

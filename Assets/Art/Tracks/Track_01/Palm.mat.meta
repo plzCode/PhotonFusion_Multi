@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7aa29379a96ef7a418985636b2f6249a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Tracks/Track_01/Palm.mat
+  uploadId: 739890

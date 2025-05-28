@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cc4c1e13947ceaa419e811775700debd
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/FX/Particles/Speed Lines.prefab
+  uploadId: 739890

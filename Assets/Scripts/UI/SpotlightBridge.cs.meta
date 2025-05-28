@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: c49ea6b7f8b9a1b4cb3f3d0fe685b83f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scripts/UI/SpotlightBridge.cs
+  uploadId: 739890

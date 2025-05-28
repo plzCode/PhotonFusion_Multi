@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: df802096a01a07a499c362374361fe38
+labels:
+- FusionPrefab
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/KartPrefabs/BlueKart.prefab
+  uploadId: 739890

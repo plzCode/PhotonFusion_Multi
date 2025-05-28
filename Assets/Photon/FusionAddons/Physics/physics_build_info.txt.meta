@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6123009c38959a64cb3aa1af4a52ad25
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Photon/FusionAddons/Physics/physics_build_info.txt
+  uploadId: 739890

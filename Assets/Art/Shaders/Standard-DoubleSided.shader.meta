@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 7ec96291c1d28e0408d6c06e8a8ab47c
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Shaders/Standard-DoubleSided.shader
+  uploadId: 739890

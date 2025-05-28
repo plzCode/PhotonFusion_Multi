@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 62421aa5b11575d47945fec5a4150a34
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/KartPrefabs/Kart Audio.prefab
+  uploadId: 739890

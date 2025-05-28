@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 190ccd4c9c5223b4bbcd3cb805e2348c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/FX/Particles/Exhaust Backfire Smoke.prefab
+  uploadId: 739890

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9ff9a352aa262a3418abadc3b79577e9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Tracks/Track_02/Materials/Metal/Metal.mat
+  uploadId: 739890

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fffd8ffb14d4ab8468d34228be6df7d3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Tracks/Track_01/FinishBlack.mat
+  uploadId: 739890

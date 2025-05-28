@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b44c524f89be3c04eb80b0f10e2279bf
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/FX/Particles/DriftTier.prefab
+  uploadId: 739890

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2e751523194152a4fb718d660181b1f5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Kart/Materials/AxleRim.mat
+  uploadId: 739890

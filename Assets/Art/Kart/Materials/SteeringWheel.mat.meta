@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4ee4809abf2b2994bbb735c196fac62c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Kart/Materials/SteeringWheel.mat
+  uploadId: 739890

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b219ff106e893c34c8775a9adc7718ea
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scenes/Track01.unity
+  uploadId: 739890

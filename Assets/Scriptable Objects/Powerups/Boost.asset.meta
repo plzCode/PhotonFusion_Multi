@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cea68da0a33ae0b49bbb6b024711b47f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scriptable Objects/Powerups/Boost.asset
+  uploadId: 739890

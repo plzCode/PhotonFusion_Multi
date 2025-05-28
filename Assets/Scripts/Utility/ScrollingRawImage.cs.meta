@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e45fdd2b1386fb342ba16fd6faccfc54
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scripts/Utility/ScrollingRawImage.cs
+  uploadId: 739890

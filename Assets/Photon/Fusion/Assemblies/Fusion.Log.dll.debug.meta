@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c148508fe7fb25b4d8e42511e4cbc3d2
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Photon/Fusion/Assemblies/Fusion.Log.dll.debug
+  uploadId: 739890

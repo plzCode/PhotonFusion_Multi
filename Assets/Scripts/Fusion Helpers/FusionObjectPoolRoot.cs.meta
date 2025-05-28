@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 002d8eab47b3430faecf9db0b5e0fb84
+timeCreated: 1620196341
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Scripts/Fusion Helpers/FusionObjectPoolRoot.cs
+  uploadId: 739890

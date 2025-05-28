@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d58f91b2a6cffb04097d3b5388f7b783
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Photon/FusionMenu/Photon-Fusion-Menu-2.0.3-Nightly-874.unitypackage
+  uploadId: 739890

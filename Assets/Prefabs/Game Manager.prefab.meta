@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 7d654f2c54ead9847bc8789dc51024f2
+labels:
+- FusionPrefab
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/Game Manager.prefab
+  uploadId: 739890

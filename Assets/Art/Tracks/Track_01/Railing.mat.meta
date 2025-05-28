@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 74be79f2a7af65d449cdc22812b2b309
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Tracks/Track_01/Railing.mat
+  uploadId: 739890

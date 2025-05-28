@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 931fc7d9694590141a9c1ea1fed3646f
+labels:
+- FusionPrefab
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Prefabs/Track Objects/Item Box.prefab
+  uploadId: 739890

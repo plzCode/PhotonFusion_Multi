@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: eec349181d44a56488e3983179c9b4a9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Tracks/Track_01/Curb_Black.mat
+  uploadId: 739890

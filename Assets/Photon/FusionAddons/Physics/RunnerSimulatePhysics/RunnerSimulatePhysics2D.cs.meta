@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a9fd79d79a0fb459ababab9a78f00caa
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 5200
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Photon/FusionAddons/Physics/RunnerSimulatePhysics/RunnerSimulatePhysics2D.cs
+  uploadId: 739890

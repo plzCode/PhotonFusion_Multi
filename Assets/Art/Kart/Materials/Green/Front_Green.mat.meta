@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 10cf0f29bc9772f4dba7da4960ad16a9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/Kart/Materials/Green/Front_Green.mat
+  uploadId: 739890

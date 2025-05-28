@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c3968bdd142691945a0dd0151c3a05fb
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213885
+  packageName: Karts Multiplayer - Photon Fusion
+  packageVersion: 2.0.5
+  assetPath: Assets/Art/UI/Animation/TrackIntro-Show.anim
+  uploadId: 739890
