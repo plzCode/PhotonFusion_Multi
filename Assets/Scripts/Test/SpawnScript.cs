@@ -21,7 +21,8 @@ public class SpawnScript : NetworkBehaviour
     public void SpawnPlayer(NetworkRunner runner, RoomPlayer player)
     {
         var index = RoomPlayer.Players.IndexOf(player);
-        var point = spawnpoints[index];
+        //var point = spawnpoints[index];
+        var point = spawnpoints[0];
 
         var prefabId = player.KartId;
         var prefab = ResourceManager.Instance.fps_Player[prefabId].prefab;
