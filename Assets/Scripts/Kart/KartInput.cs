@@ -35,7 +35,13 @@ public class KartInput : KartComponent, INetworkRunnerCallbacks
 		public bool IsReverse => IsDown(ButtonReverse);
 		public bool IsDriftPressed => IsDown(ButtonDrift);
 		public bool IsDriftPressedThisFrame => IsDownThisFrame(ButtonDrift);
-	}
+
+
+
+        public Vector2 MoveDirection;
+
+        
+    }
 
 	public Gamepad gamepad;
 
@@ -46,9 +52,14 @@ public class KartInput : KartComponent, INetworkRunnerCallbacks
 	[SerializeField] private InputAction lookBehind;
 	[SerializeField] private InputAction useItem;
 	[SerializeField] private InputAction pause;
+	[SerializeField] private InputAction move;
 
     private bool _useItemPressed;
 	private bool _driftPressed;
+
+
+
+
 
 	public override void Spawned()
 	{
@@ -63,6 +74,7 @@ public class KartInput : KartComponent, INetworkRunnerCallbacks
 		lookBehind = lookBehind.Clone();
 		useItem = useItem.Clone();
 		pause = pause.Clone();
+		move = move.Clone();
 
 		accelerate.Enable();
 		reverse.Enable();
@@ -71,6 +83,7 @@ public class KartInput : KartComponent, INetworkRunnerCallbacks
 		lookBehind.Enable();
 		useItem.Enable();
 		pause.Enable();
+		move.Enable();
 		
 		useItem.started += UseItemPressed;
 		drift.started += DriftPressed;
@@ -134,11 +147,20 @@ public class KartInput : KartComponent, INetworkRunnerCallbacks
 
         userInput.Steer = ReadFloat(steer);
 
+
+        Vector2 moveInput = move.ReadValue<Vector2>();
+        userInput.MoveDirection = moveInput.normalized;
+
         input.Set(userInput);
+
+        
 
         _driftPressed = false;
         _useItemPressed = false;
     }
+
+
+    
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
