@@ -19,7 +19,8 @@ public class PlayerController : NetworkBehaviour
 
     //[Networked] public float AppliedSpeed { get; set; }
     //[Networked] public float MaxSpeed { get; set; }
-    [Networked] private KartInput.NetworkInputData Inputs { get; set; }
+    //[Networked] private KartInput.NetworkInputData Inputs { get; set; }
+    [Networked] private PlayerInput.NetworkInputData PlayerInputs { get; set; }
 
     private void Awake()
     {
@@ -58,10 +59,6 @@ public class PlayerController : NetworkBehaviour
 
             controller.Move(move * moveSpeed * Runner.DeltaTime);
         }
-
-
-
-
     }
 
     
