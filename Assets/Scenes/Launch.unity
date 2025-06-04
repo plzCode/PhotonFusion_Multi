@@ -22639,7 +22639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
       propertyPath: tracks.Array.size
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
       propertyPath: 'tracks.Array.data[2]'
@@ -22649,6 +22649,26 @@ PrefabInstance:
       propertyPath: 'tracks.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 79493988eff5d09428a7939b2881fd54, type: 2}
+    - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
+      propertyPath: 'tracks.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 458f9c1e0fe19e947bc8373f55aecca4, type: 2}
+    - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
+      propertyPath: 'tracks.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: fabf19c288d62a24bb5b3dc8764c3a95, type: 2}
+    - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
+      propertyPath: 'tracks.Array.data[6]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0934d928f3130944f973c0ceae3e5fc4, type: 2}
+    - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
+      propertyPath: 'tracks.Array.data[7]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 738b978713e6b1749b012e3e76643ff0, type: 2}
+    - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
+      propertyPath: 'tracks.Array.data[8]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 328dff2713171c043a144ddf6bda4be0, type: 2}
     - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
       propertyPath: fps_Player.Array.size
       value: 1

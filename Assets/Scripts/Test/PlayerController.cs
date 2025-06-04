@@ -11,8 +11,8 @@ public class PlayerController : NetworkBehaviour
 
     private float verticalVelocity = 0f;
 
+    [SerializeField]
     private CharacterController controller;
-
 
     [Networked] public RoomPlayer RoomUser { get; set; }
 
