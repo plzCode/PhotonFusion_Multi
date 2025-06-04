@@ -37,7 +37,7 @@ public class PlayerController : NetworkBehaviour
     {
         base.FixedUpdateNetwork();
 
-        if (GetInput(out NetworkInputData input))
+        if (GetInput(out PlayerInput.NetworkInputData input))
         {
             Debug.Log("입력이 있습니다.");
             Vector3 move = new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);

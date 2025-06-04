@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: -5928373565424209787}
   - component: {fileID: -5034909395906052972}
   - component: {fileID: 2141159357070227425}
-  - component: {fileID: 7035734001203703080}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -73,7 +72,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0d95a703efe4f0c44a2afec31b14fb21, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -117,7 +116,6 @@ MonoBehaviour:
   - {fileID: 990254650208211767}
   - {fileID: -5928373565424209787}
   - {fileID: -5034909395906052972}
-  - {fileID: 7035734001203703080}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &7289318370481079479
 MonoBehaviour:
@@ -144,7 +142,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1426005991913254630}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 102938cf93fac5c48a0db86dfddda8a6, type: 3}
   m_Name: 
@@ -271,130 +269,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7035734001203703080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426005991913254630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a93f691ce5d4c743b70b3ddc1e47ea5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  accelerate:
-    m_Name: Accelerate
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: d9aaf2df-c76b-42ef-a9d3-245aada995d8
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  reverse:
-    m_Name: Reverse
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: e313fba9-9679-4a38-8751-bab2f6b92159
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  drift:
-    m_Name: Drift
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 74fce9cf-ce25-4393-9d5e-09487906f79c
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  steer:
-    m_Name: Steer
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 8d6b5f4e-4308-42ce-b2d5-92b2998b7562
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  lookBehind:
-    m_Name: Look Behind
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 6b2b4ddb-38dc-4be9-be66-11a554738e2e
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  useItem:
-    m_Name: Use Item
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 2afa4cfb-cfc0-4300-9cbc-47580283efea
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  pause:
-    m_Name: Pause
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4f664d4d-6ae7-4c9b-be15-1a7ca946d9cd
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  move:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: b098e135-bc45-47cf-aae6-01867e731506
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 2D Vector
-      m_Id: 5129f331-259d-4590-992a-bf847a9d1658
-      m_Path: 2DVector
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 4
-    - m_Name: up
-      m_Id: 0ab31617-1ba5-4c22-9dc2-85956d5ba97c
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: down
-      m_Id: dce0f98e-6908-461f-b3ae-c97fcab2714f
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: left
-      m_Id: de0e8629-a5ae-4237-9b88-4c18d42fd181
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    - m_Name: right
-      m_Id: 1fb01445-a059-49ff-a174-61d611b6cda4
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Move
-      m_Flags: 8
-    m_Flags: 0
 --- !u!1 &1589104661376189138
 GameObject:
   m_ObjectHideFlags: 0
