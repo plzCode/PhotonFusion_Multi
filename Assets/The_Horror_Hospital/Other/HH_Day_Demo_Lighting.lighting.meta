@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 52f1a5ed6e8c30f428579002ed8731a6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Other/HH_Day_Demo_Lighting.lighting
+  uploadId: 757595

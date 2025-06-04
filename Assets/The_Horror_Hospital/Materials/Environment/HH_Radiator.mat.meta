@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4b401d149a6f67d469a466a44db9f0ab
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Materials/Environment/HH_Radiator.mat
+  uploadId: 757595

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2ebcc585c57e7f646ac27fd1c9205856
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Animations_Camera/Main Camera.controller
+  uploadId: 757595

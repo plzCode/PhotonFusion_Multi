@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f36b6433a471b4b4080ef3a9f2a35b2b
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Environment/Ventilation/HH_Ventilation_2m_03.prefab
+  uploadId: 757595

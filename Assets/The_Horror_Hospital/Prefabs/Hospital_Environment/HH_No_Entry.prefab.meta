@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2c0de8d3c3fd3c047b4425960a486a78
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Environment/HH_No_Entry.prefab
+  uploadId: 757595

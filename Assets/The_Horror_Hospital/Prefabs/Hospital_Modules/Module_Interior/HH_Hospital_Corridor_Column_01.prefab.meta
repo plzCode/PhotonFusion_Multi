@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 645ad3648bd69ae4e94e444a69faed1f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Modules/Module_Interior/HH_Hospital_Corridor_Column_01.prefab
+  uploadId: 757595

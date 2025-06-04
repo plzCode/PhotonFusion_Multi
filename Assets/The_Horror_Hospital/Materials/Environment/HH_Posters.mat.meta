@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7c335a4322f94f64e84ba9010ce4f6a4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Materials/Environment/HH_Posters.mat
+  uploadId: 757595

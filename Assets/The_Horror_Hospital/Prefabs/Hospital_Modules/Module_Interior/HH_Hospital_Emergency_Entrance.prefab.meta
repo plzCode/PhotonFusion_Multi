@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 772a7469ec034cf439ed4557487ea43a
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Modules/Module_Interior/HH_Hospital_Emergency_Entrance.prefab
+  uploadId: 757595
