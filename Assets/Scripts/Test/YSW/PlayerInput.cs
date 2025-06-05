@@ -30,8 +30,10 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
 
     public override void Spawned()
     {
-        move = move.Clone();
+        base.Spawned();
+        Runner.AddCallbacks(this);
 
+        move = move.Clone();
         move.Enable();
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
@@ -54,6 +56,8 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         userInput.MoveDirection = moveInput.normalized;
         input.Set(userInput);
     }
+    private static bool ReadBool(InputAction action) => action.ReadValue<float>() != 0;
+    private static float ReadFloat(InputAction action) => action.ReadValue<float>();
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
 

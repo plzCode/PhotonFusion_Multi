@@ -1,14 +1,12 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Settings/High_PipelineAsset.asset.meta
-guid: f61b8056486668346aa4f4409ed74d3a
-NativeFormatImporter:
+<<<<<<<< HEAD:Assets/The_Horror_Hospital/Materials/Hospital.meta
+guid: bf04ed54625745142a3f9cdab4595af3
 ========
 guid: 584f8da6365991045bf281e894936204
+>>>>>>>> origin/main:Assets/The_Horror_Hospital/Materials.meta
 folderAsset: yes
 DefaultImporter:
->>>>>>>> origin/main:Assets/The_Horror_Hospital/Materials.meta
   externalObjects: {}
-  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

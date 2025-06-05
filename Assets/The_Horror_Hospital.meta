@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 <<<<<<<< HEAD:Assets/Art/Materials/Outline.mat.meta
 guid: 62778f52bb554b24589c3793534c2ba4
 NativeFormatImporter:
@@ -9,6 +10,16 @@ DefaultImporter:
 >>>>>>>> origin/main:Assets/The_Horror_Hospital.meta
   externalObjects: {}
   mainObjectFileID: 2100000
+=======
+<<<<<<<< HEAD:Assets/The_Horror_Hospital/Materials/Decal.meta
+guid: 3e31b6c754b48864ab2a884ce6330ce7
+========
+guid: 672526d2557878d47847ead128ef92b5
+>>>>>>>> origin/main:Assets/The_Horror_Hospital.meta
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+>>>>>>> origin/main
   userData: 
   assetBundleName: 
   assetBundleVariant: 
