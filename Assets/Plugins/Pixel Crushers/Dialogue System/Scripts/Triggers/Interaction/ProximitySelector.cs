@@ -1,5 +1,6 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
+using Fusion;
 using PixelCrushers.DialogueSystem.UnityGUI;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace PixelCrushers.DialogueSystem
     /// enabled or disabled.
     /// </summary>
     [AddComponentMenu("")] // Use wrapper.
-    public class ProximitySelector : MonoBehaviour
+    public class ProximitySelector : NetworkBehaviour
     {
 
         /// <summary>
@@ -245,7 +246,14 @@ namespace PixelCrushers.DialogueSystem
             }
 
             // If the player presses the use key/button, send the OnUse message:
-            if (IsUseButtonDown()) UseCurrentSelection();
+            if (IsUseButtonDown() && Object.HasInputAuthority && currentUsable != null)
+            {
+                var netObj = currentUsable.GetComponent<NetworkObject>();
+                if (netObj != null)
+                {
+                    RPC_UseCurrentSelection(netObj.Id);
+                }
+            }//UseCurrentSelection();
         }
 
         protected void OnSelectedUsableObject(Usable usable)
@@ -273,6 +281,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public virtual void UseCurrentSelection()
         {
+            Debug.Log(currentUsable);
             if ((currentUsable != null) && currentUsable.enabled && (currentUsable.gameObject != null) && (Time.time >= timeToEnableUseButton))
             {
                 currentUsable.OnUseUsable();
@@ -286,6 +295,29 @@ namespace PixelCrushers.DialogueSystem
                     else
                     {
                         currentUsable.gameObject.SendMessage("OnUse", fromTransform, SendMessageOptions.DontRequireReceiver);
+                    }
+                }
+            }
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        public void RPC_UseCurrentSelection(NetworkId usableId)
+        {
+            var usableObj = Runner.FindObject(usableId);
+            if (usableObj != null)
+            {
+                var usable = usableObj.GetComponent<Usable>();
+                if (usable != null && usable.enabled && usable.gameObject != null)
+                {
+                    usable.OnUseUsable();
+                    var fromTransform = (actorTransform != null) ? actorTransform : this.transform;
+                    if (broadcastToChildren)
+                    {
+                        usable.gameObject.BroadcastMessage("OnUse", fromTransform, SendMessageOptions.DontRequireReceiver);
+                    }
+                    else
+                    {
+                        usable.gameObject.SendMessage("OnUse", fromTransform, SendMessageOptions.DontRequireReceiver);
                     }
                 }
             }
@@ -327,7 +359,8 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         protected void OnTriggerEnter(Collider other)
         {
-            CheckTriggerEnter(other.gameObject);
+            if(Object.HasInputAuthority)
+                CheckTriggerEnter(other.gameObject);
         }
 
         /// <summary>

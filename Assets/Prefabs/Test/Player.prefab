@@ -52,10 +52,34 @@ MonoBehaviour:
   conversationEvents:
     onConversationStart:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7558040476261262867}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onConversationEnd:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7558040476261262867}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
     runOnConversationEndEventsAtEndOfFrame: 0
     onConversationCancelled:
       m_PersistentCalls:
@@ -137,7 +161,7 @@ MonoBehaviour:
   defaultUseMessage: "\uB300\uD654\uB97C \uD558\uC2DC\uB824\uBA74 \"E\"\uBC84\uD2BC\uC744
     \uB20C\uB7EC\uC8FC\uC138\uC694."
   useKey: 101
-  useButton: Fire2
+  useButton: 
   enableTouch: 0
   touchArea:
     origin: 0
@@ -314,7 +338,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0d95a703efe4f0c44a2afec31b14fb21, type: 2}
+  - {fileID: 2100000, guid: 0e08d5aa4eb15274c8f61545b8ee172e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -358,6 +382,7 @@ MonoBehaviour:
   - {fileID: 990254650208211767}
   - {fileID: -5928373565424209787}
   - {fileID: -5034909395906052972}
+  - {fileID: 7558040476261262867}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &7289318370481079479
 MonoBehaviour:
