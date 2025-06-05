@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b705ddf4fd1b66245a9743b275f96985
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Decals/HH_Decontamination_Required.prefab
+  uploadId: 757595

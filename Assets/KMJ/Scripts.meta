@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/KMJ/Scripts.meta
 guid: a95fb7721c41b894d9f46b76773e03f0
+========
+guid: bf04ed54625745142a3f9cdab4595af3
+>>>>>>>> main:Assets/The_Horror_Hospital/Materials/Hospital.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

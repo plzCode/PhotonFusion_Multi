@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/KMJ.meta
 guid: 9b906192185d1b24ca67c168a178cc92
+========
+guid: 3e31b6c754b48864ab2a884ce6330ce7
+>>>>>>>> main:Assets/The_Horror_Hospital/Materials/Decal.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

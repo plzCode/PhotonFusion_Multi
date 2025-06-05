@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: fb23dbb1937dc774387b8796e84ffc6d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Modules/HH_Hospital_Wall_1x2m.prefab
+  uploadId: 757595

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fbe6479f25ac1c3459acb3e4f2deeb7f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2655988077585873504
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Other/LODGroup.preset
+  uploadId: 757595

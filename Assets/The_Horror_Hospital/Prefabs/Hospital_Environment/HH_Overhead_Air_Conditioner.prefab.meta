@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ac35f24e7b1947d47a528ec16d70cac8
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Environment/HH_Overhead_Air_Conditioner.prefab
+  uploadId: 757595

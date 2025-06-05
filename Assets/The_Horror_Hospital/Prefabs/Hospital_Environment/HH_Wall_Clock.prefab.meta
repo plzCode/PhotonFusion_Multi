@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ce73f5d7f55b58a4286e08998d08fe74
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Environment/HH_Wall_Clock.prefab
+  uploadId: 757595

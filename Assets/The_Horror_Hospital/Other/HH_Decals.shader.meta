@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4f80f378b6a5bde4684e0d1060d55120
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Other/HH_Decals.shader
+  uploadId: 757595
