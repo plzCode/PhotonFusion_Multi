@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 904de8421594e8d4ba956b2469d9b60c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Materials/Environment/HH_Computer.mat
+  uploadId: 757595

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d044ee90ab99602489f8e8395c17c614
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Environment/HH_Wall_Guard_Angle.prefab
+  uploadId: 757595

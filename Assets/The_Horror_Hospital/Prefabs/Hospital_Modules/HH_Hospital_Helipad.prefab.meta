@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c13d4a982f037ec49a8f4ddc07d52896
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Modules/HH_Hospital_Helipad.prefab
+  uploadId: 757595

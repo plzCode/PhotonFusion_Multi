@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b1814a9a3c46c3e4381c267397d7e09c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Environment/HH_Ventilation_Grid_01.prefab
+  uploadId: 757595

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 31dc17272fb1279468629512be6e5edd
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Other/HH_Leaves.shader
+  uploadId: 757595

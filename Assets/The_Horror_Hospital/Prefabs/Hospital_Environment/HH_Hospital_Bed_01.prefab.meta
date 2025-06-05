@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 99e0ebbad3dd2d044b3b39d4a284c74d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Environment/HH_Hospital_Bed_01.prefab
+  uploadId: 757595

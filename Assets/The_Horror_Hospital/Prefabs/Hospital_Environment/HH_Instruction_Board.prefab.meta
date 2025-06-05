@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8e6ec831e69e851409f705696c5afd36
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Environment/HH_Instruction_Board.prefab
+  uploadId: 757595

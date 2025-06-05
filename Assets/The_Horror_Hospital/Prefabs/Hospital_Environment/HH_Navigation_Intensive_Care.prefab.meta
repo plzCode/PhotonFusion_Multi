@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0947663d879430549a1c5bf046df7450
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Prefabs/Hospital_Environment/HH_Navigation_Intensive_Care.prefab
+  uploadId: 757595

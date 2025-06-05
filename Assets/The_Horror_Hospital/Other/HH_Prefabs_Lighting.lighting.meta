@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b43423e20d04c7845a2b2dced466ced8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 310180
+  packageName: The Horror Hospital
+  packageVersion: 1.0
+  assetPath: Assets/The_Horror_Hospital/Other/HH_Prefabs_Lighting.lighting
+  uploadId: 757595
