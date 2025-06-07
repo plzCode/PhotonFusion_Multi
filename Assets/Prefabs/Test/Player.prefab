@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7142714255467940414}
+  - component: {fileID: 3389780294637402943}
   - component: {fileID: 4741185929465294967}
   - component: {fileID: 7558040476261262867}
   - component: {fileID: 3265560656467045510}
@@ -37,6 +38,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6603906875459121522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3389780294637402943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253393843457502419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995ea633b2ad9814baf6cb6ea205e326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seekerController: {fileID: 0}
 --- !u!114 &4741185929465294967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +396,7 @@ MonoBehaviour:
   - {fileID: 990254650208211767}
   - {fileID: -5928373565424209787}
   - {fileID: -5034909395906052972}
+  - {fileID: 3389780294637402943}
   - {fileID: 7558040476261262867}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &7289318370481079479
