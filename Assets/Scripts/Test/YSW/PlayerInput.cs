@@ -22,11 +22,13 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         public bool IsDownThisFrame(uint button) => (OneShots & button) == button;        
 
         public Vector2 MoveDirection;
+        public bool IsRunning; 
 
 
     }
     public Gamepad gamepad;
     [SerializeField] private InputAction move;
+    [SerializeField] private InputAction run;
 
     public override void Spawned()
     {
@@ -34,7 +36,9 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         Runner.AddCallbacks(this);
 
         move = move.Clone();
+        run = run.Clone();
         move.Enable();
+        run.Enable();
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
@@ -54,6 +58,9 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
 
         Vector2 moveInput = move.ReadValue<Vector2>();
         userInput.MoveDirection = moveInput.normalized;
+
+        userInput.IsRunning = ReadBool(run);
+
         input.Set(userInput);
     }
     private static bool ReadBool(InputAction action) => action.ReadValue<float>() != 0;
@@ -64,6 +71,7 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
     private void DisposeInputs()
     {
         move.Dispose();
+        run.Dispose();
     }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)    { }

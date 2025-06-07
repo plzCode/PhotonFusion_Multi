@@ -7,11 +7,19 @@ public class PlayerController : NetworkBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
+    private Vector2 currentInput = Vector2.zero;
+    public float inputSmoothSpeed = 5f; // or whatever feels right
+
+    private float currentSpeedMultiplier = 1.0f;
+    private const float walkSpeed = 1.0f;
+    private const float runSpeed = 1.5f;
 
     private Rigidbody rb;
 
     [SerializeField]
     private CharacterController controller;
+    [SerializeField]
+    private Animator anim;
 
     [Networked] public RoomPlayer RoomUser { get; set; }
 
@@ -28,6 +36,7 @@ public class PlayerController : NetworkBehaviour
         {
             Debug.LogError("Rigidbody is Not Found");
         }
+        anim = GetComponentInChildren<Animator>();
     }
     public override void Spawned()
     {
@@ -44,13 +53,26 @@ public class PlayerController : NetworkBehaviour
         {
             Debug.Log("Input Is Entered");
 
-            Vector3 move = new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);
-            move = move.normalized * moveSpeed;
+            // ¹æÇâ ºÎµå·´°Ô ÀüÈ¯
+            currentInput = Vector2.Lerp(currentInput, input.MoveDirection, inputSmoothSpeed * Runner.DeltaTime);
 
-            // y ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Rigidbodyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ß·ï¿½ ï¿½ï¿½ï¿½ï¿½)
+            // ¸ñÇ¥ ¹è¼Ó ¼³Á¤
+            float targetSpeedMultiplier = input.IsRunning ? runSpeed : walkSpeed;
+
+            // ¹è¼Óµµ ºÎµå·´°Ô º¸°£
+            currentSpeedMultiplier = Mathf.Lerp(currentSpeedMultiplier, targetSpeedMultiplier, inputSmoothSpeed * Runner.DeltaTime);
+
+            // ÀÌµ¿ º¤ÅÍ °è»ê
+            Vector3 move = new Vector3(currentInput.x, 0, currentInput.y) * moveSpeed * currentSpeedMultiplier;
             move.y = rb.linearVelocity.y;
 
             rb.linearVelocity = move;
+
+            if (anim != null)
+            {
+                anim.SetFloat("MoveX", currentInput.x);
+                anim.SetFloat("MoveZ", currentInput.y * currentSpeedMultiplier);
+            }
         }
     }
 

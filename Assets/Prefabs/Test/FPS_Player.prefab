@@ -428,6 +428,23 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     m_Flags: 0
+  run:
+    m_Name: Run
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 7a0bfe67-b800-4a3b-b840-52aba924de2a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 787c5644-91d2-43cc-b141-c2fa939e9663
+      m_Path: <Keyboard>/leftShift
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Run
+      m_Flags: 0
+    m_Flags: 0
 --- !u!114 &990254650208211767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,7 +459,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 5
+  inputSmoothSpeed: 5
   controller: {fileID: 0}
+  anim: {fileID: 0}
   _RoomUser: {fileID: 0}
 --- !u!114 &-5034909395906052972
 MonoBehaviour:
@@ -481,7 +500,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &4115730921566571420
 MonoBehaviour:
@@ -1436,7 +1455,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: d058fdcdc5a57b74c974d0082685f15a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
