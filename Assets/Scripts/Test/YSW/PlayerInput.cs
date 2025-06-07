@@ -61,7 +61,10 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
 
-    private void DisposeInputs()    {    }
+    private void DisposeInputs()
+    {
+        move.Dispose();
+    }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)    { }
 

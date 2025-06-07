@@ -4,12 +4,11 @@ using static Fusion.NetworkBehaviour;
 using static KartInput;
 
 public class PlayerController : NetworkBehaviour
-{   
+{
     public float moveSpeed = 5f;
-    public float gravity = -9.81f;
     public float jumpForce = 5f;
 
-    private float verticalVelocity = 0f;
+    private Rigidbody rb;
 
     [SerializeField]
     private CharacterController controller;
@@ -24,7 +23,11 @@ public class PlayerController : NetworkBehaviour
 
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody is Not Found");
+        }
     }
     public override void Spawned()
     {
@@ -39,25 +42,15 @@ public class PlayerController : NetworkBehaviour
 
         if (GetInput(out PlayerInput.NetworkInputData input))
         {
-            Debug.Log("ÀÔ·ÂÀÌ ÀÖ½À´Ï´Ù.");
+            Debug.Log("Input Is Entered");
+
             Vector3 move = new Vector3(input.MoveDirection.x, 0, input.MoveDirection.y);
+            move = move.normalized * moveSpeed;
 
-            // Áß·Â Àû¿ë
-            if (controller.isGrounded)
-            {
-                verticalVelocity = 0f;
+            // y ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Rigidbodyï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ß·ï¿½ ï¿½ï¿½ï¿½ï¿½)
+            move.y = rb.linearVelocity.y;
 
-                // Á¡ÇÁ Å° ÀÔ·Â (¿øÇÏ¸é ¿©±â¿¡ Ãß°¡ °¡´É)
-                // if (Input.GetKey(KeyCode.Space)) verticalVelocity = jumpForce;
-            }
-            else
-            {
-                verticalVelocity += gravity * Runner.DeltaTime;
-            }
-
-            move.y = verticalVelocity;
-
-            controller.Move(move * moveSpeed * Runner.DeltaTime);
+            rb.linearVelocity = move;
         }
     }
 
