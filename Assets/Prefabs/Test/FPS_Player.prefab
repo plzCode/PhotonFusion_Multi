@@ -364,9 +364,9 @@ MonoBehaviour:
   Animator: {fileID: 1854037780920056490}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 00000000
+  StateHashes: 000000002b1a167c79406955
   TriggerHashes: 00000000
-  TotalWords: 0
+  TotalWords: 3
 --- !u!114 &-6016945949809396307
 MonoBehaviour:
   m_ObjectHideFlags: 0

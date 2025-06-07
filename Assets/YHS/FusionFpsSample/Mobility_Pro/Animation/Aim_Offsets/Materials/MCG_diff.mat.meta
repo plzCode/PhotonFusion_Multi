@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 9aec96616daa92e418378e39da9dc99e
+timeCreated: 1564460604
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/3rdParty/Mobility_Pro/Animation/Aim_Offsets/Materials/MCG_diff.mat
+  uploadId: 718471
