@@ -47,11 +47,11 @@ public class PlayerController : NetworkBehaviour
     }
     private void Update()
     {
-        if (anim != null)
-        {
-            anim.SetFloat("MoveX", currentInput.x, 0.1f, Time.deltaTime);
-            anim.SetFloat("MoveZ", currentInput.y * currentSpeedMultiplier, 0.1f, Time.deltaTime);
-        }
+        //if (anim != null)
+        //{
+        //    anim.SetFloat("MoveX", currentInput.x, 0.1f, Time.deltaTime);
+        //    anim.SetFloat("MoveZ", currentInput.y * currentSpeedMultiplier, 0.1f, Time.deltaTime);
+        //}
     }
     public override void FixedUpdateNetwork()
     {
@@ -75,6 +75,13 @@ public class PlayerController : NetworkBehaviour
             targetVelocity.y = rb.linearVelocity.y;  // 중력 등 수직 속도 유지
 
             rb.linearVelocity = targetVelocity;
+
+            
+            if (anim != null)
+            {
+                anim.SetFloat("MoveX", currentInput.x, 0.1f, Runner.DeltaTime);
+                anim.SetFloat("MoveZ", currentInput.y * currentSpeedMultiplier, 0.1f, Runner.DeltaTime);
+            }
         }
     }
 
