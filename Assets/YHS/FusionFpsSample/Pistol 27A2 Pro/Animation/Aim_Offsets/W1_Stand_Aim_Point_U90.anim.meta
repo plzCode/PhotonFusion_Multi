@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0eb84021413e1b54caa4f764fae7837e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/3rdParty/Pistol 27A2 Pro/Animation/Aim_Offsets/W1_Stand_Aim_Point_U90.anim
+  uploadId: 718471

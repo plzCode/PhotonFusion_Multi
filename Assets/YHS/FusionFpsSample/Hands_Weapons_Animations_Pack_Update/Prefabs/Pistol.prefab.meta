@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5e0c9c269a60bd345be6affe5b838c62
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/3rdParty/Hands_Weapons_Animations_Pack_Update/Prefabs/Pistol.prefab
+  uploadId: 718471

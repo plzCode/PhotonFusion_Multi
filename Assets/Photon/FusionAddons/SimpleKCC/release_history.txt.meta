@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f4b413b5ce4f20d488e9fe7cf207a21d
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/Photon/FusionAddons/SimpleKCC/release_history.txt
+  uploadId: 718471

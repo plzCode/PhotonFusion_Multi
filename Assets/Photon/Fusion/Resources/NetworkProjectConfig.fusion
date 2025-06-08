@@ -21,10 +21,10 @@
         "SimulationUpdateTimeMode": 0,
         "PlayerCount": 10,
         "TickRateSelection": {
-            "Client": 64,
+            "Client": 128,
             "ServerIndex": 0,
             "ClientSendIndex": 1,
-            "ServerSendIndex": 1
+            "ServerSendIndex": 0
         }
     },
     "Network": {

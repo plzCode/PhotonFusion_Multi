@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 55fbfb2228bf67e4b9f2708b099ded81
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 7
+  defaultSettings:
+    serializedVersion: 2
+    loadType: 1
+    sampleRateSetting: 0
+    sampleRateOverride: 0
+    compressionFormat: 0
+    quality: 1
+    conversionMode: 0
+    preloadAudioData: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/3rdParty/Hands_Weapons_Animations_Pack_Update/Sounds/14Weapon_Select/Weapon_Select.flac
+  uploadId: 718471

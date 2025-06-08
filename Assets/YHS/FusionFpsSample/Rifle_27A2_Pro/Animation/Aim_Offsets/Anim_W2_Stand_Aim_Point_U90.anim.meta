@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 881eef694b6d68c419fd423d402723ae
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/3rdParty/Rifle_27A2_Pro/Animation/Aim_Offsets/Anim_W2_Stand_Aim_Point_U90.anim
+  uploadId: 718471
