@@ -148,6 +148,20 @@ MonoBehaviour:
       value: "\uD50C\uB808\uC774\uC5B4 \uCD94\uC801\uC5EC\uBD80"
       type: 0
       typeString: 
+  - id: 3
+    fields:
+    - title: Name
+      value: LastActorName
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Description
+      value: "\uCD94\uC801\uD560 \uD50C\uB808\uC774\uC5B4 \uB124\uC784"
+      type: 0
+      typeString: 
   conversations:
   - id: 1
     fields:
@@ -532,14 +546,14 @@ MonoBehaviour:
       outgoingLinks: []
       conditionsString: "CurrentQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\")
         == \"success\""
-      userScript: 'GoToTarget = true '
+      userScript: Variable["GoToTarget"] = true;
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 778.7502
-        y: 155.00005
+        x: 779.69354
+        y: 154.05666
         width: 160
         height: 30
     - id: 8

@@ -5,6 +5,8 @@ using PixelCrushers.DialogueSystem.UnityGUI;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 namespace PixelCrushers.DialogueSystem
 {
 
@@ -250,7 +252,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 var netObj = currentUsable.GetComponentInParent<NetworkObject>();
                 if (netObj != null)
-                {
+                {                    
                     RPC_UseCurrentSelection(netObj.Id);
                 }
             }//UseCurrentSelection();
@@ -263,6 +265,7 @@ namespace PixelCrushers.DialogueSystem
             if (usable != null)
             {
                 usable.OnSelectUsable();
+                
             }
         }
 
@@ -509,6 +512,7 @@ namespace PixelCrushers.DialogueSystem
                 UnityGUITools.DrawText(new Rect(0, 0, Screen.width, Screen.height), currentHeading, guiStyle, textStyle, textStyleColor);
                 UnityGUITools.DrawText(new Rect(0, guiStyleLineHeight, Screen.width, Screen.height), currentUseMessage, guiStyle, textStyle, textStyleColor);
             }
+
         }
 
         protected void SetGuiStyle()

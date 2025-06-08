@@ -1415,13 +1415,17 @@ PrefabInstance:
       propertyPath: SortKey
       value: 141312484
       objectReference: {fileID: 0}
-    - target: {fileID: 8902907255211685571, guid: a447d6ec307dadb41899b0a33ea82905, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
+    - target: {fileID: 8984054518118483351, guid: a447d6ec307dadb41899b0a33ea82905, type: 3}
+      propertyPath: maxSpeed
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 8902907255211685571, guid: a447d6ec307dadb41899b0a33ea82905, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
+    - target: {fileID: 8984054518118483351, guid: a447d6ec307dadb41899b0a33ea82905, type: 3}
+      propertyPath: endReachedDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984054518118483351, guid: a447d6ec307dadb41899b0a33ea82905, type: 3}
+      propertyPath: pickNextWaypointDist
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
