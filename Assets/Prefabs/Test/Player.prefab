@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7142714255467940414}
+  - component: {fileID: 3389780294637402943}
   - component: {fileID: 4741185929465294967}
   - component: {fileID: 7558040476261262867}
   - component: {fileID: 3265560656467045510}
@@ -37,6 +38,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6603906875459121522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3389780294637402943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253393843457502419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995ea633b2ad9814baf6cb6ea205e326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seekerController: {fileID: 0}
 --- !u!114 &4741185929465294967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,10 +66,34 @@ MonoBehaviour:
   conversationEvents:
     onConversationStart:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7558040476261262867}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onConversationEnd:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 7558040476261262867}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
     runOnConversationEndEventsAtEndOfFrame: 0
     onConversationCancelled:
       m_PersistentCalls:
@@ -137,7 +175,7 @@ MonoBehaviour:
   defaultUseMessage: "\uB300\uD654\uB97C \uD558\uC2DC\uB824\uBA74 \"E\"\uBC84\uD2BC\uC744
     \uB20C\uB7EC\uC8FC\uC138\uC694."
   useKey: 101
-  useButton: Fire2
+  useButton: 
   enableTouch: 0
   touchArea:
     origin: 0
@@ -314,7 +352,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0d95a703efe4f0c44a2afec31b14fb21, type: 2}
+  - {fileID: 2100000, guid: 0e08d5aa4eb15274c8f61545b8ee172e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -358,6 +396,8 @@ MonoBehaviour:
   - {fileID: 990254650208211767}
   - {fileID: -5928373565424209787}
   - {fileID: -5034909395906052972}
+  - {fileID: 3389780294637402943}
+  - {fileID: 7558040476261262867}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &7289318370481079479
 MonoBehaviour:
