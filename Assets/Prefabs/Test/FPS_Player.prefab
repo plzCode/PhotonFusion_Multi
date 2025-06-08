@@ -364,9 +364,9 @@ MonoBehaviour:
   Animator: {fileID: 1854037780920056490}
   ApplyTiming: 2
   SyncSettings: -1
-  StateHashes: 00000000325a708301e955b4
-  TriggerHashes: 00000000
-  TotalWords: 5
+  StateHashes: 00000000325a708301e955b4649496e85727b3dfbc8ac9f5a61bf31fd9a8f140326b79bd
+  TriggerHashes: 0000000028a98107
+  TotalWords: 7
 --- !u!114 &-6016945949809396307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,6 +445,23 @@ MonoBehaviour:
       m_Action: Run
       m_Flags: 0
     m_Flags: 0
+  jump:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1b32addc-0063-456f-9b9f-5481e34b19aa
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 54e0175e-1add-4f48-9a17-bb58cc0acb5a
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Jump
+      m_Flags: 0
+    m_Flags: 0
 --- !u!114 &990254650208211767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,11 +475,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 5
+  jumpForce: 4
+  groundCheckDistance: 0.2
   inputSmoothSpeed: 5
   controller: {fileID: 0}
   anim: {fileID: 0}
   _RoomUser: {fileID: 0}
+  customGravity: -9.81
+  fallMultiplier: 2
 --- !u!114 &-5034909395906052972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,7 +517,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112

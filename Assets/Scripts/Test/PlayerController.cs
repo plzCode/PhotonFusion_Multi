@@ -7,6 +7,8 @@ public class PlayerController : NetworkBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
+    private bool isGrounded = true;
+    [SerializeField] private float groundCheckDistance;
     private Vector2 currentInput = Vector2.zero;
     public float inputSmoothSpeed = 5f; // or whatever feels right
 
@@ -74,6 +76,14 @@ public class PlayerController : NetworkBehaviour
             Vector3 targetVelocity = moveDir * moveSpeed * currentSpeedMultiplier;
             targetVelocity.y = rb.linearVelocity.y;  // 중력 등 수직 속도 유지
 
+
+            if (input.JumpPressed && isGrounded)
+            {
+                Debug.Log("점프 눌림");
+                anim.SetTrigger("Jump");
+                targetVelocity.y =  jumpForce;
+            }
+
             rb.linearVelocity = targetVelocity;
 
             
@@ -83,10 +93,39 @@ public class PlayerController : NetworkBehaviour
                 anim.SetFloat("MoveZ", currentInput.y * currentSpeedMultiplier, 0.1f, Runner.DeltaTime);
             }
         }
+
+        
+        if (!isGrounded)
+        {
+            Vector3 gravity = Vector3.up * customGravity;
+            if (rb.linearVelocity.y < 0)
+                gravity *= fallMultiplier;
+
+            rb.AddForce(gravity, ForceMode.Acceleration);
+        }
+
+        CheckGrounded();
     }
 
-    
 
+    public float customGravity = -9.81f;
+    public float fallMultiplier = 2.0f;
 
+    private void CheckGrounded()
+    {
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, ~0);
+        anim.SetBool("IsGrounded", isGrounded);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = isGrounded ? Color.green : Color.red;
+
+        Vector3 origin = transform.position;
+        Vector3 direction = Vector3.down * groundCheckDistance;
+
+        Gizmos.DrawLine(origin, origin + direction);
+        Gizmos.DrawSphere(origin + direction, 0.05f); // 끝점에 작은 점도 표시
+    }
 
 }

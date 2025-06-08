@@ -22,13 +22,15 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         public bool IsDownThisFrame(uint button) => (OneShots & button) == button;        
 
         public Vector2 MoveDirection;
-        public bool IsRunning; 
+        public bool IsRunning;
+        public bool JumpPressed; 
 
 
     }
     public Gamepad gamepad;
     [SerializeField] private InputAction move;
     [SerializeField] private InputAction run;
+    [SerializeField] private InputAction jump;
 
     public override void Spawned()
     {
@@ -37,8 +39,10 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
 
         move = move.Clone();
         run = run.Clone();
+        jump = jump.Clone();
         move.Enable();
         run.Enable();
+        jump.Enable();
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
@@ -60,6 +64,7 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         userInput.MoveDirection = moveInput.normalized;
 
         userInput.IsRunning = ReadBool(run);
+        userInput.JumpPressed = jump.triggered;
 
         input.Set(userInput);
     }
@@ -72,6 +77,7 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
     {
         move.Dispose();
         run.Dispose();
+        jump.Dispose();
     }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)    { }
