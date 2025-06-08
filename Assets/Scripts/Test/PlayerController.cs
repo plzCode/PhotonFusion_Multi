@@ -43,36 +43,38 @@ public class PlayerController : NetworkBehaviour
         base.Spawned();
         //_changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
         //MaxSpeed = maxSpeedNormal;
+        Runner.SetIsSimulated(Object, true);
     }
-
+    private void Update()
+    {
+        if (anim != null)
+        {
+            anim.SetFloat("MoveX", currentInput.x, 0.1f, Time.deltaTime);
+            anim.SetFloat("MoveZ", currentInput.y * currentSpeedMultiplier, 0.1f, Time.deltaTime);
+        }
+    }
     public override void FixedUpdateNetwork()
     {
         base.FixedUpdateNetwork();
 
         if (GetInput(out PlayerInput.NetworkInputData input))
         {
-            Debug.Log("Input Is Entered");
-
-            // 방향 부드럽게 전환
+            // 입력 방향 부드럽게 보간
             currentInput = Vector2.Lerp(currentInput, input.MoveDirection, inputSmoothSpeed * Runner.DeltaTime);
 
-            // 목표 배속 설정
+            // 목표 속도 배율 보간
             float targetSpeedMultiplier = input.IsRunning ? runSpeed : walkSpeed;
-
-            // 배속도 부드럽게 보간
             currentSpeedMultiplier = Mathf.Lerp(currentSpeedMultiplier, targetSpeedMultiplier, inputSmoothSpeed * Runner.DeltaTime);
 
-            // 이동 벡터 계산
-            Vector3 move = new Vector3(currentInput.x, 0, currentInput.y) * moveSpeed * currentSpeedMultiplier;
-            move.y = rb.linearVelocity.y;
+            // 이동 방향과 속도 계산
+            Vector3 moveDir = new Vector3(currentInput.x, 0, currentInput.y);
+            if (moveDir.sqrMagnitude > 1f)
+                moveDir.Normalize();
 
-            rb.linearVelocity = move;
+            Vector3 targetVelocity = moveDir * moveSpeed * currentSpeedMultiplier;
+            targetVelocity.y = rb.linearVelocity.y;  // 중력 등 수직 속도 유지
 
-            if (anim != null)
-            {
-                anim.SetFloat("MoveX", currentInput.x);
-                anim.SetFloat("MoveZ", currentInput.y * currentSpeedMultiplier);
-            }
+            rb.linearVelocity = targetVelocity;
         }
     }
 
