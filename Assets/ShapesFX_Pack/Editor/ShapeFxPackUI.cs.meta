@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 397c467ab235d614ebbf8c5a909be7e9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156638
+  packageName: Shapes FX Pack
+  packageVersion: 1.7
+  assetPath: Assets/ShapesFX_Pack/Editor/ShapeFxPackUI.cs
+  uploadId: 677549
