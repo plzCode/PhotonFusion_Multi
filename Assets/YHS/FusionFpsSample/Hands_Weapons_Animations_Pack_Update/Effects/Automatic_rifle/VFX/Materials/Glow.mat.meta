@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 13dc2e073cb6ece469c05590a4039f98
+timeCreated: 1495637910
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/3rdParty/Hands_Weapons_Animations_Pack_Update/Effects/Automatic_rifle/VFX/Materials/Glow.mat
+  uploadId: 718471

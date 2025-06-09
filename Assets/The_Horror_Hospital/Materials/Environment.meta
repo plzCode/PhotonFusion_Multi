@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/KMJ/Prefabs.meta
+guid: b5bdd4b93a67e064f863b0e5df7f263c
+========
 guid: 292faf2769c77924aa74290622de4ad2
+>>>>>>>> main:Assets/The_Horror_Hospital/Materials/Environment.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 27e8171563b1307418394ea1e65431e9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 31900000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/Animations/Player/UpperBodyAvatarMask.mask
+  uploadId: 718471

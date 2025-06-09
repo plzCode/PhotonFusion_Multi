@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 2ad5c36edd0559141b78e7b2213712e6
+timeCreated: 1553426036
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/3rdParty/Hands_Weapons_Animations_Pack_Update/Prefabs/Hands_Automatic_rifle03.prefab
+  uploadId: 718471

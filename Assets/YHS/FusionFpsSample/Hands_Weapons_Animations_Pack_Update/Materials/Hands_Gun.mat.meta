@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: c10dca81b04caf7448aaadc0ad5808e0
+timeCreated: 1553426398
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/3rdParty/Hands_Weapons_Animations_Pack_Update/Materials/Hands_Gun.mat
+  uploadId: 718471

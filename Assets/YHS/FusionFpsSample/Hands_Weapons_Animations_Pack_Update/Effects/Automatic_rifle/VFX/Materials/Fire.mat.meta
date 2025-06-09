@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d88c2fc166932f746b67cf360f798e3a
+timeCreated: 1495637910
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 272941
+  packageName: Simple FPS Multiplayer - Photon Fusion
+  packageVersion: 2.0.11
+  assetPath: Assets/3rdParty/Hands_Weapons_Animations_Pack_Update/Effects/Automatic_rifle/VFX/Materials/Fire.mat
+  uploadId: 718471
