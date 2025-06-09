@@ -61,6 +61,7 @@ public class PlayerController : NetworkBehaviour
 
         if (GetInput(out PlayerInput.NetworkInputData input))
         {
+            if (Runner.IsResimulation) return; // 예측 루프 또는 보정 루프 중 하나만 실행되게 막음
             // 입력 방향 부드럽게 보간
             currentInput = Vector2.Lerp(currentInput, input.MoveDirection, inputSmoothSpeed * Runner.DeltaTime);
 
@@ -92,6 +93,8 @@ public class PlayerController : NetworkBehaviour
                 anim.SetFloat("MoveX", currentInput.x, 0.1f, Runner.DeltaTime);
                 anim.SetFloat("MoveZ", currentInput.y * currentSpeedMultiplier, 0.1f, Runner.DeltaTime);
             }
+
+            Debug.Log(Object.Id + ", " + Object.Name + ", " + Object.HasStateAuthority + ", " + Object.HasInputAuthority);
         }
 
         
