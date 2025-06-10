@@ -15,10 +15,10 @@ TagManager:
   - WorldCollide
   - Ground
   - Outline
-  - 
-  - 
-  - 
-  - 
+  - Sub_Grid
+  - 1f_Floor
+  - 2f_Floor
+  - Stair
   - 
   - 
   - 
