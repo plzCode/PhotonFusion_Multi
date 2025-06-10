@@ -14,7 +14,8 @@ public class Professor : NetworkBehaviour
     public float stairCheckRadius = 0.6f;   // 감지 반경
     public LayerMask stairLayer;            // 계단 레이어 (예: "Stair")
     private Transform tr;
-
+    [SerializeField]
+    bool nearStairs = false; // 계단 근처 여부
 
     public override void Spawned()
     {
@@ -46,7 +47,7 @@ public class Professor : NetworkBehaviour
         }*/
 
         // 계단 감지
-        bool nearStairs = Physics.CheckSphere(tr.position, stairCheckRadius, stairLayer);
+        nearStairs = Physics.CheckSphere(tr.position, stairCheckRadius, stairLayer);
 
         aiPath.endReachedDistance = nearStairs ? stairDistance : defaultDistance;
 
