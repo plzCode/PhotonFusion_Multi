@@ -250,6 +250,7 @@ namespace PixelCrushers.DialogueSystem
             // If the player presses the use key/button, send the OnUse message:
             if (IsUseButtonDown() && Object.HasInputAuthority && currentUsable != null)
             {
+                Debug.Log("Usable Object : " + currentUsable.name);
                 var netObj = currentUsable.GetComponentInParent<NetworkObject>();
                 if (netObj != null)
                 {                    
