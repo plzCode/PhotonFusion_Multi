@@ -81,6 +81,27 @@ public class PlayerController : NetworkBehaviour
             if (input.JumpPressed && isGrounded)
             {
                 Debug.Log("점프 눌림");
+                var players = GameManager.Players;
+                foreach (var playerObject in players)
+                {
+                    if (playerObject == null) continue;
+
+                    // 예: 플레이어의 Transform 참조
+                    Transform playerTransform = playerObject.transform;
+                    NetworkObject netObject = playerObject.GetComponent<NetworkObject>();
+                    // 예: 플레이어 스크립트 가져오기
+                    
+                    if (playerTransform != null)
+                    {
+                        Debug.Log(playerTransform.position);
+                    }
+                    if (netObject != null)
+                    {
+                        Debug.Log("Id : "+ netObject.Id + "name : " + netObject.name);
+                    }
+
+                    // 원하는 작업 수행 (거리 계산, 상태 체크 등)
+                }
                 anim.SetTrigger("Jump");
                 targetVelocity.y =  jumpForce;
             }
