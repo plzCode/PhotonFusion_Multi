@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Zombie
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - WorldCollide
   - Ground
   - Outline
-  - 
-  - 
-  - 
-  - 
+  - Sub_Grid
+  - 1f_Floor
+  - 2f_Floor
+  - Stair
   - 
   - 
   - 
