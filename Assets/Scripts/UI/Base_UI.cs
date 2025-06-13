@@ -9,8 +9,9 @@ public class Base_UIInfo
 
 public abstract class Base_UI : MonoBehaviour
 {
-    public bool IsStackable;
     public UIManager.ECanvasType CanvasType;
+    public bool IsStackable;
+    public bool IsOpened { get; private set; }
 
     public event Action OnOpenEvent;
     public event Action OnCloseEvent;
@@ -46,10 +47,12 @@ public abstract class Base_UI : MonoBehaviour
             _openAnimation.Play();
 
         OnOpenEvent?.Invoke();
+        IsOpened = true;
     }
 
     public virtual void OnClose()
     {
         OnCloseEvent?.Invoke();
+        IsOpened = false;
     }
 }
