@@ -12,10 +12,11 @@ public class PlayerController : NetworkBehaviour
     public float jumpForce = 5f;
     private bool isGrounded = true;
     [SerializeField] private float groundCheckDistance;
-    private Vector2 currentInput = Vector2.zero;
+    [Networked] private Vector2 currentInput { get; set; } = Vector2.zero;
+    [Networked] private float Yaw { get; set; }
     public float inputSmoothSpeed = 5f; // or whatever feels right
 
-    private float currentSpeedMultiplier = 1.0f;
+    [Networked] private float currentSpeedMultiplier { get; set; } = 1.0f;
     private const float walkSpeed = 1.0f;
     private const float runSpeed = 1.5f;
 
@@ -104,7 +105,8 @@ public class PlayerController : NetworkBehaviour
 
         if (GetInput(out PlayerInput.NetworkInputData input))
         {
-            HandleInput(input);
+            PlayerInputs = input;
+            HandleInput(PlayerInputs);
         }
 
         ApplyGravity();
@@ -140,7 +142,7 @@ public class PlayerController : NetworkBehaviour
         if (anim != null && !Runner.IsResimulation)
         {
             anim.SetFloat("MoveX", input.MoveDirection.x, 0.15f, Runner.DeltaTime);
-            anim.SetFloat("MoveZ", input.MoveDirection.y * currentSpeedMultiplier, 0.15f, Runner.DeltaTime);
+            anim.SetFloat("MoveZ", input.MoveDirection.y * currentSpeedMultiplier/moveSpeed, 0.15f, Runner.DeltaTime);
 
             if (input.JumpPressed && isGrounded)
                 anim.SetTrigger("Jump");
@@ -149,11 +151,10 @@ public class PlayerController : NetworkBehaviour
 
     private void HandleMovement(PlayerInput.NetworkInputData input)
     {
-        //  서버/호스트 (StateAuthority)만 실제 이동 처리
-        if (Object.HasStateAuthority && !Runner.IsResimulation)
-        {
+        
+        
             currentInput = Vector2.Lerp(currentInput, input.MoveDirection, inputSmoothSpeed * Runner.DeltaTime);
-            float targetSpeedMultiplier = input.IsRunning ? runSpeed : walkSpeed;
+            float targetSpeedMultiplier = moveSpeed *(input.IsRunning ? runSpeed : walkSpeed);
             currentSpeedMultiplier = Mathf.Lerp(currentSpeedMultiplier, targetSpeedMultiplier, inputSmoothSpeed * Runner.DeltaTime);
 
             Vector3 moveDir = new Vector3(currentInput.x, 0, currentInput.y);
@@ -161,26 +162,29 @@ public class PlayerController : NetworkBehaviour
 
             moveDir = transform.TransformDirection(moveDir); // 캐릭터 방향에 맞추기
 
-            Vector3 targetVelocity = moveDir * moveSpeed * currentSpeedMultiplier;
+            Vector3 targetVelocity = moveDir  * currentSpeedMultiplier;
             targetVelocity.y = rb.linearVelocity.y;
 
             if (input.JumpPressed && isGrounded)
                 targetVelocity.y = jumpForce;
 
             rb.linearVelocity = targetVelocity;
-        }
+        
     }
 
     private void HandleMouseLook(PlayerInput.NetworkInputData input)
     {
-        if (Object.HasStateAuthority)
-        {
-            float mouseX = input.LookDirection.x * mouseSensitivity;
-            transform.Rotate(Vector3.up * mouseX);
-        }
+        // 마우스 회전 처리 (StateAuthority → 예측 가능하게 Networked 값으로 처리)
+        float mouseX = input.LookDirection.x * mouseSensitivity;
+        Yaw += mouseX;
+        Yaw %= 360f; // 회전값 유지
+
+        // 회전 적용
+        Quaternion targetRot = Quaternion.Euler(0, Yaw, 0);
+        rb.MoveRotation(targetRot); // 20f는 회전 부드러움 조절
 
 
-        if (Object.HasInputAuthority)
+        if (Object.HasInputAuthority&&!Runner.IsResimulation)
         {
             float mouseY = input.LookDirection.y * mouseSensitivity;
             verticalLookRotation -= mouseY;
