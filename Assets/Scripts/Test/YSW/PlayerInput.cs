@@ -22,13 +22,16 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         public bool IsDownThisFrame(uint button) => (OneShots & button) == button;        
 
         public Vector2 MoveDirection;
+        public Vector2 LookDirection;
         public bool IsRunning;
         public bool JumpPressed; 
 
 
     }
     public Gamepad gamepad;
+    public float mouseSensitivity = 1f;
     [SerializeField] private InputAction move;
+    [SerializeField] private InputAction look;
     [SerializeField] private InputAction run;
     [SerializeField] private InputAction jump;
 
@@ -38,9 +41,11 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         Runner.AddCallbacks(this);
 
         move = move.Clone();
+        look = look.Clone();
         run = run.Clone();
         jump = jump.Clone();
         move.Enable();
+        look.Enable();
         run.Enable();
         jump.Enable();
     }
@@ -60,8 +65,11 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         gamepad = Gamepad.current;
         var userInput = new NetworkInputData();
 
-        Vector2 moveInput = move.ReadValue<Vector2>();
-        userInput.MoveDirection = moveInput.normalized;
+        Vector2 moveInput = move.ReadValue<Vector2>() * mouseSensitivity;        
+        userInput.MoveDirection = moveInput.normalized;        
+
+        Vector2 lookInput = look.ReadValue<Vector2>();    
+        userInput.LookDirection = lookInput;
 
         userInput.IsRunning = ReadBool(run);
         userInput.JumpPressed = jump.triggered;
