@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PixelCrushers.DialogueSystem;
+using UnityEngine;
 
 namespace Art_Equilibrium
 {
@@ -46,6 +47,9 @@ namespace Art_Equilibrium
 
         private void Update()
         {
+            bool hasKey = DialogueLua.GetVariable("isKeyGet").asBool;
+            if (!hasKey) return;
+            
             if (isSlidingDoor)
             {
                 Vector3 targetPos = open ? targetLocalSlidePos : defaultLocalPos;
@@ -102,7 +106,7 @@ namespace Art_Equilibrium
         {
             if (coll.CompareTag("Player"))
             {
-                doorMessage = open ? closeMessage : openMessage;
+                //doorMessage = open ? closeMessage : openMessage;
                 trig = true;
             }
         }

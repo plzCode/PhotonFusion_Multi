@@ -149,6 +149,7 @@ namespace PixelCrushers.DialogueSystem
         public Camera playerCamera;
         public float maxDistance = 5f;
         public string targetTag = "Usable";
+        bool isLook = false;
 
         /// <summary>
         /// Gets the current usable.
@@ -240,11 +241,12 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         protected virtual void Update()
         {
+            isLook = IsLookingAtTarget();
             // Exit if disabled or paused:
             if (!enabled || (Time.timeScale <= 0)) return;
 
             // If the currentUsable went missing (was destroyed, deactivated, or we changed scene), tell listeners:
-            if (toldListenersHaveUsable && (currentUsable == null || !currentUsable.enabled || !currentUsable.gameObject.activeInHierarchy))
+            if (toldListenersHaveUsable && (currentUsable == null || !currentUsable.enabled || !currentUsable.gameObject.activeInHierarchy) && isLook)
             {
                 SetCurrentUsable(null);
                 OnDeselectedUsableObject(null);
@@ -252,9 +254,9 @@ namespace PixelCrushers.DialogueSystem
             }
             
             // If the player presses the use key/button, send the OnUse message:
-            if (IsUseButtonDown() && Object.HasInputAuthority && currentUsable != null && IsLookingAtTarget(out RaycastHit hit))
+            if (IsUseButtonDown() && Object.HasInputAuthority && currentUsable != null && isLook)
             {
-                Debug.Log("Usable Object : " + currentUsable.name + " Looking Object : " + hit.collider.name);
+                //Debug.Log("Usable Object : " + currentUsable.name + " Looking Object : " + hit.collider.name);
                 var netObj = currentUsable.GetComponentInParent<NetworkObject>();
                 if (netObj != null)
                 {                    
@@ -330,14 +332,14 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
         }
-        private bool IsLookingAtTarget(out RaycastHit hitInfo)
+        public bool IsLookingAtTarget()
         {
-            Vector3 origin = playerCamera.transform.position;
-            Vector3 direction = playerCamera.transform.forward;
+            Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+            RaycastHit[] hits = Physics.RaycastAll(ray, maxDistance, ~0, QueryTriggerInteraction.Collide);
 
-            if (Physics.Raycast(origin, direction, out hitInfo, maxDistance))
+            foreach (RaycastHit hit in hits)
             {
-                if (hitInfo.collider.CompareTag(targetTag))
+                if (hit.collider.CompareTag(targetTag))
                 {
                     return true;
                 }
@@ -345,6 +347,16 @@ namespace PixelCrushers.DialogueSystem
 
             return false;
         }
+
+        private void OnDrawGizmos()
+        {
+            if (playerCamera != null)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * maxDistance);
+            }
+        }
+
         /// <summary>
         /// Checks whether the player has just pressed the use button.
         /// </summary>
@@ -381,6 +393,7 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         protected void OnTriggerEnter(Collider other)
         {
+            if (!isLook) return;
             if(Object.HasInputAuthority)
                 CheckTriggerEnter(other.gameObject);
         }

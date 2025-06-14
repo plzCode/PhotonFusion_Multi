@@ -202,6 +202,9 @@ MonoBehaviour:
   onDeselectedUsable:
     m_PersistentCalls:
       m_Calls: []
+  playerCamera: {fileID: 0}
+  maxDistance: 5
+  targetTag: Usable
 --- !u!114 &3265560656467045510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 102938cf93fac5c48a0db86dfddda8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mouseSensitivity: 1
   move:
     m_Name: Move
     m_Type: 0
@@ -478,6 +482,15 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     m_Flags: 0
+  look:
+    m_Name: Look
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 95c20b69-89e1-4a40-a739-e254df7b411c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   run:
     m_Name: Run
     m_Type: 0
@@ -514,9 +527,11 @@ MonoBehaviour:
   inputSmoothSpeed: 5
   controller: {fileID: 0}
   anim: {fileID: 0}
-  _RoomUser: {fileID: 0}
+  mouseSensitivity: 0.5
+  cameraHolder: {fileID: 0}
   customGravity: -9.81
   fallMultiplier: 2
+  _RoomUser: {fileID: 0}
 --- !u!114 &-5928373565424209787
 MonoBehaviour:
   m_ObjectHideFlags: 0

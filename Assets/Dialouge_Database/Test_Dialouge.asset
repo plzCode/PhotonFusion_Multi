@@ -342,20 +342,6 @@ MonoBehaviour:
       value: "\uC5F4\uC1E0 \uD68D\uB4DD \uC5EC\uBD80"
       type: 0
       typeString: 
-  - id: 7
-    fields:
-    - title: Name
-      value: isRadioActive
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: "\uBB34\uC804 \uC5EC\uBD80"
-      type: 0
-      typeString: 
   - id: 1
     fields:
     - title: Name
@@ -382,6 +368,20 @@ MonoBehaviour:
       typeString: CustomFieldType_Boolean
     - title: Description
       value: "\uBB38 \uAC1C\uBC29 \uC5EC\uBD80"
+      type: 0
+      typeString: 
+  - id: 7
+    fields:
+    - title: Name
+      value: isRadioActive
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: "\uBB34\uC804 \uC5EC\uBD80"
       type: 0
       typeString: 
   conversations:
@@ -672,7 +672,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 553.9434
-        y: 229.09798
+        y: 227.9616
         width: 160
         height: 30
     - id: 9
@@ -1607,7 +1607,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: "SetQuestState(\"\uAD6C\uC870\uB97C \uC694\uCCAD\uD558\uC790.\",
+        \"active\");"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
