@@ -87,13 +87,223 @@ MonoBehaviour:
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
-  items: []
-  locations: []
-  variables:
+  - id: 3
+    fields:
+    - title: Name
+      value: Player
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: IsPlayer
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    portrait: {fileID: 0}
+    spritePortrait: {fileID: 0}
+    alternatePortraits: []
+    spritePortraits: []
+  - id: 4
+    fields:
+    - title: Name
+      value: System
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: IsPlayer
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    portrait: {fileID: 0}
+    spritePortrait: {fileID: 0}
+    alternatePortraits: []
+    spritePortraits: []
+  items:
+  - id: 2
+    fields:
+    - title: Name
+      value: "\uC5F4\uC1E0 \uAD00\uB9AC \uBA85\uB2E8\uC744 \uCC3E\uC544\uBCF4\uC790."
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\uC5F4\uC1E0\uB97C \uB9C8\uC9C0\uB9C9\uC5D0 \uAD00\uB9AC\uD55C \uC778\uC6D0\uC744
+        \uD655\uC778\uD558\uC790."
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  - id: 3
+    fields:
+    - title: Name
+      value: "\uC5F4\uC1E0\uB97C \uCC3E\uC790."
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\uC5F4\uC1E0\uB97C \uAD00\uB9AC\uD558\uB358 \"OO\"\uC740 \"OO\"\uC5D0\uC11C
+        \uADFC\uBB34\uD558\uB294 \uAC83 \uAC19\uB2E4. "
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  - id: 4
+    fields:
+    - title: Name
+      value: "2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790."
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\uC774\uC81C 2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790."
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 1
     fields:
     - title: Name
-      value: Alert
+      value: "\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790."
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790."
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  - id: 5
+    fields:
+    - title: Name
+      value: "\uAD6C\uC870\uB97C \uC694\uCCAD\uD558\uC790."
+      type: 0
+      typeString: 
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\uBB34\uC804\uAE30\uB97C \uCC3E\uC544 \uAD6C\uC870\uB97C \uC694\uCCAD\uD558\uC790."
+      type: 0
+      typeString: 
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: 
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: 
+    - title: State
+      value: unassigned
+      type: 0
+      typeString: 
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+  locations: []
+  variables:
+  - id: 2
+    fields:
+    - title: Name
+      value: GoToTarget
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: "\uD50C\uB808\uC774\uC5B4 \uCD94\uC801\uC5EC\uBD80"
+      type: 0
+      typeString: 
+  - id: 3
+    fields:
+    - title: Name
+      value: LastActorName
       type: 0
       typeString: 
     - title: Initial Value
@@ -102,6 +312,76 @@ MonoBehaviour:
       typeString: CustomFieldType_Text
     - title: Description
       value: 
+      type: 0
+      typeString: 
+  - id: 4
+    fields:
+    - title: Name
+      value: isListCheck
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: "\uBA85\uB2E8 \uD655\uC778 \uC5EC\uBD80"
+      type: 0
+      typeString: 
+  - id: 5
+    fields:
+    - title: Name
+      value: isKeyGet
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: "\uC5F4\uC1E0 \uD68D\uB4DD \uC5EC\uBD80"
+      type: 0
+      typeString: 
+  - id: 7
+    fields:
+    - title: Name
+      value: isRadioActive
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: "\uBB34\uC804 \uC5EC\uBD80"
+      type: 0
+      typeString: 
+  - id: 1
+    fields:
+    - title: Name
+      value: isPowerActive
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: "\uC804\uAE30\uC2E4 \uC804\uB825\uACF5\uAE09 \uC5EC\uBD80"
+      type: 0
+      typeString: 
+  - id: 6
+    fields:
+    - title: Name
+      value: isDoorOpened
+      type: 0
+      typeString: 
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: "\uBB38 \uAC1C\uBC29 \uC5EC\uBD80"
       type: 0
       typeString: 
   conversations:
@@ -195,6 +475,18 @@ MonoBehaviour:
         destinationDialogueID: 3
         isConnector: 0
         priority: 2
+      - originConversationID: 1
+        originDialogueID: 0
+        destinationConversationID: 1
+        destinationDialogueID: 6
+        isConnector: 0
+        priority: 2
+      - originConversationID: 1
+        originDialogueID: 0
+        destinationConversationID: 1
+        destinationDialogueID: 7
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -202,8 +494,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 277.85718
-        y: 88.03574
+        x: 474.2858
+        y: 70.1786
         width: 160
         height: 30
     - id: 3
@@ -243,21 +535,12 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 1
-        originDialogueID: 3
-        destinationConversationID: 1
-        destinationDialogueID: 4
-        isConnector: 0
-        priority: 2
-      - originConversationID: 1
-        originDialogueID: 3
-        destinationConversationID: 1
-        destinationDialogueID: 5
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
+      outgoingLinks: []
+      conditionsString: "CurrentQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\")
+        == \"unassigned\""
+      userScript: "SetQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\",
+        \"active\");\nVariable[\"isPowerActive\"] = false;\nShowAlert(\"\uC804\uB825\uC744
+        \uACF5\uAE09\uD558\uC790.\");"
       onExecute:
         m_PersistentCalls:
           m_Calls:
@@ -276,39 +559,95 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 272.50003
-        y: 157.67859
+        y: 156.78574
         width: 160
         height: 30
-    - id: 4
+    - id: 6
       fields:
       - title: Title
         value: 
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
       - title: Description
         value: 
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
       - title: Actor
-        value: 1
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 2
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
         value: 
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
       - title: Dialogue Text
-        value: "\uD50C\uB808\uC774\uC5B4\uC785\uB2C8\uB2E4."
+        value: "\uD018\uC2A4\uD2B8 \uC9C4\uD589\uC911\uC785\uB2C8\uB2E4."
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
       - title: Sequence
         value: 
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
+      conversationID: 1
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 1
+        originDialogueID: 6
+        destinationConversationID: 1
+        destinationDialogueID: 8
+        isConnector: 0
+        priority: 2
+      conditionsString: "CurrentQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\")
+        == \"active\" "
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 555.9906
+        y: 163.38951
+        width: 160
+        height: 30
+    - id: 7
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: "\uD018\uC2A4\uD2B8 \uC644\uB8CC"
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -317,47 +656,48 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
-      userScript: 
+      conditionsString: "CurrentQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\")
+        == \"success\""
+      userScript: Variable["GoToTarget"] = true;
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 161.78568
-        y: 241.60715
+        x: 779.69354
+        y: 154.05666
         width: 160
         height: 30
-    - id: 5
+    - id: 8
       fields:
       - title: Title
         value: 
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
       - title: Description
         value: 
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
       - title: Actor
-        value: 1
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 2
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
         value: 
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
       - title: Dialogue Text
-        value: "\uD50C\uB808\uC774\uC5B4\uAC00 \uC544\uB2D9\uB2C8\uB2E4."
+        value: "\uD018\uC2A4\uD2B8 \uC644\uB8CC"
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
       - title: Sequence
         value: 
         type: 0
-        typeString: CustomFieldType_Text
+        typeString: 
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -366,20 +706,21 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: 
-      userScript: 
+      conditionsString: Variable["isPowerActive"] == true
+      userScript: "SetQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\",
+        \"success\");"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 368.92862
-        y: 246.07147
+        x: 572.5001
+        y: 242.50005
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 50.006542, y: 27.201094}
-    canvasZoom: 1.1199999
+    canvasScrollPosition: {x: 25.315876, y: 8.334779}
+    canvasZoom: 1.0899998
   syncInfo:
     syncActors: 0
     syncItems: 0

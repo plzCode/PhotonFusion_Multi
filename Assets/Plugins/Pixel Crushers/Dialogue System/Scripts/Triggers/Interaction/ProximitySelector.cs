@@ -146,6 +146,10 @@ namespace PixelCrushers.DialogueSystem
 
         public event System.Action Disabled = null;
 
+        public Camera playerCamera;
+        public float maxDistance = 5f;
+        public string targetTag = "Usable";
+
         /// <summary>
         /// Gets the current usable.
         /// </summary>
@@ -246,11 +250,11 @@ namespace PixelCrushers.DialogueSystem
                 OnDeselectedUsableObject(null);
                 toldListenersHaveUsable = false;
             }
-
+            
             // If the player presses the use key/button, send the OnUse message:
-            if (IsUseButtonDown() && Object.HasInputAuthority && currentUsable != null)
+            if (IsUseButtonDown() && Object.HasInputAuthority && currentUsable != null && IsLookingAtTarget(out RaycastHit hit))
             {
-                Debug.Log("Usable Object : " + currentUsable.name);
+                Debug.Log("Usable Object : " + currentUsable.name + " Looking Object : " + hit.collider.name);
                 var netObj = currentUsable.GetComponentInParent<NetworkObject>();
                 if (netObj != null)
                 {                    
@@ -326,7 +330,21 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
         }
+        private bool IsLookingAtTarget(out RaycastHit hitInfo)
+        {
+            Vector3 origin = playerCamera.transform.position;
+            Vector3 direction = playerCamera.transform.forward;
 
+            if (Physics.Raycast(origin, direction, out hitInfo, maxDistance))
+            {
+                if (hitInfo.collider.CompareTag(targetTag))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
         /// <summary>
         /// Checks whether the player has just pressed the use button.
         /// </summary>
