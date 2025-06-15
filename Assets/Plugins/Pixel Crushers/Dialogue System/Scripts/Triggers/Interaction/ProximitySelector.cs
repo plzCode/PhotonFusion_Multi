@@ -252,17 +252,19 @@ namespace PixelCrushers.DialogueSystem
                 OnDeselectedUsableObject(null);
                 toldListenersHaveUsable = false;
             }
-            
+
             // If the player presses the use key/button, send the OnUse message:
             if (IsUseButtonDown() && Object.HasInputAuthority && currentUsable != null && isLook)
             {
                 //Debug.Log("Usable Object : " + currentUsable.name + " Looking Object : " + hit.collider.name);
                 var netObj = currentUsable.GetComponentInParent<NetworkObject>();
                 if (netObj != null)
-                {                    
+                {
                     RPC_UseCurrentSelection(netObj.Id);
                 }
-            }//UseCurrentSelection();
+            }
+            
+            //UseCurrentSelection();
         }
 
         protected void OnSelectedUsableObject(Usable usable)
