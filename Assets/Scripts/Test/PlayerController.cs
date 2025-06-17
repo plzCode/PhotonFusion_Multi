@@ -32,6 +32,10 @@ public class PlayerController : NetworkBehaviour
     private Animator anim;
     [SerializeField]
     private Animator armAnim;
+    [SerializeField]
+    private SkinnedMeshRenderer headRenderer;
+    [SerializeField]
+    private SkinnedMeshRenderer bodyRenderer;
     #endregion
     
     #region PlayerCamera
@@ -68,6 +72,9 @@ public class PlayerController : NetworkBehaviour
         {
             Debug.LogError("Rigidbody is Not Found");
         }
+
+
+        
         
         
     }
@@ -86,6 +93,12 @@ public class PlayerController : NetworkBehaviour
             Camera cam = GetComponentInChildren<Camera>();
             if (cam != null)
                 cam.enabled = true;
+
+
+            // 3인칭 캐릭터 렌더링 그림자만 하기
+            headRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            bodyRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+
         }
         else
         {
