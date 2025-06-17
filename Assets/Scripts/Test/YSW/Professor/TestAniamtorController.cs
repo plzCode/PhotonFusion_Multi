@@ -1,13 +1,16 @@
+using Fusion;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TestAnimatorController : MonoBehaviour
+public class TestAnimatorController : NetworkBehaviour
 {
     [SerializeField]
     private NavMeshAgent navMeshAgent;
 
     [SerializeField]
     private Animator animator;
+
+    [Networked] private float speed { get; set; } = 0f;
 
     void Awake()
     {
@@ -19,11 +22,12 @@ public class TestAnimatorController : MonoBehaviour
             animator = GetComponent<Animator>();
     }
 
-    void Update()
+    public override void FixedUpdateNetwork()
     {
+        if (!HasStateAuthority) return;
         if (animator != null && navMeshAgent != null)
         {
-            float speed = navMeshAgent.velocity.magnitude;
+            speed = navMeshAgent.velocity.magnitude;
             animator.SetFloat("Speed", speed);
         }
     }

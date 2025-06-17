@@ -146,6 +146,11 @@ namespace PixelCrushers.DialogueSystem
 
         public event System.Action Disabled = null;
 
+        public Camera playerCamera;
+        public float maxDistance = 5f;
+        public string targetTag = "Usable";
+        bool isLook = false;
+
         /// <summary>
         /// Gets the current usable.
         /// </summary>
@@ -236,11 +241,12 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         protected virtual void Update()
         {
+            isLook = IsLookingAtTarget();
             // Exit if disabled or paused:
             if (!enabled || (Time.timeScale <= 0)) return;
 
             // If the currentUsable went missing (was destroyed, deactivated, or we changed scene), tell listeners:
-            if (toldListenersHaveUsable && (currentUsable == null || !currentUsable.enabled || !currentUsable.gameObject.activeInHierarchy))
+            if (toldListenersHaveUsable && (currentUsable == null || !currentUsable.enabled || !currentUsable.gameObject.activeInHierarchy) && isLook)
             {
                 SetCurrentUsable(null);
                 OnDeselectedUsableObject(null);
@@ -248,15 +254,17 @@ namespace PixelCrushers.DialogueSystem
             }
 
             // If the player presses the use key/button, send the OnUse message:
-            if (IsUseButtonDown() && Object.HasInputAuthority && currentUsable != null)
+            if (IsUseButtonDown() && Object.HasInputAuthority && currentUsable != null && isLook)
             {
-                Debug.Log("Usable Object : " + currentUsable.name);
+                //Debug.Log("Usable Object : " + currentUsable.name + " Looking Object : " + hit.collider.name);
                 var netObj = currentUsable.GetComponentInParent<NetworkObject>();
                 if (netObj != null)
-                {                    
+                {
                     RPC_UseCurrentSelection(netObj.Id);
                 }
-            }//UseCurrentSelection();
+            }
+            
+            //UseCurrentSelection();
         }
 
         protected void OnSelectedUsableObject(Usable usable)
@@ -326,6 +334,30 @@ namespace PixelCrushers.DialogueSystem
                 }
             }
         }
+        public bool IsLookingAtTarget()
+        {
+            Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+            RaycastHit[] hits = Physics.RaycastAll(ray, maxDistance, ~0, QueryTriggerInteraction.Collide);
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.CompareTag(targetTag))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (playerCamera != null)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * maxDistance);
+            }
+        }
 
         /// <summary>
         /// Checks whether the player has just pressed the use button.
@@ -363,6 +395,7 @@ namespace PixelCrushers.DialogueSystem
         /// </param>
         protected void OnTriggerEnter(Collider other)
         {
+            if (!isLook) return;
             if(Object.HasInputAuthority)
                 CheckTriggerEnter(other.gameObject);
         }
