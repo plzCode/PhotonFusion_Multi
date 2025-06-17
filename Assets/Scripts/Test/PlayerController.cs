@@ -30,6 +30,12 @@ public class PlayerController : NetworkBehaviour
     private CharacterController controller;
     [SerializeField]
     private Animator anim;
+    [SerializeField]
+    private Animator armAnim;
+    [SerializeField]
+    private SkinnedMeshRenderer headRenderer;
+    [SerializeField]
+    private SkinnedMeshRenderer bodyRenderer;
     #endregion
     
     #region PlayerCamera
@@ -66,7 +72,10 @@ public class PlayerController : NetworkBehaviour
         {
             Debug.LogError("Rigidbody is Not Found");
         }
-        anim = GetComponentInChildren<Animator>();
+
+
+        
+        
         
     }
     public override void Spawned()
@@ -84,6 +93,12 @@ public class PlayerController : NetworkBehaviour
             Camera cam = GetComponentInChildren<Camera>();
             if (cam != null)
                 cam.enabled = true;
+
+
+            // 3인칭 캐릭터 렌더링 그림자만 하기
+            headRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            bodyRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+
         }
         else
         {
@@ -143,9 +158,22 @@ public class PlayerController : NetworkBehaviour
         {
             anim.SetFloat("MoveX", input.MoveDirection.x, 0.15f, Runner.DeltaTime);
             anim.SetFloat("MoveZ", input.MoveDirection.y * currentSpeedMultiplier/moveSpeed, 0.15f, Runner.DeltaTime);
+            
 
             if (input.JumpPressed && isGrounded)
                 anim.SetTrigger("Jump");
+        }
+
+        if (armAnim != null && !Runner.IsResimulation)
+        {
+            // 1) Rigidbody 기반 실제 속도를 사용
+            Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+            float speed = horizontalVel.magnitude; // 단위: m/s
+
+            // (선택) 최대 달리기 속도로 정규화
+            float normalizedSpeed = speed / (moveSpeed * runSpeed);
+
+            armAnim.SetFloat("Speed", normalizedSpeed, 0.1f, Runner.DeltaTime);
         }
     }
 
