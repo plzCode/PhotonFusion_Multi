@@ -24,7 +24,7 @@
             "Client": 128,
             "ServerIndex": 0,
             "ClientSendIndex": 1,
-            "ServerSendIndex": 0
+            "ServerSendIndex": 1
         }
     },
     "Network": {

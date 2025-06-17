@@ -1,10 +1,17 @@
-﻿using UnityEngine;
+﻿using PixelCrushers.DialogueSystem;
+using UnityEngine;
+using Fusion;
+using Fusion.Sockets;
+using System;
+using System.Collections.Generic;
 
 namespace Art_Equilibrium
 {
-    public class AE_Door : MonoBehaviour
+    public class AE_Door : NetworkBehaviour
     {
-        bool trig, open;
+        [Networked]
+        private NetworkBool open { get; set; } = false;
+        bool trig;
         public float smooth = 2.0f;
         public float DoorOpenAngle = 87.0f;
         private Quaternion defaultRot;
@@ -44,8 +51,12 @@ namespace Art_Equilibrium
             audioSource = gameObject.AddComponent<AudioSource>();
         }
 
-        private void Update()
+        public void Update()
         {
+            bool hasKey = DialogueLua.GetVariable("isKeyGet").asBool;
+            Debug.Log($"Has Key: {hasKey}");
+            if(!hasKey) return;
+
             if (isSlidingDoor)
             {
                 Vector3 targetPos = open ? targetLocalSlidePos : defaultLocalPos;
@@ -57,11 +68,12 @@ namespace Art_Equilibrium
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * smooth);
             }
 
+            Debug.Log(Object.HasInputAuthority ? "Has Input Authority" : "Does not have Input Authority");
             if (Input.GetKeyDown(KeyCode.E) && trig && !isKeyPressed)
             {
-                open = !open;
+                Debug.Log("E key pressed, toggling door state.");
+                RPC_ToggleDoor();
                 isKeyPressed = true;
-                PlayDoorSound();
             }
 
             if (Input.GetKeyUp(KeyCode.E))
@@ -70,6 +82,13 @@ namespace Art_Equilibrium
             }
 
             doorMessage = trig ? (open ? closeMessage : openMessage) : "";
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+        private void RPC_ToggleDoor()
+        {
+            open = !open;
+            PlayDoorSound();
         }
 
         private void OnGUI()
@@ -102,7 +121,7 @@ namespace Art_Equilibrium
         {
             if (coll.CompareTag("Player"))
             {
-                doorMessage = open ? closeMessage : openMessage;
+                //doorMessage = open ? closeMessage : openMessage;
                 trig = true;
             }
         }
@@ -132,5 +151,6 @@ namespace Art_Equilibrium
                 }
             }
         }
+
     }
 }
