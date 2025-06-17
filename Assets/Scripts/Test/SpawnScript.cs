@@ -1,4 +1,6 @@
 using Fusion;
+using PixelCrushers.DialogueSystem;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnScript : NetworkBehaviour 
@@ -6,6 +8,9 @@ public class SpawnScript : NetworkBehaviour
     public static SpawnScript Current {get; private set;}
 
     public Transform[] spawnpoints;
+    public int spawnPointIndex = 0;
+
+    public GameObject professor;
 
     private void Awake()
     {
@@ -42,4 +47,34 @@ public class SpawnScript : NetworkBehaviour
         Debug.Log($"Spawning kart for {player.Username} as {entity.name}");
         entity.transform.name = $"Kart ({player.Username})";
     }
+
+    public void ReSpawn()
+    {
+        foreach(var player in GameManager.Players)
+        {
+            player.transform.position = spawnpoints[spawnPointIndex].position;
+        }
+        if (DialogueLua.GetVariable("GoToTarget").asBool && professor != null)
+        {
+            var agent = professor.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (agent != null)
+            {
+                agent.enabled = false;
+            }
+
+            //professor.transform.position =spawnpoints[spawnPointIndex].position;
+            professor.GetComponent<NetworkTransform>().Teleport(spawnpoints[spawnPointIndex].position, Quaternion.identity);
+            if (agent != null)
+            {
+                agent.enabled = true;
+            }
+            //RPC_MoveProfessor(spawnpoints[spawnPointIndex].position);
+        }
+    }
+
+    public void SetSpawnPoint(int num)
+    {
+        spawnPointIndex = num;
+    }
+    
 }

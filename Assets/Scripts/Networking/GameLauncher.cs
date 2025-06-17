@@ -1,11 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
 using Fusion;
 using Fusion.Addons.Physics;
 using Fusion.Sockets;
 using FusionExamples.FusionHelpers;
 using Managers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -281,7 +282,7 @@ public class GameLauncher : MonoBehaviour, INetworkRunnerCallbacks
 	public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
 	public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data) { }
 	public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
-	public void OnSceneLoadDone(NetworkRunner runner) { }
+	public void OnSceneLoadDone(NetworkRunner runner) 	{ }
 	public void OnSceneLoadStart(NetworkRunner runner) { }
 
 	private static (string, string) ShutdownReasonToHuman(ShutdownReason reason)
