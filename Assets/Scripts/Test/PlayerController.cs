@@ -1,5 +1,6 @@
 using Fusion;
 using UnityEngine;
+using UnityEngine.Windows;
 using static Fusion.NetworkBehaviour;
 using static KartInput;
 
@@ -22,8 +23,14 @@ public class PlayerController : NetworkBehaviour
 
     #endregion
 
+    #region Weapon
+    [Header("무기 정보")]
+    [SerializeField] WeaponManager weaponManager;
+
+    #endregion
+
     #region Components
-    
+
     private Rigidbody rb;
     [Header("컴포넌트")]
     [SerializeField]
@@ -33,9 +40,11 @@ public class PlayerController : NetworkBehaviour
     [SerializeField]
     private Animator armAnim;
     [SerializeField]
-    private SkinnedMeshRenderer headRenderer;
+    private SkinnedMeshRenderer[] bodyCasting;
     [SerializeField]
-    private SkinnedMeshRenderer bodyRenderer;
+    private MeshRenderer[] rifleCasting;
+    [SerializeField]
+    private SkinnedMeshRenderer[] fpsBodyCasting;
     #endregion
     
     #region PlayerCamera
@@ -43,6 +52,10 @@ public class PlayerController : NetworkBehaviour
     //카메라 
     [SerializeField] private float mouseSensitivity = 0.5f;
     [SerializeField] private Transform cameraHolder; // 상하 회전용
+    [SerializeField] private Transform aimPos; // 조준점(빈 오브젝트)
+    [SerializeField] private Camera playerCamera; // 플레이어 카메라
+    [SerializeField] private float aimDistance = 100f; // 조준 최대 거리
+    [SerializeField] private LayerMask aimLayerMask = ~0; // 조준에 사용할 레이어
     private float verticalLookRotation = 0f;
     #endregion
 
@@ -73,7 +86,7 @@ public class PlayerController : NetworkBehaviour
             Debug.LogError("Rigidbody is Not Found");
         }
 
-
+        
         
         
         
@@ -96,8 +109,16 @@ public class PlayerController : NetworkBehaviour
 
 
             // 3인칭 캐릭터 렌더링 그림자만 하기
-            headRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-            bodyRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            for (int i = 0; i < bodyCasting.Length; i++)
+            {
+                bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+            for (int i = 0; i < rifleCasting.Length; i++)
+            {
+                rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+
+            
 
         }
         else
@@ -106,13 +127,28 @@ public class PlayerController : NetworkBehaviour
             Camera cam = GetComponentInChildren<Camera>();
             if (cam != null)
                 cam.enabled = false;
+            // 다른 플레이어의 1인칭 바디 렌더링 끄기
+            for (int i = 0; i < fpsBodyCasting.Length; i++)
+            {
+                fpsBodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+
         }
 
         Runner.SetIsSimulated(Object, true);
     }
     private void Update()
     {
-        
+        if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire))
+        {
+            if (weaponManager.ShouldFire())
+            {
+                weaponManager.Fire(aimPos);
+                Debug.Log("쏘는중");
+            }
+        }
+
+        UpdateAimPos();
     }
     public override void FixedUpdateNetwork()
     {
@@ -121,13 +157,20 @@ public class PlayerController : NetworkBehaviour
         if (GetInput(out PlayerInput.NetworkInputData input))
         {
             PlayerInputs = input;
+            
             HandleInput(PlayerInputs);
         }
+
+        
 
         ApplyGravity();
 
         CheckGrounded();
+
+        
+        
     }
+
 
     private void HandleInput(PlayerInput.NetworkInputData input)
     {
@@ -136,6 +179,25 @@ public class PlayerController : NetworkBehaviour
         HandleMovement(input);
 
         HandleMouseLook(input);
+
+        
+    }
+
+    void UpdateAimPos()
+    {
+        
+
+        Vector3 rayOrigin = playerCamera.transform.position;
+        Vector3 rayDirection = playerCamera.transform.forward;
+
+        if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, aimDistance, aimLayerMask))
+        {
+            aimPos.position = hit.point; // 충돌한 곳
+        }
+        else
+        {
+            aimPos.position = rayOrigin + rayDirection * aimDistance; // 최대 거리
+        }
     }
 
     private void ApplyGravity()
