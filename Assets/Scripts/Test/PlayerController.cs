@@ -15,6 +15,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float groundCheckDistance;
     [Networked] private Vector2 currentInput { get; set; } = Vector2.zero;
     [Networked] private float Yaw { get; set; }
+    [Networked] private float Pitch { get; set; }
     public float inputSmoothSpeed = 5f; // or whatever feels right
 
     [Networked] private float currentSpeedMultiplier { get; set; } = 1.0f;
@@ -46,7 +47,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField]
     private SkinnedMeshRenderer[] fpsBodyCasting;
     #endregion
-    
+
     #region PlayerCamera
     [Header("카메라,민감도")]
     //카메라 
@@ -86,10 +87,10 @@ public class PlayerController : NetworkBehaviour
             Debug.LogError("Rigidbody is Not Found");
         }
 
-        
-        
-        
-        
+
+
+
+
     }
     public override void Spawned()
     {
@@ -118,7 +119,7 @@ public class PlayerController : NetworkBehaviour
                 rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             }
 
-            
+
 
         }
         else
@@ -145,6 +146,9 @@ public class PlayerController : NetworkBehaviour
             {
                 weaponManager.Fire(aimPos);
                 Debug.Log("쏘는중");
+                armAnim.SetTrigger("Fire");
+                //armAnim.Play("Fire", 0, 0);
+
             }
         }
 
@@ -157,18 +161,18 @@ public class PlayerController : NetworkBehaviour
         if (GetInput(out PlayerInput.NetworkInputData input))
         {
             PlayerInputs = input;
-            
+
             HandleInput(PlayerInputs);
         }
 
-        
+
 
         ApplyGravity();
 
         CheckGrounded();
 
-        
-        
+
+
     }
 
 
@@ -180,23 +184,28 @@ public class PlayerController : NetworkBehaviour
 
         HandleMouseLook(input);
 
-        
+
     }
 
     void UpdateAimPos()
     {
-        
+
 
         Vector3 rayOrigin = playerCamera.transform.position;
-        Vector3 rayDirection = playerCamera.transform.forward;
+
+        // Yaw, Pitch 값을 이용해 회전값을 만들고
+        Quaternion aimRotation = Quaternion.Euler(Pitch, Yaw, 0f);
+
+        // forward 벡터를 직접 구함
+        Vector3 rayDirection = aimRotation * Vector3.forward;
 
         if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, aimDistance, aimLayerMask))
         {
-            aimPos.position = hit.point; // 충돌한 곳
+            aimPos.position = hit.point;
         }
         else
         {
-            aimPos.position = rayOrigin + rayDirection * aimDistance; // 최대 거리
+            aimPos.position = rayOrigin + rayDirection * aimDistance;
         }
     }
 
@@ -219,8 +228,8 @@ public class PlayerController : NetworkBehaviour
         if (anim != null && !Runner.IsResimulation)
         {
             anim.SetFloat("MoveX", input.MoveDirection.x, 0.15f, Runner.DeltaTime);
-            anim.SetFloat("MoveZ", input.MoveDirection.y * currentSpeedMultiplier/moveSpeed, 0.15f, Runner.DeltaTime);
-            
+            anim.SetFloat("MoveZ", input.MoveDirection.y * currentSpeedMultiplier / moveSpeed, 0.15f, Runner.DeltaTime);
+
 
             if (input.JumpPressed && isGrounded)
                 anim.SetTrigger("Jump");
@@ -241,25 +250,25 @@ public class PlayerController : NetworkBehaviour
 
     private void HandleMovement(PlayerInput.NetworkInputData input)
     {
-        
-        
-            currentInput = Vector2.Lerp(currentInput, input.MoveDirection, inputSmoothSpeed * Runner.DeltaTime);
-            float targetSpeedMultiplier = moveSpeed *(input.IsRunning ? runSpeed : walkSpeed);
-            currentSpeedMultiplier = Mathf.Lerp(currentSpeedMultiplier, targetSpeedMultiplier, inputSmoothSpeed * Runner.DeltaTime);
 
-            Vector3 moveDir = new Vector3(currentInput.x, 0, currentInput.y);
-            if (moveDir.sqrMagnitude > 1f) moveDir.Normalize();
 
-            moveDir = transform.TransformDirection(moveDir); // 캐릭터 방향에 맞추기
+        currentInput = Vector2.Lerp(currentInput, input.MoveDirection, inputSmoothSpeed * Runner.DeltaTime);
+        float targetSpeedMultiplier = moveSpeed * (input.IsRunning ? runSpeed : walkSpeed);
+        currentSpeedMultiplier = Mathf.Lerp(currentSpeedMultiplier, targetSpeedMultiplier, inputSmoothSpeed * Runner.DeltaTime);
 
-            Vector3 targetVelocity = moveDir  * currentSpeedMultiplier;
-            targetVelocity.y = rb.linearVelocity.y;
+        Vector3 moveDir = new Vector3(currentInput.x, 0, currentInput.y);
+        if (moveDir.sqrMagnitude > 1f) moveDir.Normalize();
 
-            if (input.JumpPressed && isGrounded)
-                targetVelocity.y = jumpForce;
+        moveDir = transform.TransformDirection(moveDir); // 캐릭터 방향에 맞추기
 
-            rb.linearVelocity = targetVelocity;
-        
+        Vector3 targetVelocity = moveDir * currentSpeedMultiplier;
+        targetVelocity.y = rb.linearVelocity.y;
+
+        if (input.JumpPressed && isGrounded)
+            targetVelocity.y = jumpForce;
+
+        rb.linearVelocity = targetVelocity;
+
     }
 
     private void HandleMouseLook(PlayerInput.NetworkInputData input)
@@ -274,16 +283,24 @@ public class PlayerController : NetworkBehaviour
         rb.MoveRotation(targetRot); // 20f는 회전 부드러움 조절
 
 
-        if (Object.HasInputAuthority&&!Runner.IsResimulation)
-        {
-            float mouseY = input.LookDirection.y * mouseSensitivity;
-            verticalLookRotation -= mouseY;
-            verticalLookRotation = Mathf.Clamp(verticalLookRotation, -80f, 80f);
-            cameraHolder.localEulerAngles = new Vector3(verticalLookRotation, 0, 0);
-        }
+        float mouseY = input.LookDirection.y * mouseSensitivity;
+        Pitch -= mouseY;
+        Pitch = Mathf.Clamp(Pitch, -80f, 80f); // Networked 값으로도 클램핑 필요            
+
+        cameraHolder.localEulerAngles = new Vector3(Pitch, 0, 0);
+
+
+
+        //if (Object.HasInputAuthority&&!Runner.IsResimulation)
+        //{
+        //    float mouseY = input.LookDirection.y * mouseSensitivity;
+        //    verticalLookRotation -= mouseY;
+        //    verticalLookRotation = Mathf.Clamp(verticalLookRotation, -80f, 80f);
+        //    cameraHolder.localEulerAngles = new Vector3(verticalLookRotation, 0, 0);
+        //}
     }
 
-    
+
 
     private void CheckGrounded()
     {

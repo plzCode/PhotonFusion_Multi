@@ -27,7 +27,9 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         public Vector2 MoveDirection;
         public Vector2 LookDirection;
         public bool IsRunning;
-        public bool JumpPressed; 
+        public bool JumpPressed;
+
+        public Vector3 aimWorldPosition;
 
 
     }

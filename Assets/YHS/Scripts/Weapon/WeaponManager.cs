@@ -16,6 +16,10 @@ public class WeaponManager : NetworkBehaviour
     [SerializeField] int bulletsPerShot;
     public float damage = 20;
 
+    [Header("muzzle Effect")]
+    [SerializeField] GameObject muzzleFlash;
+    [SerializeField] GameObject muzzleSmoke;
+
     [SerializeField] Transform aimpos;
 
     
@@ -54,7 +58,8 @@ public class WeaponManager : NetworkBehaviour
         for (int i = 0; i < bulletsPerShot; i++)
         {
             GameObject currentBullet = Instantiate(bullet, barrelPos.position, barrelPos.rotation);
-
+            Instantiate(muzzleFlash, barrelPos.position, barrelPos.rotation);
+            Instantiate(muzzleSmoke, barrelPos.position, barrelPos.rotation);
             Bullet bulletScript = currentBullet.GetComponent<Bullet>();
             //bulletScript.weapon = this;
 

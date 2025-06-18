@@ -3797,13 +3797,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825a70eea3419ea4b8e7f82232df774c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.2
+  fireRate: 0.1
   semiAuto: 0
   bullet: {fileID: 2834371211323286588, guid: 621e8de5aadc50b46b172ac58194bc0b, type: 3}
   barrelPos: {fileID: 4138920058333027526}
   bulletVelocity: 100
   bulletsPerShot: 1
   damage: 20
+  muzzleFlash: {fileID: 1000010254994808, guid: bed79ed361384f643b8c7ee4be202837, type: 3}
+  muzzleSmoke: {fileID: 6631087918505611698, guid: f3aa683335052b347be94db7aa520c8d, type: 3}
   aimpos: {fileID: 3442137627632222918}
 --- !u!23 &6649825907599193845 stripped
 MeshRenderer:
