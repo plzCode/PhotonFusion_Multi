@@ -18,6 +18,9 @@ public class TestAI : NetworkBehaviour
 
     public float rotationSpeed = 10f;
 
+    [Header("Stats")]
+    [Networked] public float health { get; set; } = 100f; // AI의 체력
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -121,4 +124,39 @@ public class TestAI : NetworkBehaviour
         }
     }
     #endregion
+
+    public void TakeDamage(float damage)
+    {
+        //if (!HasStateAuthority) return;
+        health -= damage;
+        if (health <= 0f)
+        {
+            // Handle death logic here
+            Debug.Log("AI has died.");
+            // Optionally, you can disable the agent or trigger a death animation
+            agent.isStopped = true;
+            agent.enabled = false;
+        }
+    }
+
+    public void Heal(float amount)
+    {
+        if (!Object.HasStateAuthority) return;
+        health += amount;
+        if (health > 100f) health = 100f; // Max health limit
+    }
+
+    public void ResetAI()
+    {
+        if (!Object.HasStateAuthority) return;
+
+        health = 100f;
+
+        // 에이전트 재활성화
+        if (!agent.enabled)
+            agent.enabled = true;
+
+        agent.isStopped = false;
+    }
+
 }
