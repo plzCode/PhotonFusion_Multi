@@ -33,8 +33,8 @@ public class ZombieWaveManager : NetworkBehaviour
     [SerializeField] private float tensionThreshold = 0.6f; // 이 값 이상이면 웨이브 정지
 
     [Header("스폰 반경 (플레이어 기준)")]
-    [SerializeField] private float minDist = 10f;
-    [SerializeField] private float maxDist = 20f;
+    [SerializeField] private int minDist = 10;
+    [SerializeField] private int maxDist = 20;
     //[SerializeField] private float navSampleRadius = 3f;
    
     /*──────── Networked ────────*/
@@ -77,7 +77,7 @@ public class ZombieWaveManager : NetworkBehaviour
         if (players.Length == 0 || commonPool.Count == 0) return;
 
         /* ① 일반 좀비 : 10~20 랜덤 */
-        int commonCount = Random.Range(10, 21);
+        int commonCount = Random.Range(minDist, maxDist);
         SpawnBatch(commonCount, commonPool, players);
 
         /* ② 특수 좀비 : 플레이어 수 × 1 */
@@ -130,7 +130,7 @@ public class ZombieWaveManager : NetworkBehaviour
 
             int nearZ = GameObject.FindGameObjectsWithTag("Zombie").Count(z => Vector3.Distance(z.transform.position, p.transform.position) < 15f);
 
-            float enemyStress = Mathf.Clamp01(nearZ * 0.05f);
+            float enemyStress = Mathf.Clamp01(nearZ * enemyCoeff);
 
             highest = Mathf.Max(highest, hpStress + enemyStress);
         }
