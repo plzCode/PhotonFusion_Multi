@@ -8,6 +8,13 @@ public class FusionBootstrap : MonoBehaviour
     private async void Start()
     {
         var runner = GetComponent<NetworkRunner>();
+        // 이미 실행 중이면 두 번째 StartGame은 스킵
+        if (runner.IsRunning)
+        {
+            Debug.Log("Runner already running, skipping StartGame");
+            return;
+        }
+
         runner.ProvideInput = true;               // 내 입력 전송
 
         var sceneInfo = new NetworkSceneInfo();

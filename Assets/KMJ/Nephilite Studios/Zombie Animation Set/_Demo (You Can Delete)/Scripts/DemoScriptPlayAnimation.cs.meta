@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8be677f39aa3d7740bf41706fbf05367
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 268209
+  packageName: Zombie Animation Set
+  packageVersion: 1.0
+  assetPath: Assets/Nephilite Studios/Zombie Animation Set/_Demo (You Can Delete)/Scripts/DemoScriptPlayAnimation.cs
+  uploadId: 620862

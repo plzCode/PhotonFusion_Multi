@@ -3,88 +3,99 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(SpecialZombieController))]
+[RequireComponent(typeof(ZombieAIController))]
+
 public class ZombieController : NetworkBehaviour
 {
-    [SerializeField] private ZombieConfig data;
-
-    public ZombieConfig Data => data;
+    [SerializeField] ZombieConfig data;
 
     /* 네트워크 동기화 변수 */
     [Networked] public int CurrentHP { get; set; }
-    [Networked] public int ConfigId { get; set; }  // SO 식별 번호
+    [Networked] public int ConfigId { get; set; }
 
-    private NavMeshAgent agent;
-    private Transform target;     // 플레이어 Transform
+    /* ───── 내부 ───── */
+    NavMeshAgent agent;
+    ZombieAIController ai;
+    Animator anim;
 
     /* 공격 파라미터 */
     float attackTimer;
-    const float ATTACK_CD = 1.0f;          // 1초 쿨
-    const float ATTACK_RANGE = 1.3f;
+    const float ATTACK_CD = 1.0f;
 
-    public void Init(ZombieConfig cfg)           // ← 스폰 직전에 호출
+    public ZombieConfig Data => data;          // 외부 참조용 getter
+
+    /*========== 초기화(웨이브 스폰 시) ==========*/
+    public void Init(ZombieConfig cfg)
     {
         data = cfg;
         CurrentHP = cfg.maxHP;
         ConfigId = ZombieConfigRegistry.GetId(cfg);
+
+        GetComponent<SpecialZombieController>().Init(cfg); //특수 능력
     }
     public override void Spawned()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = data.moveSpeed;
+        ai = GetComponent<ZombieAIController>();
+        anim = GetComponentInChildren<Animator>();
 
-        target = GameObject.FindWithTag("Player")?.transform;
+        agent.speed = data.moveSpeed;
+        attackTimer = 0f;
 
         if (HasStateAuthority)
             CurrentHP = data.maxHP;
-
-        /* 타입 표시(디버그) */
-        var tm = new GameObject("Label").AddComponent<TextMesh>();
-        tm.text = data.specialType.ToString();
-        tm.characterSize = 0.2f;
-        tm.color = Color.yellow;
-        tm.transform.SetParent(transform);
-        tm.transform.localPosition = Vector3.up * 1.5f;
     }
 
+    /*========== 메인 루프 ==========*/
     public override void FixedUpdateNetwork()
     {
-        if (!HasStateAuthority || target == null) return;
+        if (!HasStateAuthority) return;
 
-        /* 추적 */
-        agent.SetDestination(target.position);
+        /* 1) 이동 속도 → 애니메이션 파라미터 (없으면 무시) */
+        anim?.SetFloat("Speed", agent.velocity.magnitude);
 
-        /* 공격 쿨다운 */
+        /* 2) 공격 판정 */
         attackTimer -= Runner.DeltaTime;
-        if (attackTimer <= 0 &&
-            Vector3.Distance(transform.position, target.position) < ATTACK_RANGE)
+
+        if (ai.CurrentState == ZombieAIController.State.Chase &&
+            ai.Target != null &&
+            Vector3.Distance(transform.position, ai.Target.position) < data.attackRange)
         {
-            /* 서버가 피해 계산 → 클라이언트(타깃) RPC */
-            var hp = target.GetComponent<PlayerHealth>();
-            hp?.TakeDamage(data.damage);        // 서버 로컬
+            if (attackTimer <= 0f)
+            {
+                attackTimer = ATTACK_CD;
+                anim?.SetTrigger("Attack");
 
-            attackTimer = ATTACK_CD;
-
-            /* 시각·사운드 RPC 예시 */
-            RPC_PlayHit(target.GetComponent<NetworkObject>().InputAuthority);
+                /* RPC 로 피해 전송 */
+                RPC_DealDamage(ai.Target.GetComponent<NetworkObject>().InputAuthority,
+                               data.damage);
+            }
         }
     }
 
-    /* 클라이언트 타깃 전용 RPC – 화면 흔들림, 피격 사운드 등 */
-    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
-    void RPC_PlayHit(PlayerRef owner, RpcInfo info = default)
-    {
-        Debug.Log("[Player] Got hit!");
-        // owner 변수를 쓰지 않으면 생략해도 됨
-        /* TODO: UI HitFlash, 카메라 Shake 등 */
-    }
-
+    /*========== HP 감소 / 사망 ==========*/
     public void TakeDamage(int dmg)
     {
         if (!HasStateAuthority) return;
-        CurrentHP = Mathf.Max(CurrentHP - dmg, 0);
 
-        if (CurrentHP == 0)
-            Runner.Despawn(Object);                // 네트워크 제거
+        CurrentHP = Mathf.Max(CurrentHP - dmg, 0);
+        if (CurrentHP == 0) Die();
+    }
+    void Die()
+    {
+        anim?.SetBool("IsDead", true);                       // 죽음 애니 (옵션)
+        GetComponent<SpecialZombieController>().OnDeath();   // 특수 효과 발동
+        Runner.Despawn(Object);                              // 네트워크 제거
+    }
+
+    /*========== RPC: 플레이어에게 데미지 ==========*/
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    void RPC_DealDamage(PlayerRef recv, int dmg, RpcInfo info = default)
+    {
+        var hp = UnityEngine.Object.FindFirstObjectByType<PlayerHealth>();
+
+        hp?.TakeDamage(dmg);
     }
 
 }
