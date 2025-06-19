@@ -296,13 +296,13 @@ GameObject:
   m_Component:
   - component: {fileID: 6603906875459121522}
   - component: {fileID: 7384717107892842537}
-  - component: {fileID: 7289318370481079479}
   - component: {fileID: -6016945949809396307}
   - component: {fileID: 990254650208211767}
   - component: {fileID: -5034909395906052972}
   - component: {fileID: 504746011726612177}
   - component: {fileID: 4115730921566571420}
   - component: {fileID: 6715751569870295092}
+  - component: {fileID: -1264859830822923807}
   m_Layer: 0
   m_Name: FPS_Player
   m_TagString: Untagged
@@ -345,33 +345,15 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 7289318370481079479}
   - {fileID: -6016945949809396307}
   - {fileID: 990254650208211767}
   - {fileID: -5034909395906052972}
   - {fileID: 4115730921566571420}
+  - {fileID: -1264859830822923807}
   - {fileID: 6922012068158924932}
   - {fileID: 4709381502077343073}
   - {fileID: 3360197090615604105}
   ForceRemoteRenderTimeframe: 0
---- !u!114 &7289318370481079479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426005991913254630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Animator: {fileID: 1854037780920056490}
-  ApplyTiming: 2
-  SyncSettings: -1
-  StateHashes: 00000000325a708301e955b4649496e85727b3dfbc8ac9f5a61bf31fd9a8f140326b79bdf1a6ecf8790bb032e716143bf978a35c2c34c7e44b34aae8d0e68e828c594de3bb4d069d
-  TriggerHashes: 0000000028a98107f1a6ecf8
-  TotalWords: 11
 --- !u!114 &-6016945949809396307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +496,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d67861a95bfcee429f3881ac5aeb2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Hp: 100
+  _isAlive: 1
   moveSpeed: 5
   jumpForce: 4
   groundCheckDistance: 0.2
@@ -635,6 +619,24 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.88, z: 0}
+--- !u!114 &-1264859830822923807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426005991913254630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 1854037780920056490}
+  ApplyTiming: 2
+  SyncSettings: -1
+  StateHashes: 00000000325a708301e955b4649496e85727b3dfbc8ac9f5a61bf31fd9a8f140326b79bd2afa8626a8b5caa3f1a6ecf8790bb032e716143bf978a35c2c34c7e44b34aae8d0e68e828c594de3bb4d069d95ad2fc5
+  TriggerHashes: 0000000028a98107f1a6ecf8
+  TotalWords: 11
 --- !u!1 &1803671088251361187
 GameObject:
   m_ObjectHideFlags: 0

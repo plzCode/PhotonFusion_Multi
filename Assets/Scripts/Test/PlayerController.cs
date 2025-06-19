@@ -9,6 +9,8 @@ public class PlayerController : NetworkBehaviour
 
     #region PlayerStats
     [Header("플레이어 스탯")]
+    [Networked] public float Hp { get; set; } = 100;
+    [Networked] public bool isAlive { get; set; } = true;
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
     private bool isGrounded = true;
@@ -140,6 +142,9 @@ public class PlayerController : NetworkBehaviour
     }
     private void Update()
     {
+        if (!isAlive)
+            return;
+
         if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire))
         {
             if (weaponManager.ShouldFire())
@@ -147,16 +152,62 @@ public class PlayerController : NetworkBehaviour
                 weaponManager.Fire(aimPos);
                 Debug.Log("쏘는중");
                 armAnim.SetTrigger("Fire");
+                SoundManager.Instance.Play("RifleFire");
                 //armAnim.Play("Fire", 0, 0);
+                if (Object.HasInputAuthority)
+                {
+                    RPC_ZombieHit(Yaw, Pitch);
+                }
+                    
+                
 
             }
         }
 
         UpdateAimPos();
     }
+
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RPC_ZombieHit(float yaw, float pitch)
+    {
+        TakeDamage(2);
+
+        Vector3 rayOrigin = playerCamera.transform.position; // 또는 총구 위치
+        Quaternion aimRotation = Quaternion.Euler(pitch, yaw, 0f);
+        Vector3 rayDir = aimRotation * Vector3.forward;
+
+        if (Physics.Raycast(rayOrigin, rayDir, out var hit, 100f, aimLayerMask))
+        {
+            if (hit.collider.CompareTag("Zombie"))
+            {
+                //// 서버가 맞은 좀비 컴포넌트 얻기
+                //var zombie = hit.collider.GetComponent<ZombieHealth>();
+                //if (zombie != null)
+                //{
+                //    zombie.TakeDamage(10); // 데미지 수치는 필요에 따라 조절
+                //}
+
+                // 모든 클라이언트에 피격 이펙트 실행 요청 (RPC 호출)
+                RPC_HitEffect(hit.point);
+            }
+            
+
+        }
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_HitEffect(Vector3 point)
+    {
+        Quaternion rotation = Quaternion.identity; // 필요시 hit.normal 사용 가능
+        EffectPoolManager.Instance.GetEffect(point, rotation);
+    }
+
+
     public override void FixedUpdateNetwork()
     {
         base.FixedUpdateNetwork();
+
+        
 
         if (GetInput(out PlayerInput.NetworkInputData input))
         {
@@ -178,6 +229,9 @@ public class PlayerController : NetworkBehaviour
 
     private void HandleInput(PlayerInput.NetworkInputData input)
     {
+        if (!isAlive)
+            return;
+
         HandleAnimation(input);
 
         HandleMovement(input);
@@ -207,6 +261,32 @@ public class PlayerController : NetworkBehaviour
         {
             aimPos.position = rayOrigin + rayDirection * aimDistance;
         }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        if (HasStateAuthority)
+        {
+            Hp -= amount;
+
+            if (Hp <= 0)
+            {
+                Debug.Log("죽음");
+                isAlive = false;
+
+                anim.SetBool("isAlive", isAlive);
+                RPC_SetArmAnim("isAliveBool", isAlive);
+                rb.linearVelocity = Vector3.zero;
+
+            }
+        }
+                
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    private void RPC_SetArmAnim(string paramName,bool _bool)
+    {
+        armAnim.SetBool(paramName, _bool);
     }
 
     private void ApplyGravity()
@@ -247,6 +327,8 @@ public class PlayerController : NetworkBehaviour
             armAnim.SetFloat("Speed", normalizedSpeed, 0.1f, Runner.DeltaTime);
         }
     }
+
+
 
     private void HandleMovement(PlayerInput.NetworkInputData input)
     {
