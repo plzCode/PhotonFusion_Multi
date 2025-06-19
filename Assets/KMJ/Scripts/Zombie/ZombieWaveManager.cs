@@ -126,7 +126,7 @@ public class ZombieWaveManager : NetworkBehaviour
         float highest = 0;
         foreach (var p in FindObjectsByType<PlayerHealth>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
         {
-            float hpStress = 1f - (float)p.CurrentHP / p.MaxHP;
+            float hpStress = 1f - (float)p.CurrentHP / p.maxHP;
 
             int nearZ = GameObject.FindGameObjectsWithTag("Zombie").Count(z => Vector3.Distance(z.transform.position, p.transform.position) < 15f);
 

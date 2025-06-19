@@ -1,79 +1,85 @@
 ﻿using Fusion;
 using UnityEngine;
 using UnityEngine.AI;
+using Zombie.States;
 
-[RequireComponent(typeof(ZombieDetection), typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(ZombieController))]
 public class ZombieAIController : NetworkBehaviour
 {
-    public enum State { Idle, Alert, Chase }
-    [Networked] State current { get; set; }
+    [HideInInspector] public Animator anim;
+    [HideInInspector] public NavMeshAgent agent;
 
-    public State CurrentState => current;
-    public Transform Target { get; private set; }
-    NavMeshAgent agent;
-    ZombieDetection detect;
-    Vector3 alertTarget;
+    [Networked, HideInInspector] public NetworkObject TargetNetObj { get; private set; }
+    public Transform Target => TargetNetObj ? TargetNetObj.transform : null;
+
+    /* ─ Config 접근 ─ */
+    public ZombieConfig Data => zCtrl.Data;
+
+    /* ─ 내부 ─ */
+    ZombieController zCtrl;
+    ZombieState current;
+
+    /* ========== 초기화 ========== */
+    void Awake()
+    {
+        anim = GetComponentInChildren<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        zCtrl = GetComponent<ZombieController>();
+    }
+
 
     public override void Spawned()
     {
-        agent = GetComponent<NavMeshAgent>();
-        detect = GetComponent<ZombieDetection>();
-        Target = GameObject.FindGameObjectWithTag("Player")?.transform;
-        current = State.Idle;
+        /* Host가 플레이어 지정 (임시: 첫 번째 Player 태그) */
+        if (HasStateAuthority && TargetNetObj == null)
+        {
+            var playerGO = GameObject.FindWithTag("Player");
+            if (playerGO) TargetNetObj = playerGO.GetComponent<NetworkObject>();
+        }
+
+        ChangeState(new IdleWalkState(this));
+    }
+
+    /* ========== 상태 머신 ========== */
+    public void ChangeState(ZombieState next)
+    {
+        current?.Exit();
+        current = next;
+        current.Enter();
+
+        Debug.Log($"{name} ▶ {next.GetType().Name}");
     }
 
     public override void FixedUpdateNetwork()
     {
-        if (!HasStateAuthority) return;
-
-        switch (current)
-        {
-            case State.Idle:
-                if (detect.CanSeePlayer())
-                {
-                    current = State.Chase;
-                    Debug.Log($"{name} ▶ Chase");
-                }
-                break;
-
-            case State.Alert:
-                agent.SetDestination(alertTarget);
-                if (agent.remainingDistance < 0.3f)
-                {
-                    current = State.Idle;
-                    Debug.Log($"{name} ▶ Idle");
-                }
-                if (detect.CanSeePlayer())
-                {
-                    current = State.Chase;
-                    Debug.Log($"{name} ▶ Chase");
-                }
-                break;
-
-            case State.Chase:
-                if (detect.CanSeePlayer())
-                {
-                    agent.SetDestination(Target.position);
-                }
-                else
-                {
-                    // 놓쳤으면 마지막 위치로 Alert
-                    alertTarget = Target.position;
-                    current = State.Alert;
-                    Debug.Log($"{name} ▶ Alert");
-                }
-                break;
-        }
+        if (current != null)
+            current.Update();
     }
+    public void SetMoveSpeed(float s) => agent.speed = s;
+    public bool CanSeePlayer(float maxDist = 15f, float fov = 120f)
+    {
+        if (Target == null) return false;
 
-    /* 사운드 알람용 공개 메서드 */
+        Vector3 dir = (Target.position - transform.position);
+        if (dir.sqrMagnitude > maxDist * maxDist) return false;
+
+        float angle = Vector3.Angle(transform.forward, dir);
+        if (angle > fov * 0.5f) return false;
+
+        /* 레이캐스트 시야 가림 체크는 필요 시 추가 */
+        return true;
+    }
+    public void PlayBlend(float speed01)
+    {
+        anim.SetFloat("Speed", speed01);
+    }
+    /* 소리 감지용 간단 콜백 (선택) */
     public void OnHearSound(Vector3 pos)
     {
-        if (current == State.Idle && detect.CanHearSound(pos))
-        {
-            alertTarget = pos;
-            current = State.Alert;
-            Debug.Log($"{name} ▶ Alert (sound)");
-        }
+        if (!HasStateAuthority) return;
+        if (current is DieState) return;
+
+        ChangeState(new AlertState(this));
     }
 }

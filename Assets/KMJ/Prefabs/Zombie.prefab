@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 484a53984e5f9264cad35b4494adcf43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 68d563e5538f6974ebe89e98568e53fa, type: 2}
   _CurrentHP: 0
   _ConfigId: 0
 --- !u!114 &-858446971881733489
@@ -176,6 +176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a831db653f8c354abe21b680388b4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  agent: {fileID: 0}
+  data: {fileID: 0}
 --- !u!114 &4759985786357056142
 MonoBehaviour:
   m_ObjectHideFlags: 0

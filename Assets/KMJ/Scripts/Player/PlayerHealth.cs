@@ -3,20 +3,17 @@ using UnityEngine;
 
 public class PlayerHealth : NetworkBehaviour
 {
-    [SerializeField] private int maxHP = 100;
+    [Networked] public int CurrentHP { get; private set; }
+    public int maxHP = 100;
 
-    [Networked] public int CurrentHP { get; set; }
-    public int MaxHP => maxHP;
-    public override void Spawned()
-    {
-        if (HasStateAuthority)                // Host/Server 쪽
-            CurrentHP = maxHP;
-    }
+    public override void Spawned() => CurrentHP = maxHP;
 
-    /* 나중에 실제 데미지 주면 ↓ 호출 */
-    public void TakeDamage(int dmg)
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_TakeDamage(int dmg)
     {
-        if (!HasStateAuthority) return;      // 서버에서만 체력 감소
+        Debug.Log($"[PlayerHealth] RPC_TakeDamage 받은 값 = {dmg}");
+        if (CurrentHP <= 0) return;
         CurrentHP = Mathf.Max(CurrentHP - dmg, 0);
+        Debug.Log($"[Player] HP → {CurrentHP}");
     }
 }
