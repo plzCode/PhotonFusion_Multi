@@ -1,13 +1,14 @@
-﻿public abstract class ZombieState
+﻿
+namespace Zombie.States
 {
-    protected ZombieAIController controller;
-
-    public ZombieState(ZombieAIController controller)
+    public abstract class ZombieState
     {
-        this.controller = controller;
-    }
+        protected ZombieAIController ctrl;
 
-    public virtual void Enter() { }
-    public virtual void Update() { }
-    public virtual void Exit() { }
+        protected ZombieState(ZombieAIController c) { this.ctrl = c; }
+
+        public virtual void Enter() { }
+        public virtual void Update() { }
+        public virtual void Exit() { }
+    }
 }

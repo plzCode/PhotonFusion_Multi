@@ -1,20 +1,21 @@
 ﻿using UnityEngine;
+using Zombie.States;
 
 public class IdleWalkState : ZombieState
 {
-    public IdleWalkState(ZombieAIController controller) : base(controller) { }
+    public IdleWalkState(ZombieAIController c) : base(c) { }
 
     public override void Enter()
     {
-        //controller.SetMoveSpeed(0.7f);
-        //controller.PlayBlend("IdleWalk", 0.7f); // Animator에 Speed 반영
+        ctrl.SetMoveSpeed(0.7f);
+        ctrl.PlayBlend(0.2f);               // Idle-Walk 블렌드
     }
-
     public override void Update()
     {
-        //if (controller.CanSeePlayer())
-        //{
-        //    controller.ChangeState(new AlertState(controller));
-        //}
+        if (ctrl.CanSeePlayer())
+        {
+            ctrl.anim.SetBool("IsAlert", true);   // ← Bool ON
+            ctrl.ChangeState(new AlertState(ctrl));
+        }
     }
 }
