@@ -25,6 +25,7 @@ public class SpawnScript : NetworkBehaviour
 
     public void SpawnPlayer(NetworkRunner runner, RoomPlayer player)
     {
+        if(!HasStateAuthority) return;
         var index = RoomPlayer.Players.IndexOf(player);
         //var point = spawnpoints[index];
         var point = spawnpoints[0];
@@ -50,7 +51,8 @@ public class SpawnScript : NetworkBehaviour
 
     public void ReSpawn()
     {
-        foreach(var player in GameManager.Players)
+        if (!HasStateAuthority) return;
+        foreach (var player in GameManager.Players)
         {
             player.transform.position = spawnpoints[spawnPointIndex].position;
         }
@@ -67,6 +69,11 @@ public class SpawnScript : NetworkBehaviour
             if (agent != null)
             {
                 agent.enabled = true;
+            }
+            TestAI tmpAI = agent.GetComponent<TestAI>();
+            if(tmpAI != null)
+            {
+                tmpAI.ResetAI();
             }
             //RPC_MoveProfessor(spawnpoints[spawnPointIndex].position);
         }

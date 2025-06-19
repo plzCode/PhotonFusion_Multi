@@ -9,11 +9,14 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
 {
     public struct NetworkInputData : INetworkInput
     {
-       /* public const uint ButtonW = 1 << 0;
-        public const uint ButtonS = 1 << 1;
-        public const uint ButtonDrift = 1 << 2;
-        public const uint ButtonLookbehind = 1 << 3;
-        public const uint UseItem = 1 << 4;*/
+
+        public const uint ButtonFire = 1 << 0;
+        public const uint ButtonReload = 1 << 1;
+        //public const uint ButtonW = 1 << 0;
+        //public const uint ButtonS = 1 << 1;
+        //public const uint ButtonDrift = 1 << 2;
+        //public const uint ButtonLookbehind = 1 << 3;
+        //public const uint UseItem = 1 << 4;
 
         public uint Buttons;
         public uint OneShots;
@@ -24,7 +27,9 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         public Vector2 MoveDirection;
         public Vector2 LookDirection;
         public bool IsRunning;
-        public bool JumpPressed; 
+        public bool JumpPressed;
+
+        public Vector3 aimWorldPosition;
 
 
     }
@@ -34,6 +39,7 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
     [SerializeField] private InputAction look;
     [SerializeField] private InputAction run;
     [SerializeField] private InputAction jump;
+    [SerializeField] private InputAction fire;
 
     public override void Spawned()
     {
@@ -44,10 +50,12 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         look = look.Clone();
         run = run.Clone();
         jump = jump.Clone();
+        fire = fire.Clone();
         move.Enable();
         look.Enable();
         run.Enable();
         jump.Enable();
+        fire.Enable();
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
@@ -73,6 +81,9 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
 
         userInput.IsRunning = ReadBool(run);
         userInput.JumpPressed = jump.triggered;
+
+        if (fire.ReadValue<float>() != 0f)
+            userInput.Buttons |= NetworkInputData.ButtonFire;
 
         input.Set(userInput);
     }

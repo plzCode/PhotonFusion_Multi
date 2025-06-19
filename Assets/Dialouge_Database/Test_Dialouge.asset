@@ -532,7 +532,7 @@ MonoBehaviour:
       - title: EventGuid
         value: 9fa95499-54b9-4396-8bd5-06b76977b4cc
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -554,35 +554,11 @@ MonoBehaviour:
         \uACF5\uAE09\uD558\uC790.\");"
       onExecute:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 11500000, guid: b870dc16bdd89ff49b448739fbbf4159, type: 3}
-            m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_MethodName: 
-            m_Mode: 5
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_MethodName: 
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: 
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 272.50003
-        y: 156.78574
+        x: 273.50003
+        y: 159.78574
         width: 160
         height: 30
     - id: 6
@@ -590,11 +566,11 @@ MonoBehaviour:
       - title: Title
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 2
         type: 5
@@ -606,19 +582,19 @@ MonoBehaviour:
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: "\uC804\uAE30\uC2E4\uC5D0\uC11C \uC804\uC6D0\uC744 \uACF5\uAE09\uD574\uC918\uC694."
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Sequence
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: EventGuid
         value: afba251a-b14d-4f58-a3d0-2e6f683c75ef
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -642,7 +618,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 555.9906
-        y: 163.38951
+        y: 164.38951
         width: 160
         height: 30
     - id: 8
@@ -1255,11 +1231,11 @@ MonoBehaviour:
       - title: Title
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 3
         type: 5
@@ -1271,19 +1247,19 @@ MonoBehaviour:
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: "\uAD50\uC218\uB2D8, \uC804\uAE30 \uBCF5\uAD6C \uC644\uB8CC\uB410\uC5B4\uC694."
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Sequence
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: EventGuid
         value: 8bf45988-89b7-4531-906b-3b6b842fd49a
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
@@ -1643,8 +1619,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 77.359985, y: 88.64537}
-    canvasZoom: 0.90999997
+    canvasScrollPosition: {x: 142.94377, y: 7.793814}
+    canvasZoom: 0.9999999
   syncInfo:
     syncActors: 0
     syncItems: 0

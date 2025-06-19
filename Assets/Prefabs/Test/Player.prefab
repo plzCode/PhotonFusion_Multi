@@ -509,6 +509,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  fire:
+    m_Name: Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a77f5dd1-c8fb-40e1-8446-f31bf575fdb8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!114 &990254650208211767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,10 +534,21 @@ MonoBehaviour:
   jumpForce: 5
   groundCheckDistance: 0
   inputSmoothSpeed: 5
+  weaponManager: {fileID: 0}
   controller: {fileID: 0}
   anim: {fileID: 0}
+  armAnim: {fileID: 0}
+  bodyCasting: []
+  rifleCasting: []
+  fpsBodyCasting: []
   mouseSensitivity: 0.5
   cameraHolder: {fileID: 0}
+  aimPos: {fileID: 0}
+  playerCamera: {fileID: 0}
+  aimDistance: 100
+  aimLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   customGravity: -9.81
   fallMultiplier: 2
   _RoomUser: {fileID: 0}
