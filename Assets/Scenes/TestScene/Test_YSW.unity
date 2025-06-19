@@ -1848,7 +1848,7 @@ MonoBehaviour:
       allowAlertsDuringConversations: 1
       alertCheckFrequency: 0
       alertCharsPerSecond: 0
-      minAlertSeconds: 2
+      minAlertSeconds: 1.5
   persistentDataSettings:
     recordPersistentDataOn: 1
     includeActorData: 1
@@ -5357,6 +5357,10 @@ PrefabInstance:
       propertyPath: SortKey
       value: 3275349731
       objectReference: {fileID: 0}
+    - target: {fileID: 4749971713328168599, guid: f7f8eea8f2dd12d4a8a6d0baf39fcef1, type: 3}
+      propertyPath: pauseGameDuringConversation
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5985,6 +5989,9 @@ MonoBehaviour:
   - {fileID: 1157326538}
   spawnPointIndex: 0
   professor: {fileID: 1756578884}
+  professorPos: {x: 0, y: 0, z: 0}
+  professorRot: {x: 0, y: 0, z: 0, w: 0}
+  key: {fileID: 6195035634665960003}
 --- !u!4 &1953913541
 Transform:
   m_ObjectHideFlags: 0
@@ -6484,6 +6491,15 @@ PrefabInstance:
     - target: {fileID: 173760129927618766, guid: 5615cd5b986ae3a43a04cc8dbbe29909, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382523309545605528, guid: 5615cd5b986ae3a43a04cc8dbbe29909, type: 3}
+      propertyPath: luaCode
+      value: "Variable[\"isDoorConact\"] = true;\nSetQuestState(\"\uC5F4\uC1E0 \uAD00\uB9AC
+        \uBA85\uB2E8\uC744 \uCC3E\uC544\uBCF4\uC790.\", \"active\");"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382523309545605528, guid: 5615cd5b986ae3a43a04cc8dbbe29909, type: 3}
+      propertyPath: condition.questConditions.Array.data[0].questState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4382523309545605528, guid: 5615cd5b986ae3a43a04cc8dbbe29909, type: 3}
       propertyPath: onExecute.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -14066,6 +14082,12 @@ PrefabInstance:
       value: Key
       objectReference: {fileID: 0}
     - target: {fileID: 4560542128945825047, guid: 1d9dc29fb0ac237469d9e50d6e75c73f, type: 3}
+      propertyPath: luaCode
+      value: "Variable[\"isKeyGet\"] = true;\nSetQuestState(\"\uC5F4\uC1E0\uB97C
+        \uCC3E\uC790.\", \"success\")\nSetQuestState(\"2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790.\",
+        \"active\")\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4560542128945825047, guid: 1d9dc29fb0ac237469d9e50d6e75c73f, type: 3}
       propertyPath: onExecute.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1953913540}
@@ -14074,6 +14096,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d9dc29fb0ac237469d9e50d6e75c73f, type: 3}
+--- !u!1 &6195035634665960003 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2684689395762288668, guid: 1d9dc29fb0ac237469d9e50d6e75c73f, type: 3}
+  m_PrefabInstance: {fileID: 6195035634665960002}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8129532384346354541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14082,6 +14109,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1226920319478498334, guid: bd36b576c885a4a4a8964ea9376a34a1, type: 3}
+      propertyPath: luaCode
+      value: "Variable[\"isPowerActive\"] = true;\nSetQuestState(\"\uC804\uB825\uC744
+        \uACF5\uAE09\uD558\uC790.\", \"success\");\nSetQuestState(\"\uAD50\uC218\uC5D0\uAC8C
+        \uB3CC\uC544\uAC00\uC790.\", \"active\");"
+      objectReference: {fileID: 0}
     - target: {fileID: 1226920319478498334, guid: bd36b576c885a4a4a8964ea9376a34a1, type: 3}
       propertyPath: onExecute.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

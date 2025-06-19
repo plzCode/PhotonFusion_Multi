@@ -1,21 +1,51 @@
 using Fusion;
+using NUnit.Framework;
 using PixelCrushers.DialogueSystem;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SpawnScript : NetworkBehaviour 
+public class SpawnScript : NetworkBehaviour
 {
-    public static SpawnScript Current {get; private set;}
+    public static SpawnScript Current { get; private set; }
 
     public Transform[] spawnpoints;
     public int spawnPointIndex = 0;
 
     public GameObject professor;
+    public Vector3 professorPos;
+    public Quaternion professorRot;
+    public GameObject key;
+
+    List<string> questNames = new List<string>()
+    {
+        "열쇠 관리 명단을 찾아보자.",
+        "열쇠를 찾자.",
+        "2층을 탐사하자.",
+        "전력을 공급하자.",
+        "교수에게 돌아가자.",
+        "구조를 요청하자."
+    };
+    List<string> variableNames = new List<string>()
+    {
+        "isDoorConact",
+        "isListCheck",
+        "isKeyGet",
+        "isConactProfessor",
+        "isPowerActive",
+        "Dummy",
+        "isRadioActive"
+    };
 
     private void Awake()
     {
         Current = this;
         GameManager.SetSpawnScript(this);
+        if (professor != null)
+        {
+            professorPos = professor.transform.position;
+            professorRot = professor.transform.rotation;
+        }
     }
 
     public bool ControlCamera(Camera cam)
@@ -25,7 +55,7 @@ public class SpawnScript : NetworkBehaviour
 
     public void SpawnPlayer(NetworkRunner runner, RoomPlayer player)
     {
-        if(!HasStateAuthority) return;
+        if (!HasStateAuthority) return;
         var index = RoomPlayer.Players.IndexOf(player);
         //var point = spawnpoints[index];
         var point = spawnpoints[0];
@@ -71,17 +101,88 @@ public class SpawnScript : NetworkBehaviour
                 agent.enabled = true;
             }
             TestAI tmpAI = agent.GetComponent<TestAI>();
-            if(tmpAI != null)
+            if (tmpAI != null)
             {
                 tmpAI.ResetAI();
             }
             //RPC_MoveProfessor(spawnpoints[spawnPointIndex].position);
         }
+        InitQuestState();
     }
 
     public void SetSpawnPoint(int num)
     {
         spawnPointIndex = num;
     }
-    
+
+    public void InitQuestState()
+    {
+        if (questNames.Count == 0 || variableNames.Count == 0)
+        {
+            Debug.LogWarning("퀘스트 이름 또는 변수 이름 리스트가 비어 있습니다.");
+            return;
+        }
+
+        int activeIndex = -1;
+
+        // 현재 Active 퀘스트 찾기
+        for (int i = 0; i < questNames.Count; i++)
+        {
+            if (QuestLog.GetQuestState(questNames[i]) == QuestState.Active)
+            {
+                activeIndex = i;
+                break;
+            }
+        }
+
+        if (activeIndex == -1)
+        {
+            Debug.LogWarning("Active 상태인 퀘스트가 없습니다.");
+            return;
+        }
+
+        int previousIndex = activeIndex - 1;
+        int currentIndex = activeIndex;
+
+        // 이전 퀘스트들: Success
+        for (int i = 0; i < previousIndex && i < questNames.Count && i < variableNames.Count; i++)
+        {
+            QuestLog.SetQuestState(questNames[i], QuestState.Success);
+            DialogueLua.SetVariable(variableNames[i], true);
+        }
+
+        // 이전 퀘스트: Active
+        if (previousIndex >= 0 && previousIndex < questNames.Count && previousIndex < variableNames.Count)
+        {
+            QuestLog.SetQuestState(questNames[previousIndex], QuestState.Active);
+            DialogueLua.SetVariable(variableNames[previousIndex], true);
+            Debug.Log("이전 퀘스트 Active: " + questNames[previousIndex]);
+        }
+
+        // 현재 퀘스트: Unassigned
+        if (currentIndex < questNames.Count && currentIndex < variableNames.Count)
+        {
+            QuestLog.SetQuestState(questNames[currentIndex], QuestState.Unassigned);
+            DialogueLua.SetVariable(variableNames[currentIndex], false);
+            Debug.Log("현재 퀘스트 Unassigned: " + questNames[currentIndex]);
+        }
+        if (questNames[currentIndex] == "2층을 탐사하자.") 
+        {
+            if(key != null)
+            {
+                key.SetActive(true);
+            }
+        }
+        if(questNames[currentIndex] == "구조를 요청하자.")
+        {
+            if (professor != null)
+            {
+                DialogueLua.SetVariable("GoToTarget", false);
+                /*professor.transform.position = professorPos;
+                professor.transform.rotation = professorRot;*/
+                professor.GetComponent<NetworkTransform>().Teleport(professorPos, professorRot);
+            }
+        }
+
+    }
 }

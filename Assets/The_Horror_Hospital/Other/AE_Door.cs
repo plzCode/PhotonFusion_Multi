@@ -68,7 +68,7 @@ namespace Art_Equilibrium
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * smooth);
             }
 
-            Debug.Log(Object.HasInputAuthority ? "Has Input Authority" : "Does not have Input Authority");
+            //Debug.Log(Object.HasInputAuthority ? "Has Input Authority" : "Does not have Input Authority");
             if (Input.GetKeyDown(KeyCode.E) && trig && !isKeyPressed)
             {
                 Debug.Log("E key pressed, toggling door state.");
