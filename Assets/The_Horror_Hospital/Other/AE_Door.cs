@@ -54,7 +54,7 @@ namespace Art_Equilibrium
         public void Update()
         {
             bool hasKey = DialogueLua.GetVariable("isKeyGet").asBool;
-            Debug.Log($"Has Key: {hasKey}");
+            //Debug.Log($"Has Key: {hasKey}");
             if(!hasKey) return;
 
             if (isSlidingDoor)
