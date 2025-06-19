@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
+
+using Fusion;
 using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
@@ -37,14 +39,20 @@ namespace PixelCrushers.DialogueSystem
 
         void Update()
         {
+            if (!IsLocalPlayer()) return;
             if (runtimeQuestLogWindow == null) return;
             if (DialogueManager.IsDialogueSystemInputDisabled()) return;
-            if (InputDeviceManager.IsKeyDown(key) || (!string.IsNullOrEmpty(buttonName) && DialogueManager.getInputButtonDown(buttonName)))
+            if (Input.GetKeyDown(key))
+                //InputDeviceManager.IsKeyDown(key) || (!string.IsNullOrEmpty(buttonName) && DialogueManager.getInputButtonDown(buttonName)))
             {
                 if (runtimeQuestLogWindow.isOpen) runtimeQuestLogWindow.Close(); else runtimeQuestLogWindow.Open();
             }
         }
-
+        bool IsLocalPlayer()
+        {
+            var networkObject = GetComponentInParent<NetworkObject>();
+            return networkObject != null && networkObject.HasInputAuthority;
+        }
     }
 
 }
