@@ -9,7 +9,14 @@ public class SpawnScript : NetworkBehaviour
 {
     public static SpawnScript Current { get; private set; }
 
-    public Transform[] spawnpoints;
+    [System.Serializable]
+    public class SpawnPointGroup
+    {
+        public Transform[] points;
+    }
+
+    public SpawnPointGroup[] spawnpoints;
+
     public int spawnPointIndex = 0;
 
     public GameObject professor;
@@ -53,7 +60,7 @@ public class SpawnScript : NetworkBehaviour
         throw new System.NotImplementedException();
     }
 
-    public void SpawnPlayer(NetworkRunner runner, RoomPlayer player)
+    /*public void SpawnPlayer(NetworkRunner runner, RoomPlayer player)
     {
         if (!HasStateAuthority) return;
         var index = RoomPlayer.Players.IndexOf(player);
@@ -77,9 +84,52 @@ public class SpawnScript : NetworkBehaviour
 
         Debug.Log($"Spawning kart for {player.Username} as {entity.name}");
         entity.transform.name = $"Kart ({player.Username})";
+    }*/
+    public void SpawnPlayer(NetworkRunner runner, RoomPlayer player)
+    {
+        Debug.Log($"!!!!!!!!!!!!!!!!");
+        if (!HasStateAuthority) return;
+
+        var index = RoomPlayer.Players.IndexOf(player);
+
+        if (spawnPointIndex >= spawnpoints.Length)
+        {
+            Debug.LogWarning("spawnPointIndex가 spawnpoints 범위를 초과합니다.");
+            return;
+        }
+
+        Transform[] currentPoints = spawnpoints[spawnPointIndex].points;
+
+        if (currentPoints == null || currentPoints.Length == 0)
+        {
+            Debug.LogWarning("해당 단계의 스폰 지점이 비어 있습니다.");
+            return;
+        }
+
+        int spawnIndex = index % currentPoints.Length;
+        var point = currentPoints[spawnIndex];
+
+        var prefabId = player.KartId;
+        var prefab = ResourceManager.Instance.fps_Player[prefabId].prefab;
+
+        // Spawn player
+        var entity = runner.Spawn(
+            prefab,
+            point.position,
+            point.rotation,
+            player.Object.InputAuthority
+        );
+
+        entity.Controller.RoomUser = player;
+        player.GameState = RoomPlayer.EGameState.GameCutscene;
+        player.Player = entity.Controller;
+
+        Debug.Log($"Spawning player for {player.Username} at {point.name}");
+        entity.transform.name = $"Player ({player.Username})";
     }
 
-    public void ReSpawn()
+
+    /*public void ReSpawn()
     {
         if (!HasStateAuthority) return;
         foreach (var player in GameManager.Players)
@@ -107,6 +157,44 @@ public class SpawnScript : NetworkBehaviour
             }
             //RPC_MoveProfessor(spawnpoints[spawnPointIndex].position);
         }
+        InitQuestState();
+    }*/
+
+    public void ReSpawn()
+    {
+        if (!HasStateAuthority) return;
+
+        // 플레이어 개수만큼 포인트가 있어야 함
+        if (spawnpoints.Length <= spawnPointIndex)
+        {
+            Debug.LogWarning("지정된 spawnPointIndex에 해당하는 SpawnPointGroup이 없습니다.");
+            return;
+        }
+
+        Transform[] currentSpawnPoints = spawnpoints[spawnPointIndex].points;
+        int i = 0;
+        for (i = 0; i < GameManager.Players.Count; i++)
+        {
+            var player = GameManager.Players[i];
+            int spawnIndex = i % currentSpawnPoints.Length; // 오버플로우 방지
+            player.transform.position = currentSpawnPoints[spawnIndex].position;
+        }
+
+        if (DialogueLua.GetVariable("GoToTarget").asBool && professor != null)
+        {
+            var agent = professor.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (agent != null) agent.enabled = false;
+
+            professor.GetComponent<NetworkTransform>().Teleport(currentSpawnPoints[i].position, Quaternion.identity);
+
+            if (agent != null)
+            {
+                agent.enabled = true;
+                var tmpAI = agent.GetComponent<TestAI>();
+                if (tmpAI != null) tmpAI.ResetAI();
+            }
+        }
+
         InitQuestState();
     }
 
