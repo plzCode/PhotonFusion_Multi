@@ -549,6 +549,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnpoints:
   - {fileID: 1667967775}
+  spawnPointIndex: 0
+  professor: {fileID: 0}
 --- !u!4 &1481671564
 Transform:
   m_ObjectHideFlags: 0
