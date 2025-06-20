@@ -145,7 +145,7 @@ public class PlayerController : NetworkBehaviour
         if (!isAlive)
             return;
 
-        if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire))
+        if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire)||PlayerInputs.IsDownThisFrame(PlayerInput.NetworkInputData.ButtonFire))
         {
             if (weaponManager.ShouldFire())
             {
