@@ -417,9 +417,9 @@ MonoBehaviour:
   Animator: {fileID: 3860684862153167695}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 00000000
+  StateHashes: 00000000958341e27e40c91f
   TriggerHashes: 00000000
-  TotalWords: 0
+  TotalWords: 1
 --- !u!114 &-6016945949809396307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d67861a95bfcee429f3881ac5aeb2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Hp: 100
+  _isAlive: 1
   moveSpeed: 5
   jumpForce: 5
   groundCheckDistance: 0
