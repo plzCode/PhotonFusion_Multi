@@ -247,7 +247,7 @@ public class PlayerController : NetworkBehaviour
                 var zombie = hit.collider.GetComponent<ZombieController>();
                 if (zombie != null)
                 {
-                    zombie.TakeDamage(weaponManager.damage); // 데미지 수치는 필요에 따라 조절
+                    zombie.RPC_TakeDamage(weaponManager.damage); // 데미지 수치는 필요에 따라 조절
                 }
 
                 // 모든 클라이언트에 피격 이펙트 실행 요청 (RPC 호출)
