@@ -17,6 +17,14 @@ public class AlertState : ZombieState
 
     public override void Update()
     {
+        if (ctrl.Target != null)
+        {
+            bool canSee = ctrl.CanSeePlayer();
+            Debug.DrawLine(ctrl.transform.position + Vector3.up * 1.2f,
+                           ctrl.Target.position + Vector3.up * 1.2f,
+                           canSee ? Color.green : Color.red , 0.1f);
+            Debug.Log($"[AI] Target={ctrl.TargetNetObj}");
+        }
         /* ① 플레이어를 계속 보고 있나? */
         if (ctrl.CanSeePlayer())
         {
