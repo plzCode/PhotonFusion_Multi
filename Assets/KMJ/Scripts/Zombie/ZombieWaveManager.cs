@@ -72,7 +72,7 @@ public class ZombieWaveManager : NetworkBehaviour
     }
     void SpawnWave()
     {
-        var players = FindObjectsByType<PlayerHealth>(FindObjectsInactive.Exclude,FindObjectsSortMode.None);
+        var players = FindObjectsByType<PlayerController>(FindObjectsInactive.Exclude,FindObjectsSortMode.None);
 
         if (players.Length == 0 || commonPool.Count == 0) return;
 
@@ -88,7 +88,7 @@ public class ZombieWaveManager : NetworkBehaviour
     }
 
     /* 공통 스폰 함수 */
-    void SpawnBatch(int count, IEnumerable<ZombieConfig> pool, PlayerHealth[] players)
+    void SpawnBatch(int count, IEnumerable<ZombieConfig> pool, PlayerController[] players)
     {
         if (count <= 0) return;
 
@@ -124,9 +124,9 @@ public class ZombieWaveManager : NetworkBehaviour
     float CalcTension()
     {
         float highest = 0;
-        foreach (var p in FindObjectsByType<PlayerHealth>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+        foreach (var p in FindObjectsByType<PlayerController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
         {
-            float hpStress = 1f - (float)p.CurrentHP / p.maxHP;
+            float hpStress = 1f - (float)p.Hp / 100; // 플레이어 HP 비율 (0~1) maxHp 같은 변수 생기면 고치기
 
             int nearZ = GameObject.FindGameObjectsWithTag("Zombie").Count(z => Vector3.Distance(z.transform.position, p.transform.position) < 15f);
 
@@ -141,7 +141,7 @@ public class ZombieWaveManager : NetworkBehaviour
     public void TriggerEventWave(int count)
     {
         if (!HasStateAuthority) return;
-        var players = FindObjectsByType<PlayerHealth>(
+        var players = FindObjectsByType<PlayerController>(
                           FindObjectsInactive.Exclude,
                           FindObjectsSortMode.None);
         if (players.Length == 0) return;

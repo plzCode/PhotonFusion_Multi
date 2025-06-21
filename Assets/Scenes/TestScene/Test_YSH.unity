@@ -549,6 +549,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnpoints:
   - {fileID: 1667967775}
+  spawnPointIndex: 0
+  professor: {fileID: 0}
+  professorPos: {x: 0, y: 0, z: 0}
+  professorRot: {x: 0, y: 0, z: 0, w: 0}
+  key: {fileID: 0}
 --- !u!4 &1481671564
 Transform:
   m_ObjectHideFlags: 0
