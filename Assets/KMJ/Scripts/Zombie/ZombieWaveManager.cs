@@ -30,7 +30,7 @@ public class ZombieWaveManager : NetworkBehaviour
     [Header("긴장도(tension) 계산")]
     [SerializeField] private float enemyCoeff = 0.05f;   // 적 1마리당 긴장도 가중치
     [SerializeField] private float smoothAlpha = 0.25f;    // 지수이동평균
-    [SerializeField] private float tensionThreshold = 0.6f; // 이 값 이상이면 웨이브 정지
+    //[SerializeField] private float tensionThreshold = 0.6f; // 이 값 이상이면 웨이브 정지
 
     [Header("스폰 반경 (플레이어 기준)")]
     [SerializeField] private int minDist = 10;

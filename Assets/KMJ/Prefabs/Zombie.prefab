@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 8342658996836609492}
   - component: {fileID: 1913023261730507351}
   - component: {fileID: -4932920650084939719}
-  - component: {fileID: 4759985786357056142}
   - component: {fileID: -8410313003481707510}
   - component: {fileID: 7203784274868264431}
   - component: {fileID: -8550252493563984870}
@@ -94,7 +93,6 @@ MonoBehaviour:
   - {fileID: 7705248563404005563}
   - {fileID: 1913023261730507351}
   - {fileID: -4932920650084939719}
-  - {fileID: 4759985786357056142}
   - {fileID: -8550252493563984870}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &7705248563404005563
@@ -165,18 +163,6 @@ MonoBehaviour:
   anim: {fileID: 0}
   agent: {fileID: 0}
   _TargetNetObj: {fileID: 0}
---- !u!114 &4759985786357056142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5321271475740704852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dbf8697bc5d33d43ab4b544d5e795e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &-8410313003481707510
 Animator:
   serializedVersion: 7
