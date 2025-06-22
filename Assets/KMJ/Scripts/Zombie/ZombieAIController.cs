@@ -23,6 +23,7 @@ public class ZombieAIController : NetworkBehaviour
     public bool IsAttacking { get; set; }
 
     const int REFRESH_TICKS = 30;     // 약 0.5초(60Hz)마다 갱신
+    const float DETECT_RADIUS = 12F;
 
     /* ========== 초기화 ========== */
     void Awake()
@@ -71,6 +72,12 @@ public class ZombieAIController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+
+        if (HasStateAuthority && Runner.Tick % 30 == 0)
+        {
+            Debug.Log($"{name}  onNav={agent.isOnNavMesh}  vel={agent.velocity.magnitude:0.00}  rem={agent.remainingDistance:0.00}");
+        }
+
         if (HasStateAuthority && Runner.Tick % 60 == 0)
             Debug.Log($"{name} Target = {TargetNetObj?.name}");
 
@@ -79,7 +86,34 @@ public class ZombieAIController : NetworkBehaviour
 
         if (HasStateAuthority && Runner.Tick % REFRESH_TICKS == 0 || TargetNetObj == null)
             TargetNetObj = GetNearestPlayer();
+
+        if (HasStateAuthority && (Runner.Tick % REFRESH_TICKS == 0 || TargetNetObj == null))
+        {
+            TargetNetObj = GetNearestPlayerWithinRadius(DETECT_RADIUS);
+            // 시야로도 보이면 Alert 즉시 Chase
+            if (TargetNetObj && CanSeePlayer())
+                ChangeState(new ChaseState(this));
+        }
     }
+
+    NetworkObject GetNearestPlayerWithinRadius(float radius)
+    {
+        NetworkObject nearest = null;
+        float minDist = radius * radius; // 제곱 거리로 비교
+
+        foreach (var player in GameManager.Players)
+        {
+            if (player == null) continue;                   // 누락/파괴 대비
+            float d = (player.transform.position - transform.position).sqrMagnitude;
+            if (d < minDist)
+            {
+                minDist = d;
+                nearest = player;
+            }
+        }
+        return nearest;
+    }
+
 
     public void SetMoveSpeed(float s) => agent.speed = s;
 

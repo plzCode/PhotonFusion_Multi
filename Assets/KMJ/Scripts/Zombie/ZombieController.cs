@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(SpecialZombieController))]
 [RequireComponent(typeof(ZombieAIController))]
 
 public class ZombieController : NetworkBehaviour
@@ -42,28 +41,35 @@ public class ZombieController : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_RequestDamage(int dmg, RpcInfo info = default)
     {
+        if (CurrentHP <= 0) return;
+
         if (!HasStateAuthority) return;
             CurrentHP = Mathf.Max(CurrentHP - dmg, 0);
 
         Debug.Log($"{name} HP {CurrentHP}");
 
-        if (CurrentHP <= 0) return;                 // 이미 죽음
-
         if (CurrentHP > 0)
         {
-            anim.SetTrigger("Hit");                // Hit 애니
-            ai.ChangeState(new HitState(ai));      // 짧은 경직
+            RPC_Hit();
         }
         else
         {
             Die();                                 // 사망 처리
         }
     }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_Hit()
+    {
+        anim.SetTrigger("Hit");                // Hit 애니
+        ai.ChangeState(new HitState(ai));      // 짧은 경직
+    }
+
     /*========== 사망 처리 ==========*/
     void Die()
     {
         anim?.SetBool("IsDead", true);                       // 죽음 애니 (옵션)
-        GetComponent<SpecialZombieController>()?.OnDeath();   // 특수 효과 발동
+        var special = GetComponent<SpecialZombieController>();
+        if (special) special.OnDeath();   // 특수 효과 발동
         agent.enabled = false;                               // 이동정지
 
         StartCoroutine(WaitAndDespawn());

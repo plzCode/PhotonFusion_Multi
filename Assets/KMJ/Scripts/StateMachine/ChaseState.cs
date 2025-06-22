@@ -12,6 +12,9 @@ public class ChaseState : ZombieState
     }
     public override void Update()
     {
+        if (ctrl.Target)
+            ctrl.agent.SetDestination(ctrl.Target.position);
+
         if (ctrl.Target == null)
         {
             // 플레이어를 잃어버리면 Alert → Idle 로 복귀
