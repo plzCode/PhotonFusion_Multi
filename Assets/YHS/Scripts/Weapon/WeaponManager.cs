@@ -14,7 +14,7 @@ public class WeaponManager : NetworkBehaviour
     [SerializeField] Transform barrelPos;
     [SerializeField] float bulletVelocity;
     [SerializeField] int bulletsPerShot;
-    public float damage = 20;
+    public int damage = 10;
 
     [Header("muzzle Effect")]
     [SerializeField] GameObject muzzleFlash;
@@ -22,7 +22,10 @@ public class WeaponManager : NetworkBehaviour
 
     [SerializeField] Transform aimpos;
 
-    
+    [Header("recoil Amount")]
+    [SerializeField] public float recoilAmount = 2f; // 반동 강도
+    [SerializeField] public float recoilRecoverySpeed = 8f; // 반동 복구 속도
+
     void Update()
     {
         //if (ShouldFire()) Fire(aimpos);

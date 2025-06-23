@@ -1,5 +1,6 @@
-using Fusion;
+ï»¿using Fusion;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 using static Fusion.NetworkBehaviour;
 using static KartInput;
@@ -8,7 +9,7 @@ public class PlayerController : NetworkBehaviour
 {
 
     #region PlayerStats
-    [Header("ÇÃ·¹ÀÌ¾î ½ºÅÈ")]
+    [Header("í”Œë ˆì´ì–´ ìŠ¤íƒ¯")]
     [Networked] public float Hp { get; set; } = 100;
     [Networked] public bool isAlive { get; set; } = true;
     public float moveSpeed = 5f;
@@ -27,15 +28,19 @@ public class PlayerController : NetworkBehaviour
     #endregion
 
     #region Weapon
-    [Header("¹«±â Á¤º¸")]
-    [SerializeField] WeaponManager weaponManager;
+    [Header("ë¬´ê¸° ì •ë³´")]
+    [SerializeField] private WeaponManager weaponManager;
+    [SerializeField] private Transform armTransform;
+    [SerializeField] private Vector3 defaultArmPosition; 
+    [SerializeField] private Vector3 armTargetPositon = new Vector3(-0.12f,0f,0f);
+    [SerializeField] private float zoomLerpSpeed = 10f;
 
     #endregion
 
     #region Components
 
     private Rigidbody rb;
-    [Header("ÄÄÆ÷³ÍÆ®")]
+    [Header("ì»´í¬ë„ŒíŠ¸")]
     [SerializeField]
     private CharacterController controller;
     [SerializeField]
@@ -51,19 +56,23 @@ public class PlayerController : NetworkBehaviour
     #endregion
 
     #region PlayerCamera
-    [Header("Ä«¸Ş¶ó,¹Î°¨µµ")]
-    //Ä«¸Ş¶ó 
+    [Header("ì¹´ë©”ë¼,ë¯¼ê°ë„")]
+    //ì¹´ë©”ë¼ 
     [SerializeField] private float mouseSensitivity = 0.5f;
-    [SerializeField] private Transform cameraHolder; // »óÇÏ È¸Àü¿ë
-    [SerializeField] private Transform aimPos; // Á¶ÁØÁ¡(ºó ¿ÀºêÁ§Æ®)
-    [SerializeField] private Camera playerCamera; // ÇÃ·¹ÀÌ¾î Ä«¸Ş¶ó
-    [SerializeField] private float aimDistance = 100f; // Á¶ÁØ ÃÖ´ë °Å¸®
-    [SerializeField] private LayerMask aimLayerMask = ~0; // Á¶ÁØ¿¡ »ç¿ëÇÒ ·¹ÀÌ¾î
+    [SerializeField] private Transform cameraHolder; // ìƒí•˜ íšŒì „ìš©
+    [SerializeField] private Transform aimPos; // ì¡°ì¤€ì (ë¹ˆ ì˜¤ë¸Œì íŠ¸)
+    [SerializeField] private Camera playerCamera; // í”Œë ˆì´ì–´ ì¹´ë©”ë¼
+    [SerializeField] private float aimDistance = 100f; // ì¡°ì¤€ ìµœëŒ€ ê±°ë¦¬
+    [SerializeField] private LayerMask aimLayerMask = ~0; // ì¡°ì¤€ì— ì‚¬ìš©í•  ë ˆì´ì–´
     private float verticalLookRotation = 0f;
+
+
+    [SerializeField] private float defaultFov = 60f;
+    [SerializeField] private float zoomFOV = 50f;
     #endregion
 
     #region Gravity
-    [Header("Áß·Â,Áß·Â°¡¼Óµµ")]
+    [Header("ì¤‘ë ¥,ì¤‘ë ¥ê°€ì†ë„")]
     public float customGravity = -9.81f;
     public float fallMultiplier = 2.0f;
     #endregion
@@ -97,21 +106,26 @@ public class PlayerController : NetworkBehaviour
     public override void Spawned()
     {
         base.Spawned();
+
+        // ì´ˆê¸° íŒ” ìœ„ì¹˜ê°’ ì €ì¥(ì¼ë°˜ìƒíƒœ íŒ”ìœ„ì¹˜)
+        defaultArmPosition = armTransform.localPosition;
+
+
         //_changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
         //MaxSpeed = maxSpeedNormal;
         if (Object.HasInputAuthority)
         {
-            //¸¶¿ì½º ¶ô
+            //ë§ˆìš°ìŠ¤ ë½
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            // MainCamera°¡ ÀÌ ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® ¾È¿¡ ÀÖÀ» °æ¿ì
+            // MainCameraê°€ ì´ í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ ì•ˆì— ìˆì„ ê²½ìš°
             Camera cam = GetComponentInChildren<Camera>();
             if (cam != null)
                 cam.enabled = true;
 
 
-            // 3ÀÎÄª Ä³¸¯ÅÍ ·»´õ¸µ ±×¸²ÀÚ¸¸ ÇÏ±â
+            // 3ì¸ì¹­ ìºë¦­í„° ë Œë”ë§ ê·¸ë¦¼ìë§Œ í•˜ê¸°
             for (int i = 0; i < bodyCasting.Length; i++)
             {
                 bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
@@ -121,16 +135,15 @@ public class PlayerController : NetworkBehaviour
                 rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             }
 
-
-
+                        
         }
         else
         {
-            // ´Ù¸¥ ÇÃ·¹ÀÌ¾î´Â Ä«¸Ş¶ó ²û
+            // ë‹¤ë¥¸ í”Œë ˆì´ì–´ëŠ” ì¹´ë©”ë¼ ë”
             Camera cam = GetComponentInChildren<Camera>();
             if (cam != null)
                 cam.enabled = false;
-            // ´Ù¸¥ ÇÃ·¹ÀÌ¾îÀÇ 1ÀÎÄª ¹Ùµğ ·»´õ¸µ ²ô±â
+            // ë‹¤ë¥¸ í”Œë ˆì´ì–´ì˜ 1ì¸ì¹­ ë°”ë”” ë Œë”ë§ ë„ê¸°
             for (int i = 0; i < fpsBodyCasting.Length; i++)
             {
                 fpsBodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
@@ -145,24 +158,73 @@ public class PlayerController : NetworkBehaviour
         if (!isAlive)
             return;
 
-        if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire))
+        // ì‚¬ê²©
+        if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire)||PlayerInputs.IsDownThisFrame(PlayerInput.NetworkInputData.ButtonFire))
         {
             if (weaponManager.ShouldFire())
             {
                 weaponManager.Fire(aimPos);
-                Debug.Log("½î´ÂÁß");
+
+                // ìƒí•˜ ë°˜ë™ ì ìš©
+                if (PlayerInputs.IsZooming)
+                {
+                    float zoomRecoilAmount = recoilAmount * 0.66f;
+                    Pitch -= zoomRecoilAmount;
+                }
+                else
+                {
+                    Pitch -= recoilAmount;
+                }                    
+
+                currentRecoverTimer = recoilRecoveryTime;
+                currentRecoilOffset = recoilAmount;
+                recoilRecoveryPerSecond = recoilAmount / recoilRecoveryTime;
+
+                // ì¢Œìš° ë°˜ë™ ëœë¤ ì ìš©
+                float yawRecoil = Random.Range(-maxYawRecoil, maxYawRecoil);
+                Yaw += yawRecoil;
+
+                currentYawRecoverTimer = recoilRecoveryTime;
+                currentYawRecoilOffset = yawRecoil;
+                yawRecoveryPerSecond = yawRecoil / recoilRecoveryTime;
+
+
+                Debug.Log("ì˜ëŠ”ì¤‘");
                 armAnim.SetTrigger("Fire");
+                anim.SetTrigger("Fire");
                 SoundManager.Instance.Play("RifleFire");
                 //armAnim.Play("Fire", 0, 0);
                 if (Object.HasInputAuthority)
                 {
                     RPC_ZombieHit(Yaw, Pitch);
-                }
-                    
-                
-
+                }                 
             }
         }
+
+        
+        // ì¤Œ ìƒíƒœì¼ ë•Œ íŒ” ìœ„ì¹˜ ë³´ê°„
+        Vector3 targetPos = defaultArmPosition;
+        if (PlayerInputs.IsZooming)
+            targetPos += armTargetPositon;
+
+        armTransform.localPosition = Vector3.Lerp(
+            armTransform.localPosition,
+            targetPos,
+            zoomLerpSpeed * Time.deltaTime
+        );
+
+
+        // ì¹´ë©”ë¼ ì¤Œ Fov ë³´ê°„
+        //float targetFOV = defaultFov;
+        float targetFOV = PlayerInputs.IsZooming ? zoomFOV : defaultFov;
+        
+
+        playerCamera.fieldOfView = Mathf.Lerp(
+            playerCamera.fieldOfView,
+            targetFOV,
+            zoomLerpSpeed * Time.deltaTime
+        );
+
 
         UpdateAimPos();
     }
@@ -171,9 +233,9 @@ public class PlayerController : NetworkBehaviour
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_ZombieHit(float yaw, float pitch)
     {
-        TakeDamage(2);
+        TakeDamage(0);
 
-        Vector3 rayOrigin = playerCamera.transform.position; // ¶Ç´Â ÃÑ±¸ À§Ä¡
+        Vector3 rayOrigin = playerCamera.transform.position; // ë˜ëŠ” ì´êµ¬ ìœ„ì¹˜
         Quaternion aimRotation = Quaternion.Euler(pitch, yaw, 0f);
         Vector3 rayDir = aimRotation * Vector3.forward;
 
@@ -181,14 +243,14 @@ public class PlayerController : NetworkBehaviour
         {
             if (hit.collider.CompareTag("Zombie"))
             {
-                //// ¼­¹ö°¡ ¸ÂÀº Á»ºñ ÄÄÆ÷³ÍÆ® ¾ò±â
-                //var zombie = hit.collider.GetComponent<ZombieHealth>();
-                //if (zombie != null)
-                //{
-                //    zombie.TakeDamage(10); // µ¥¹ÌÁö ¼öÄ¡´Â ÇÊ¿ä¿¡ µû¶ó Á¶Àı
-                //}
+                // ì„œë²„ê°€ ë§ì€ ì¢€ë¹„ ì»´í¬ë„ŒíŠ¸ ì–»ê¸°
+                var zombie = hit.collider.GetComponent<ZombieController>();
+                if (zombie != null)
+                {
+                    zombie.RPC_RequestDamage(weaponManager.damage); // ë°ë¯¸ì§€ ìˆ˜ì¹˜ëŠ” í•„ìš”ì— ë”°ë¼ ì¡°ì ˆ
+                }
 
-                // ¸ğµç Å¬¶óÀÌ¾ğÆ®¿¡ ÇÇ°İ ÀÌÆåÆ® ½ÇÇà ¿äÃ» (RPC È£Ãâ)
+                // ëª¨ë“  í´ë¼ì´ì–¸íŠ¸ì— í”¼ê²© ì´í™íŠ¸ ì‹¤í–‰ ìš”ì²­ (RPC í˜¸ì¶œ)
                 RPC_HitEffect(hit.point);
             }
             
@@ -198,7 +260,7 @@ public class PlayerController : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_HitEffect(Vector3 point)
     {
-        Quaternion rotation = Quaternion.identity; // ÇÊ¿ä½Ã hit.normal »ç¿ë °¡´É
+        Quaternion rotation = Quaternion.identity; // í•„ìš”ì‹œ hit.normal ì‚¬ìš© ê°€ëŠ¥
         EffectPoolManager.Instance.GetEffect(point, rotation);
     }
 
@@ -247,10 +309,10 @@ public class PlayerController : NetworkBehaviour
 
         Vector3 rayOrigin = playerCamera.transform.position;
 
-        // Yaw, Pitch °ªÀ» ÀÌ¿ëÇØ È¸Àü°ªÀ» ¸¸µé°í
+        // Yaw, Pitch ê°’ì„ ì´ìš©í•´ íšŒì „ê°’ì„ ë§Œë“¤ê³ 
         Quaternion aimRotation = Quaternion.Euler(Pitch, Yaw, 0f);
 
-        // forward º¤ÅÍ¸¦ Á÷Á¢ ±¸ÇÔ
+        // forward ë²¡í„°ë¥¼ ì§ì ‘ êµ¬í•¨
         Vector3 rayDirection = aimRotation * Vector3.forward;
 
         if (Physics.Raycast(rayOrigin, rayDirection, out RaycastHit hit, aimDistance, aimLayerMask))
@@ -271,7 +333,7 @@ public class PlayerController : NetworkBehaviour
 
             if (Hp <= 0)
             {
-                Debug.Log("Á×À½");
+                Debug.Log("ì£½ìŒ");
                 isAlive = false;
 
                 anim.SetBool("isAlive", isAlive);
@@ -291,7 +353,7 @@ public class PlayerController : NetworkBehaviour
 
     private void ApplyGravity()
     {
-        // Áß·Â Ã³¸® (StateAuthority¸¸ ´ã´ç)
+        // ì¤‘ë ¥ ì²˜ë¦¬ (StateAuthorityë§Œ ë‹´ë‹¹)
         if (HasStateAuthority && !isGrounded)
         {
             Vector3 gravity = Vector3.up * customGravity;
@@ -304,28 +366,41 @@ public class PlayerController : NetworkBehaviour
 
     private void HandleAnimation(PlayerInput.NetworkInputData input)
     {
-        //  Å¬¶óÀÌ¾ğÆ® (InputAuthority)¿ë ¾Ö´Ï¸ŞÀÌ¼Ç Ã³¸®
+        
+        //  í´ë¼ì´ì–¸íŠ¸ (InputAuthority)ìš© ì• ë‹ˆë©”ì´ì…˜ ì²˜ë¦¬
         if (anim != null && !Runner.IsResimulation)
         {
+            
+
             anim.SetFloat("MoveX", input.MoveDirection.x, 0.15f, Runner.DeltaTime);
             anim.SetFloat("MoveZ", input.MoveDirection.y * currentSpeedMultiplier / moveSpeed, 0.15f, Runner.DeltaTime);
 
-
+            
             if (input.JumpPressed && isGrounded)
                 anim.SetTrigger("Jump");
+
         }
 
         if (armAnim != null && !Runner.IsResimulation)
         {
-            // 1) Rigidbody ±â¹İ ½ÇÁ¦ ¼Óµµ¸¦ »ç¿ë
+            // 1) Rigidbody ê¸°ë°˜ ì‹¤ì œ ì†ë„ë¥¼ ì‚¬ìš©
             Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-            float speed = horizontalVel.magnitude; // ´ÜÀ§: m/s
+            float speed = horizontalVel.magnitude; // ë‹¨ìœ„: m/s
 
-            // (¼±ÅÃ) ÃÖ´ë ´Ş¸®±â ¼Óµµ·Î Á¤±ÔÈ­
+            // (ì„ íƒ) ìµœëŒ€ ë‹¬ë¦¬ê¸° ì†ë„ë¡œ ì •ê·œí™”
             float normalizedSpeed = speed / (moveSpeed * runSpeed);
 
             armAnim.SetFloat("Speed", normalizedSpeed, 0.1f, Runner.DeltaTime);
         }
+
+        if (anim != null && !Runner.IsResimulation)
+        {
+            float normalizedLook = Mathf.InverseLerp(-80f, 80f, Pitch);
+            float lookValue = (normalizedLook - 0.5f) * -2f;
+            anim.SetFloat("Look", lookValue);
+        }
+
+
     }
 
 
@@ -341,7 +416,7 @@ public class PlayerController : NetworkBehaviour
         Vector3 moveDir = new Vector3(currentInput.x, 0, currentInput.y);
         if (moveDir.sqrMagnitude > 1f) moveDir.Normalize();
 
-        moveDir = transform.TransformDirection(moveDir); // Ä³¸¯ÅÍ ¹æÇâ¿¡ ¸ÂÃß±â
+        moveDir = transform.TransformDirection(moveDir); // ìºë¦­í„° ë°©í–¥ì— ë§ì¶”ê¸°
 
         Vector3 targetVelocity = moveDir * currentSpeedMultiplier;
         targetVelocity.y = rb.linearVelocity.y;
@@ -352,22 +427,26 @@ public class PlayerController : NetworkBehaviour
         rb.linearVelocity = targetVelocity;
 
     }
-
+    
     private void HandleMouseLook(PlayerInput.NetworkInputData input)
     {
-        // ¸¶¿ì½º È¸Àü Ã³¸® (StateAuthority ¡æ ¿¹Ãø °¡´ÉÇÏ°Ô Networked °ªÀ¸·Î Ã³¸®)
+        // ë§ˆìš°ìŠ¤ íšŒì „ ì²˜ë¦¬ (StateAuthority â†’ ì˜ˆì¸¡ ê°€ëŠ¥í•˜ê²Œ Networked ê°’ìœ¼ë¡œ ì²˜ë¦¬)
         float mouseX = input.LookDirection.x * mouseSensitivity;
         Yaw += mouseX;
-        Yaw %= 360f; // È¸Àü°ª À¯Áö
-
-        // È¸Àü Àû¿ë
-        Quaternion targetRot = Quaternion.Euler(0, Yaw, 0);
-        rb.MoveRotation(targetRot); // 20f´Â È¸Àü ºÎµå·¯¿ò Á¶Àı
-
+        Yaw %= 360f;
 
         float mouseY = input.LookDirection.y * mouseSensitivity;
         Pitch -= mouseY;
-        Pitch = Mathf.Clamp(Pitch, -80f, 80f); // Networked °ªÀ¸·Îµµ Å¬·¥ÇÎ ÇÊ¿ä            
+
+        // ë°˜ë™ ë³µêµ¬ ì²˜ë¦¬
+        ApplyRecoilRecovery();
+
+        // í´ë¨í•‘ì€ ë§ˆì§€ë§‰ì— í•œ ë²ˆë§Œ
+        Pitch = Mathf.Clamp(Pitch, -80f, 80f);
+
+        // íšŒì „ ì ìš©
+        Quaternion targetRot = Quaternion.Euler(0, Yaw, 0);
+        rb.MoveRotation(targetRot);
 
         cameraHolder.localEulerAngles = new Vector3(Pitch, 0, 0);
 
@@ -381,7 +460,49 @@ public class PlayerController : NetworkBehaviour
         //    cameraHolder.localEulerAngles = new Vector3(verticalLookRotation, 0, 0);
         //}
     }
+    //ìƒí•˜ ë°˜ë™
+    [SerializeField] private float recoilAmount = 2f;
+    [SerializeField] private float recoilRecoveryTime = 0.35f;
 
+    private float currentRecoverTimer = 0f;
+    private float currentRecoilOffset = 0f;
+    private float recoilRecoveryPerSecond = 0f;
+
+    //ì¢Œìš° ë°˜ë™
+    [SerializeField] private float maxYawRecoil = 1f; // ì˜ˆ: ì¢Œìš° ìµœëŒ€ ë°˜ë™
+
+    private float currentYawRecoilOffset = 0f;
+    private float currentYawRecoverTimer = 0f;
+    private float yawRecoveryPerSecond = 0f;
+
+    private void ApplyRecoilRecovery()
+    {
+        if (currentRecoverTimer > 0f)
+        {
+            float recoverStep = recoilRecoveryPerSecond * Runner.DeltaTime;
+            Pitch += recoverStep;
+            currentRecoverTimer -= Runner.DeltaTime;
+
+            if (currentRecoverTimer <= 0f)
+            {
+                currentRecoilOffset = 0f;
+                recoilRecoveryPerSecond = 0f;
+            }
+        }
+
+        // ì¢Œìš°(Yaw) ë³µêµ¬
+        if (currentYawRecoverTimer > 0f)
+        {
+            float recoverStep = yawRecoveryPerSecond * Runner.DeltaTime;
+            Yaw -= recoverStep;
+            currentYawRecoverTimer -= Runner.DeltaTime;
+            if (currentYawRecoverTimer <= 0f)
+            {
+                currentYawRecoilOffset = 0f;
+                yawRecoveryPerSecond = 0f;
+            }
+        }
+    }
 
 
     private void CheckGrounded()
@@ -399,7 +520,7 @@ public class PlayerController : NetworkBehaviour
         Vector3 direction = Vector3.down * groundCheckDistance;
 
         Gizmos.DrawLine(origin, origin + direction);
-        Gizmos.DrawSphere(origin + direction, 0.05f); // ³¡Á¡¿¡ ÀÛÀº Á¡µµ Ç¥½Ã
+        Gizmos.DrawSphere(origin + direction, 0.05f); // ëì ì— ì‘ì€ ì ë„ í‘œì‹œ
     }
 
 }
