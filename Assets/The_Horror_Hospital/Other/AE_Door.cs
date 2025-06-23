@@ -46,6 +46,10 @@ namespace Art_Equilibrium
 
         private void Update()
         {
+            bool hasKey = DialogueLua.GetVariable("isKeyGet").asBool;
+            //Debug.Log($"Has Key: {hasKey}");
+            if(!hasKey) return;
+
             if (isSlidingDoor)
             {
                 Vector3 targetPos = open ? targetLocalSlidePos : defaultLocalPos;
@@ -57,6 +61,7 @@ namespace Art_Equilibrium
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * smooth);
             }
 
+            //Debug.Log(Object.HasInputAuthority ? "Has Input Authority" : "Does not have Input Authority");
             if (Input.GetKeyDown(KeyCode.E) && trig && !isKeyPressed)
             {
                 open = !open;

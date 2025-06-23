@@ -13,6 +13,12 @@ GameObject:
   - component: {fileID: 3802163238685710926}
   - component: {fileID: 8149026747921015887}
   - component: {fileID: 8462098417110169124}
+  - component: {fileID: 8542320118906782701}
+  - component: {fileID: 7521978582176855848}
+  - component: {fileID: 1668369659982198413}
+  - component: {fileID: 5691677130920832672}
+  - component: {fileID: 7668864180169244136}
+  - component: {fileID: 7939299889281118437}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -128,8 +134,131 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 7521978582176855848}
+  - {fileID: 1668369659982198413}
+  - {fileID: 7668864180169244136}
+  - {fileID: 7939299889281118437}
   ForceRemoteRenderTimeframe: 0
+--- !u!143 &8542320118906782701
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021607916709432689}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.8
+  m_Radius: 0.3
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7521978582176855848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021607916709432689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
+--- !u!114 &1668369659982198413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021607916709432689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af6da26f8716fe46b8ffc2f3500d256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _CurrentHP: 0
+  maxHP: 100
+--- !u!114 &5691677130920832672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021607916709432689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ecb53e79555f3044888271efc2b01b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killRange: 15
+  killKey: 107
+--- !u!114 &7668864180169244136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021607916709432689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d13a14e380c0c439f7fff0f4e34269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugDamage: 20
+--- !u!114 &7939299889281118437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021607916709432689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d67861a95bfcee429f3881ac5aeb2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Hp: 100
+  _isAlive: 1
+  moveSpeed: 5
+  jumpForce: 5
+  groundCheckDistance: 0
+  inputSmoothSpeed: 5
+  weaponManager: {fileID: 0}
+  controller: {fileID: 0}
+  anim: {fileID: 0}
+  armAnim: {fileID: 0}
+  bodyCasting: []
+  rifleCasting: []
+  fpsBodyCasting: []
+  mouseSensitivity: 0.5
+  cameraHolder: {fileID: 0}
+  aimPos: {fileID: 0}
+  playerCamera: {fileID: 0}
+  aimDistance: 100
+  aimLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  customGravity: -9.81
+  fallMultiplier: 2
+  _RoomUser: {fileID: 0}
 --- !u!1 &6207507700449670794
 GameObject:
   m_ObjectHideFlags: 0

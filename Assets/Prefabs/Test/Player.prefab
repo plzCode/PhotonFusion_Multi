@@ -374,9 +374,9 @@ MonoBehaviour:
   Animator: {fileID: 3860684862153167695}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 00000000
+  StateHashes: 00000000958341e27e40c91f
   TriggerHashes: 00000000
-  TotalWords: 0
+  TotalWords: 1
 --- !u!114 &-6016945949809396307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +438,51 @@ MonoBehaviour:
       m_Action: Move
       m_Flags: 8
     m_Flags: 0
+  look:
+    m_Name: Look
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 95c20b69-89e1-4a40-a739-e254df7b411c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  run:
+    m_Name: Run
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 07fdb3d8-f3ed-4a50-9451-df5646f46ef9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  jump:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c5a92ddc-2e0a-4de6-84b7-698bc237da35
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  fire:
+    m_Name: Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a77f5dd1-c8fb-40e1-8446-f31bf575fdb8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  Zoom:
+    m_Name: Zoom
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: bfe80f72-0df3-429f-93aa-4d51518db4c5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!114 &990254650208211767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,11 +495,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d67861a95bfcee429f3881ac5aeb2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Hp: 100
+  _isAlive: 1
   moveSpeed: 5
   gravity: -9.81
   jumpForce: 5
   controller: {fileID: 0}
   _RoomUser: {fileID: 0}
+  recoilAmount: 3
+  recoilRecoveryTime: 0.35
+  maxYawRecoil: 1.5
 --- !u!114 &-5928373565424209787
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,11 +9,14 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
 {
     public struct NetworkInputData : INetworkInput
     {
-       /* public const uint ButtonW = 1 << 0;
-        public const uint ButtonS = 1 << 1;
-        public const uint ButtonDrift = 1 << 2;
-        public const uint ButtonLookbehind = 1 << 3;
-        public const uint UseItem = 1 << 4;*/
+
+        public const uint ButtonFire = 1 << 0;
+        public const uint ButtonReload = 1 << 1;
+        //public const uint ButtonW = 1 << 0;
+        //public const uint ButtonS = 1 << 1;
+        //public const uint ButtonDrift = 1 << 2;
+        //public const uint ButtonLookbehind = 1 << 3;
+        //public const uint UseItem = 1 << 4;
 
         public uint Buttons;
         public uint OneShots;
@@ -22,19 +25,39 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         public bool IsDownThisFrame(uint button) => (OneShots & button) == button;        
 
         public Vector2 MoveDirection;
+        public Vector2 LookDirection;
+        public bool IsRunning;
+        public bool JumpPressed;
+        public bool IsZooming;
+
+        public Vector3 aimWorldPosition;
 
 
     }
     public Gamepad gamepad;
     [SerializeField] private InputAction move;
-
+    [SerializeField] private InputAction look;
+    [SerializeField] private InputAction run;
+    [SerializeField] private InputAction jump;
+    [SerializeField] private InputAction fire;
+    [SerializeField] private InputAction Zoom;
     public override void Spawned()
     {
         base.Spawned();
         Runner.AddCallbacks(this);
 
         move = move.Clone();
+        look = look.Clone();
+        run = run.Clone();
+        jump = jump.Clone();
+        fire = fire.Clone();
+        Zoom = Zoom.Clone();
         move.Enable();
+        look.Enable();
+        run.Enable();
+        jump.Enable();
+        fire.Enable();
+        Zoom.Enable();
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
@@ -52,8 +75,20 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         gamepad = Gamepad.current;
         var userInput = new NetworkInputData();
 
-        Vector2 moveInput = move.ReadValue<Vector2>();
-        userInput.MoveDirection = moveInput.normalized;
+        Vector2 moveInput = move.ReadValue<Vector2>() * mouseSensitivity;        
+        userInput.MoveDirection = moveInput.normalized;        
+
+        Vector2 lookInput = look.ReadValue<Vector2>();    
+        userInput.LookDirection = lookInput;
+
+        userInput.IsRunning = ReadBool(run);
+        userInput.JumpPressed = jump.triggered;
+        userInput.IsZooming = ReadBool(Zoom);
+
+        if (fire.ReadValue<float>() != 0f)
+            userInput.Buttons |= NetworkInputData.ButtonFire;
+
+
         input.Set(userInput);
     }
     private static bool ReadBool(InputAction action) => action.ReadValue<float>() != 0;
@@ -61,7 +96,14 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
 
-    private void DisposeInputs()    {    }
+    private void DisposeInputs()
+    {
+        move.Dispose();
+        run.Dispose();
+        jump.Dispose();
+        fire.Dispose();
+        Zoom.Dispose();
+    }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)    { }
 
