@@ -182,7 +182,7 @@ MonoBehaviour:
   showCompletedQuests: 0
   showCompletedEntryText: 0
   questDescriptionSource: 0
-  visibleOnStart: 0
+  visibleOnStart: 1
 --- !u!1 &140792
 GameObject:
   m_ObjectHideFlags: 0

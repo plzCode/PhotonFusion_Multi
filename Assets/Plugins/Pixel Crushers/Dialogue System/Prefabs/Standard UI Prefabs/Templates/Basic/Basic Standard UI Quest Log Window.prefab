@@ -3853,7 +3853,7 @@ MonoBehaviour:
   unlockCursorWhileOpen: 0
   useGroups: 1
   newQuestText: 
-  trackOneQuestAtATime: 0
+  trackOneQuestAtATime: 1
   deselectQuestOnSecondClick: 1
   mainPanel: {fileID: 11452756}
   showingActiveQuestsHeading:
