@@ -163,6 +163,18 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: 
+      type: 0
+      typeString: 
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 3
     fields:
     - title: Name
@@ -192,6 +204,18 @@ MonoBehaviour:
       typeString: 
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: 
+      type: 0
+      typeString: 
+    - title: Track
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 4
@@ -224,6 +248,18 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: 
+      type: 0
+      typeString: 
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 1
     fields:
     - title: Name
@@ -254,6 +290,18 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: 
+      type: 0
+      typeString: 
   - id: 6
     fields:
     - title: Name
@@ -282,6 +330,22 @@ MonoBehaviour:
       type: 0
       typeString: 
     - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: 
+      type: 0
+      typeString: 
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Abandonable
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
@@ -315,6 +379,18 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: 
+      type: 0
+      typeString: 
   locations: []
   variables:
   - id: 2
@@ -547,6 +623,12 @@ MonoBehaviour:
         destinationDialogueID: 19
         isConnector: 0
         priority: 2
+      - originConversationID: 1
+        originDialogueID: 0
+        destinationConversationID: 1
+        destinationDialogueID: 26
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -672,8 +754,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 554.77106
-        y: 163.17
+        x: 480.65338
+        y: 160.81705
         width: 160
         height: 30
     - id: 9
@@ -1289,8 +1371,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 164.08467
+        x: 681.37695
+        y: 162.90822
         width: 160
         height: 30
     - id: 20
@@ -1347,8 +1429,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 215.45454
+        x: 681.37695
+        y: 214.27809
         width: 160
         height: 30
     - id: 21
@@ -1403,8 +1485,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 265.45453
+        x: 681.37695
+        y: 264.27808
         width: 160
         height: 30
     - id: 22
@@ -1458,8 +1540,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 315.45447
+        x: 681.37695
+        y: 314.278
         width: 160
         height: 30
     - id: 23
@@ -1515,8 +1597,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 365.45447
+        x: 681.37695
+        y: 364.278
         width: 160
         height: 30
     - id: 24
@@ -1570,8 +1652,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 415.45447
+        x: 681.37695
+        y: 414.278
         width: 160
         height: 30
     - id: 25
@@ -1620,13 +1702,62 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 775.4546
-        y: 464.31805
+        x: 682.51337
+        y: 463.1416
+        width: 160
+        height: 30
+    - id: 26
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: "\uC790\uB124\uB97C \uB530\uB77C\uAC00\uACA0\uB124."
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 1
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 877.8152
+        y: 161.35507
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 19.1781, y: 0}
-    canvasZoom: 0.7300001
+    canvasScrollPosition: {x: 17.926193, y: 0}
+    canvasZoom: 0.84999996
   syncInfo:
     syncActors: 0
     syncItems: 0
