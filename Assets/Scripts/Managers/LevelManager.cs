@@ -60,6 +60,8 @@ namespace Managers
                     {
                         player.GameState = RoomPlayer.EGameState.GameCutscene;
                         GameManager.CurrentMap.SpawnPlayer(Runner, player);
+						var networkPlayer = player.Player;
+						GameManager.RegisterPlayer(networkPlayer.Object);
                     }
                 }
             }
