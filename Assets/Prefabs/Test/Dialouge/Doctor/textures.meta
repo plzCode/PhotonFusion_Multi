@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Test/Dialouge/Doctor/textures.meta
 guid: 354aa082f11b1d543900c3a11a5cc891
 folderAsset: yes
+========
+guid: 74760ec6d1725dc489cbf7839233f548
+>>>>>>>> yhSon:Assets/The_Horror_Hospital/The_Horror_Hospital_URP.unitypackage.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
