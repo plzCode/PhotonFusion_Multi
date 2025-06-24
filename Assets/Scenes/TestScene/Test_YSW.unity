@@ -827,7 +827,6 @@ GameObject:
   - component: {fileID: 269916782}
   - component: {fileID: 269916781}
   - component: {fileID: 269916780}
-  - component: {fileID: 269916779}
   - component: {fileID: 269916784}
   m_Layer: 11
   m_Name: Plane
@@ -836,28 +835,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &269916779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269916778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 212a67341853a234e81ddd60373a8fda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  introTracks: []
-  checkpoints: []
-  spawnpoints: []
-  finishLine: {fileID: 0}
-  itemContainer: {fileID: 0}
-  coinContainer: {fileID: 0}
-  definition: {fileID: 0}
-  sequence: {fileID: 0}
-  music: 
-  introSpeed: 0.5
 --- !u!64 &269916780
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -964,8 +941,7 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 269916779}
+  NetworkedBehaviours: []
   ForceRemoteRenderTimeframe: 0
 --- !u!1 &276405597
 GameObject:
