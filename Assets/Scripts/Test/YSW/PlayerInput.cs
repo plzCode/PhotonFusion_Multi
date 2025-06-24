@@ -28,6 +28,7 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         public Vector2 LookDirection;
         public bool IsRunning;
         public bool JumpPressed;
+        public bool IsZooming;
 
         public Vector3 aimWorldPosition;
 
@@ -40,6 +41,7 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
     [SerializeField] private InputAction run;
     [SerializeField] private InputAction jump;
     [SerializeField] private InputAction fire;
+    [SerializeField] private InputAction Zoom;
 
     public override void Spawned()
     {
@@ -51,11 +53,13 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         run = run.Clone();
         jump = jump.Clone();
         fire = fire.Clone();
+        Zoom = Zoom.Clone();
         move.Enable();
         look.Enable();
         run.Enable();
         jump.Enable();
         fire.Enable();
+        Zoom.Enable();
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
@@ -81,9 +85,11 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
 
         userInput.IsRunning = ReadBool(run);
         userInput.JumpPressed = jump.triggered;
+        userInput.IsZooming = ReadBool(Zoom);
 
         if (fire.ReadValue<float>() != 0f)
             userInput.Buttons |= NetworkInputData.ButtonFire;
+
 
         input.Set(userInput);
     }
@@ -97,6 +103,8 @@ public class PlayerInput : NetworkBehaviour, INetworkRunnerCallbacks
         move.Dispose();
         run.Dispose();
         jump.Dispose();
+        fire.Dispose();
+        Zoom.Dispose();
     }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)    { }
