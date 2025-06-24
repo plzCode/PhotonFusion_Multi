@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class OutlineController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class OutlineController : MonoBehaviour
 
     Renderer[] _renderers;
 
+    public bool Enabled = false;
+    bool _prevEnabled = false;
     void Awake()
     {
         _renderers = GetComponentsInChildren<Renderer>();
@@ -16,6 +19,16 @@ public class OutlineController : MonoBehaviour
         for (int i = 0; i < _renderers.Length; i++)
         {
             _originMats[i] = _renderers[i].material;
+        }
+    }
+
+    void Update()
+    {
+        bool hasChanged = Enabled != _prevEnabled;
+        if (hasChanged)
+        {
+            _prevEnabled = Enabled;
+            SetOutline(Enabled);
         }
     }
 

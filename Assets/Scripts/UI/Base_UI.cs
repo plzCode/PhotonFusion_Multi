@@ -9,8 +9,9 @@ public class Base_UIInfo
 
 public abstract class Base_UI : MonoBehaviour
 {
-    public bool IsStackable;
     public UIManager.ECanvasType CanvasType;
+    public bool IsStackable;
+    public bool IsOpened { get; private set; }
 
     public event Action OnOpenEvent;
     public event Action OnCloseEvent;
@@ -27,11 +28,6 @@ public abstract class Base_UI : MonoBehaviour
 
         var rectTransform = GetComponent<RectTransform>();
         _openAnimation = GetComponent<Animation>();
-
-        rectTransform.localPosition = new Vector3(0f, 0f, 0f);
-        rectTransform.localScale = new Vector3(1f, 1f, 1f);
-        rectTransform.offsetMin = new Vector2(0, 0);
-        rectTransform.offsetMax = new Vector2(0, 0);
     }
 
     public virtual void SetInfo(Base_UIInfo info)
@@ -46,10 +42,12 @@ public abstract class Base_UI : MonoBehaviour
             _openAnimation.Play();
 
         OnOpenEvent?.Invoke();
+        IsOpened = true;
     }
 
     public virtual void OnClose()
     {
         OnCloseEvent?.Invoke();
+        IsOpened = false;
     }
 }

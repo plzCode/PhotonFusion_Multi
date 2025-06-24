@@ -1,3 +1,5 @@
+using PixelCrushers.DialogueSystem;
+using PixelCrushers.DialogueSystem.Wrappers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,11 +41,25 @@ public class Dialogue_UI : Base_UI
     #endregion
 
     #region Debug
-    //[SerializeField] string DebugText = "Dialogue UI Initialized";
-    //[SerializeField] Color DebugTextColor = Color.white;
-    //int _debugTextCount = 0;
+    [SerializeField] string DebugText = "Dialogue UI Initialized";
+    [SerializeField] Color DebugTextColor = Color.white;
+    int _debugTextCount = 0;
     #endregion
 
+
+    void Awake()
+    {
+        Initialize();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _debugTextCount++;
+            PushText($"{DebugText} {_debugTextCount}", DebugTextColor);
+        }
+    }
 
     public override void Initialize()
     {
@@ -85,6 +101,7 @@ public class Dialogue_UI : Base_UI
     public void OnDestroyText()
     {
         StartCoroutine(AdjustLayoutSize());
+        DialogueManager.StopConversation(); // 한번에 다수의 텍스트가 출력되는 경우에는 버그가 발생할 가능성이 높음
     }
 
     IEnumerator AdjustLayoutSize()
