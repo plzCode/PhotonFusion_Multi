@@ -137,7 +137,7 @@ MonoBehaviour:
     - title: Name
       value: "\uC5F4\uC1E0 \uAD00\uB9AC \uBA85\uB2E8\uC744 \uCC3E\uC544\uBCF4\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Pictures
       value: '[]'
       type: 3
@@ -146,19 +146,19 @@ MonoBehaviour:
       value: "\uC5F4\uC1E0\uB97C \uB9C8\uC9C0\uB9C9\uC5D0 \uAD00\uB9AC\uD55C \uC778\uC6D0\uC744
         \uD655\uC778\uD558\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Success Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Failure Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: State
       value: unassigned
       type: 0
-      typeString: 
+      typeString: CustomFieldType_QuestState
     - title: Is Item
       value: False
       type: 2
@@ -168,9 +168,9 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     - title: Display Name
-      value: 
+      value: "\uC5F4\uC1E0 \uAD00\uB9AC \uBA85\uB2E8\uC744 \uCC3E\uC544\uBCF4\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Track
       value: True
       type: 2

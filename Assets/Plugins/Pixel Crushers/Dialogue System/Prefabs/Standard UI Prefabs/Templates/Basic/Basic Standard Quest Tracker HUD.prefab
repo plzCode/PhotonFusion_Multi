@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2168d38d221b35c4ba543877f39e93ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefsToggleKey: QuestTracker
+  playerPrefsToggleKey: 
   container: {fileID: 22495766}
   showContainerIfEmpty: 1
   questTrackTemplate: {fileID: 11482462}
