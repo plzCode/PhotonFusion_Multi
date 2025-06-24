@@ -42,8 +42,9 @@ public class UIManager : Singleton<UIManager>
 
             if (!_canvasCache.TryGetValue(type, out canvas))
             {
-                Canvas canvasPrefab = Resources.Load<Canvas>($"UI/Canvas/{type} Canvas");
+                Canvas canvasPrefab = Resources.Load<Canvas>($"UI/{type}Canvas");
                 canvas = Instantiate(canvasPrefab, transform);
+                _canvasCache[type] = canvas;
             }
         }
 
@@ -66,19 +67,26 @@ public class UIManager : Singleton<UIManager>
             return null;
         }
 
-        GameObject spawnedObj = Instantiate(prefab.gameObject);
+        if (prefab.gameObject == null)
+        {
+            Debug.LogError($"UI 프리팹을 찾을 수 없습니다. {typeof(T).Name}");
+            return null;
+        }
+
+        Canvas canvas = GetCanvas(prefab.CanvasType);
+        T spawnedObj = Instantiate(prefab, canvas.transform);
         spawnedObj.name = typeof(T).Name;
-        _uiCache[typeof(T)] = spawnedObj.GetComponent<T>();
-        return (T)_uiCache[typeof(T)];
+        _uiCache[typeof(T)] = spawnedObj;
+        return spawnedObj;
     }
 
-    public void ShowUI<T>(Base_UIInfo info) where T : Base_UI
+    public void ShowUI<T>(Base_UIInfo info = null) where T : Base_UI
     {
         T ui = GetUI<T>();
         ShowUI(ui, info);
     }
 
-    public void ShowUI(Base_UI ui, Base_UIInfo info)
+    public void ShowUI(Base_UI ui, Base_UIInfo info = null)
     {
         if (ui.gameObject == null)
         {
@@ -86,14 +94,15 @@ public class UIManager : Singleton<UIManager>
             return;
         }
 
-        if (ui.gameObject.activeSelf)
+        if (ui.IsOpened)
         {
             Debug.LogWarning($"UI가 이미 활성화되어 있습니다.");
             return;
         }
 
         ui.Initialize();
-        ui.SetInfo(info);
+        if (info != null)
+            ui.SetInfo(info);
         ui.gameObject.SetActive(true);
         ui.OnOpen();
 
@@ -115,7 +124,7 @@ public class UIManager : Singleton<UIManager>
             return;
         }
 
-        if (!ui.gameObject.activeSelf)
+        if (!ui.IsOpened)
         {
             Debug.LogWarning($"UI가 이미 비활성화되어 있습니다.");
             return;
