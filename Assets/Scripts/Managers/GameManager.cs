@@ -1,7 +1,9 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fusion;
 using UnityEngine;
+
 
 public class GameManager : NetworkBehaviour
 {
@@ -13,7 +15,7 @@ public class GameManager : NetworkBehaviour
 	public static int KartLayer => Instance.kartLayer;
 
 
-	public new Camera camera;
+    public new Camera camera;
 	private ICameraController cameraController;
 
 	public GameType GameType => ResourceManager.Instance.gameTypes[GameTypeId];
@@ -32,16 +34,16 @@ public class GameManager : NetworkBehaviour
 	[Networked] public int GameTypeId { get; set; }
 	[Networked] public int MaxUsers { get; set; }
 
-	// °ÔÀÓ ÇÃ·¹ÀÌ¾î ¸ñ·Ï
+	// ê²Œì„ í”Œë ˆì´ì–´ ëª©ë¡
 	[SerializeField]
     private List<NetworkObject> players = new List<NetworkObject>();
 	
-	// ÀĞ±â ÂüÁ¶¿ë
+	// ì½ê¸° ì°¸ì¡°ìš©
     public static IReadOnlyList<NetworkObject> Players => Instance.players;
 
     private static void OnLobbyDetailsChangedCallback(GameManager changed)
 	{
-		Debug.Log("º¯°æ»çÇ×À¸·Î ÀÎÇÑ ¾÷µ¥ÀÌÆ®½Ç½Ã");
+		Debug.Log("ë³€ê²½ì‚¬í•­ìœ¼ë¡œ ì¸í•œ ì—…ë°ì´íŠ¸ì‹¤ì‹œ");
 		OnLobbyDetailsUpdated?.Invoke(changed);
 	}
 	
@@ -51,7 +53,7 @@ public class GameManager : NetworkBehaviour
 	{
 		if (Instance && Instance != this)
 		{
-			Debug.Log("»èÁ¦Çß´Ù");
+			Debug.Log("ì‚­ì œí–ˆë‹¤");
 			Destroy(gameObject);
 			return;
 		}
@@ -73,7 +75,7 @@ public class GameManager : NetworkBehaviour
 			MaxUsers = ServerInfo.MaxUsers;
 		}
 
-        //OnLobbyDetailsUpdated?.Invoke(this); // ¿©±â¼­ ÇÑ¹ø È£Ãâ
+        //OnLobbyDetailsUpdated?.Invoke(this); // ì—¬ê¸°ì„œ í•œë²ˆ í˜¸ì¶œ
     }
 	
 	public override void Render()
@@ -106,8 +108,8 @@ public class GameManager : NetworkBehaviour
 		/*if (cameraController.ControlCamera(camera) == false)
 			cameraController = null;*/ //Intro Camera
 	}
-	
-	public static void GetCameraControl(ICameraController controller)
+
+    public static void GetCameraControl(ICameraController controller)
 	{
 		Instance.cameraController = controller;
 	}

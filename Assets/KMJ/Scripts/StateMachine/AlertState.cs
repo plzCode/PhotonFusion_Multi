@@ -4,48 +4,33 @@ using Zombie.States;
 
 public class AlertState : ZombieState
 {
-    float timer;
+    const float REPATH = 0.25f;
+    float elapsed;
 
     public AlertState(ZombieAIController c) : base(c) { }
 
     public override void Enter()
     {
-        timer = 0f;
-        ctrl.SetMoveSpeed(0f);              // 제자리
-        ctrl.anim.SetBool("IsAlert", true); // 애니메이터 bool ON
+        ctrl.IsAlert = true;
+        ctrl.SetMoveSpeed(1f);
+        elapsed = REPATH;
     }
 
     public override void Update()
     {
-        if (ctrl.Target != null)
+        if (ctrl.Target == null)
         {
-            bool canSee = ctrl.CanSeePlayer();
-            Debug.DrawLine(ctrl.transform.position + Vector3.up * 1.2f,
-                           ctrl.Target.position + Vector3.up * 1.2f,
-                           canSee ? Color.green : Color.red , 0.1f);
-            Debug.Log($"[AI] Target={ctrl.TargetNetObj}");
+            ctrl.ChangeState(new IdleState(ctrl));
+            return;
         }
-        /* ① 플레이어를 계속 보고 있나? */
-        if (ctrl.CanSeePlayer())
-        {
-            timer += Time.deltaTime;        // 시야 유지 시간 누적
 
-            /* ② 2초 이상 감지 유지 → Chase 전환 */
-            if (timer >= 2f)
-            {
-                ctrl.ChangeState(new ChaseState(ctrl));
-            }
-        }
-        else
+        elapsed += Time.deltaTime;
+        if (elapsed >= REPATH)
         {
-            /* ③ 시야를 잃었다 → IdleWalk(배회)로 복귀 */
-            ctrl.anim.SetBool("IsAlert", false);
-            ctrl.ChangeState(new IdleWalkState(ctrl));
+            elapsed = 0;
+            ctrl.agent.SetDestination(ctrl.Target.position); // 계속 추적
         }
     }
 
-    public override void Exit()
-    {
-        ctrl.anim.SetBool("IsAlert", false);   // 상태 나갈 때 항상 OFF
-    }
+    //public override void Exit() => ctrl.IsAlert = false; // ★ Bool OFF
 }
