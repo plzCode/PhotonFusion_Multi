@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 48e1f805160113245b144df82798f0c6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Art/Materials/Generator2_Door.mat
+  uploadId: 415333

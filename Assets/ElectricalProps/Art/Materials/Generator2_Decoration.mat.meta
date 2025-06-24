@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b01d34e2a914c0f4bbe827ff7259d857
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Art/Materials/Generator2_Decoration.mat
+  uploadId: 415333

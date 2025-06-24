@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4f74d6a4018dab14eae4d9ca09327009
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Art/Materials/Prop1_Tubes.mat
+  uploadId: 415333

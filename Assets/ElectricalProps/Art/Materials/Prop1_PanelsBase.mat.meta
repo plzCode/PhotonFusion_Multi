@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8f6dfc203b48cc0469f3bd7fb710029e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Art/Materials/Prop1_PanelsBase.mat
+  uploadId: 415333
