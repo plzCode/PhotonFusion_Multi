@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a86069c9926b06c4fb00a2c884c8dd5e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Art/Materials/Ground.mat
+  uploadId: 415333

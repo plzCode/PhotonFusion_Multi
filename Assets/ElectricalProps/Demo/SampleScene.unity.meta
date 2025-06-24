@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: fd2a5aa76b5a42040b99b36231399793
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Demo/SampleScene.unity
+  uploadId: 415333

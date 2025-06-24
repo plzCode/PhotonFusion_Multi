@@ -1,79 +1,29 @@
 ﻿using Fusion;
 using UnityEngine;
 
+/// 최소 기능: 씬이 시작되면 서버가 좀비 한 마리만 스폰
 public class AIDirector : NetworkBehaviour
 {
-    [SerializeField] ZombieWaveManager waveMgr;  // Inspector ZombieWaveManager 연결
+    [Header("테스트용 좀비 Prefab")]
+    public NetworkPrefabRef zombiePrefab;
 
-    enum Phase { Calm, BuildUp, Horde, Finale }
-    [Networked] Phase CurrentPhase { get; set; }
+    private bool spawnedOnce = false;
 
-    // 진행도·사운드·시간 등 추가 변수
-    float calmTimer, buildUpTimer;
-    [SerializeField] float buildUpCooldown = 10f;  // 웨이브 쿨다운(초)
-    float buildUpWaveTimer;                        // 내부 타이머
-
+    // NetworkBehaviour 라이프사이클: Spawned()는 네트워크 객체가 생기자마자 호출
     public override void Spawned()
     {
-        if (!HasStateAuthority) { enabled = false; return; }
-        CurrentPhase = Phase.Calm;
-    }
+        // 서버(Host)일 때만 작업
+        if (!HasStateAuthority) return;
 
-    public override void FixedUpdateNetwork()
-    {
-        switch (CurrentPhase)
+        // 한 번만 스폰
+        if (!spawnedOnce)
         {
-            case Phase.Calm:
-                if (waveMgr.tensionLevel < 0.3f)
-                {
-                    calmTimer += Runner.DeltaTime;
-                    if (calmTimer > 15f)   // 15초 숨 돌렸으면
-                    {
-                        CurrentPhase = Phase.BuildUp;
-                        calmTimer = 0;
-                    }
-                }
-                else calmTimer = 0;
-                break;
+            spawnedOnce = true;
 
-            case Phase.BuildUp:
-                if (waveMgr.tensionLevel < 0.6f)
-                {
-                    buildUpTimer += Runner.DeltaTime;
-                    buildUpWaveTimer += Runner.DeltaTime;
+            // AIDirector 자기 위치에서 +5m 앞에 소환
+            Vector3 pos = transform.position + Vector3.forward * 5f;
 
-                    if (buildUpTimer > 5f &&            // 최소 5초 Build-Up 유지
-                        buildUpWaveTimer > buildUpCooldown)
-                    {
-                        waveMgr.TriggerEventWave(Random.Range(10, 16));
-                        buildUpWaveTimer = 0f;          // 쿨다운 리셋
-                    }
-                }
-                else         // 플레이어가 힘들어함 → 다시 Calm
-                {
-                    CurrentPhase = Phase.Calm;
-                    buildUpTimer = buildUpWaveTimer = 0f;
-                }
-                // 이벤트 웨이브 → Horde
-                break;
-
-            case Phase.Horde:
-                // WaveManager.TriggerEventWave(40~50) 호출
-                // tension 완전 가득 차면 잠시 쉬고 Phase.Calm
-                if (waveMgr.tensionLevel > 0.8f)
-                    CurrentPhase = Phase.Calm;
-                break;
-
-            case Phase.Finale:
-                // 마지막 장면
-                break;
+            Runner.Spawn(zombiePrefab, pos, Quaternion.identity);
         }
-    }
-
-    /* 외부 이벤트로 하드 웨이브 호출 */
-    public void OnGeneratorRepaired()
-    {
-        CurrentPhase = Phase.Horde;
-        waveMgr.TriggerEventWave(50);   // 대량
     }
 }

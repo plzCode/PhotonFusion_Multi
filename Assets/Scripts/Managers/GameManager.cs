@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
@@ -32,14 +31,7 @@ public class GameManager : NetworkBehaviour
 	[Networked] public int GameTypeId { get; set; }
 	[Networked] public int MaxUsers { get; set; }
 
-	// 게임 플레이어 목록
-	[SerializeField]
-    private List<NetworkObject> players = new List<NetworkObject>();
-	
-	// 읽기 참조용
-    public static IReadOnlyList<NetworkObject> Players => Instance.players;
-
-    private static void OnLobbyDetailsChangedCallback(GameManager changed)
+	private static void OnLobbyDetailsChangedCallback(GameManager changed)
 	{
 		Debug.Log("변경사항으로 인한 업데이트실시");
 		OnLobbyDetailsUpdated?.Invoke(changed);
@@ -122,16 +114,4 @@ public class GameManager : NetworkBehaviour
 	{
 		CurrentMap = spawnScript;
 	}
-
-    public static void RegisterPlayer(NetworkObject player)
-    {
-        if (!Instance.players.Contains(player))
-            Instance.players.Add(player);
-    }
-
-    public static void UnregisterPlayer(NetworkObject player)
-    {
-        if (Instance.players.Contains(player))
-            Instance.players.Remove(player);
-    }
 }

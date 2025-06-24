@@ -181,11 +181,10 @@ namespace Pathfinding {
 		public bool reachedDestination {
 			get {
 				if (!reachedEndOfPath) return false;
-                //if (!interpolator.valid || remainingDistance + movementPlane.ToPlane(destination - interpolator.endPoint).magnitude > endReachedDistance) return false;
-                if (!interpolator.valid || Vector3.Distance(position, destination) > endReachedDistance) return false;
+				if (!interpolator.valid || remainingDistance + movementPlane.ToPlane(destination - interpolator.endPoint).magnitude > endReachedDistance) return false;
 
-                // Don't do height checks in 2D mode
-                if (orientation != OrientationMode.YAxisForward) {
+				// Don't do height checks in 2D mode
+				if (orientation != OrientationMode.YAxisForward) {
 					// Check if the destination is above the head of the character or far below the feet of it
 					float yDifference;
 					movementPlane.ToPlane(destination - position, out yDifference);

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a9b3ac1d402e6d84a8209bdf95d2f829
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Prefabs/Wires.prefab
+  uploadId: 415333

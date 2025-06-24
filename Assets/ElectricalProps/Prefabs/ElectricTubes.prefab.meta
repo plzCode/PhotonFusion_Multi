@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2ae6da4d1ff22d049952bee7566fe281
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Prefabs/ElectricTubes.prefab
+  uploadId: 415333

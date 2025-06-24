@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 1b22b97a64848724da6922eb034e2c45
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 148339
+  packageName: Helicopter Sound Effects Pack
+  packageVersion: 1.0
+  assetPath: Assets/Helicopter Sound Effects Pack/Helicopter Interior Cruising 6.wav
+  uploadId: 749392
