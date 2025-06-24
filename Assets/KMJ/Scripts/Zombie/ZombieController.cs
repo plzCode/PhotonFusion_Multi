@@ -1,5 +1,6 @@
 ﻿using Fusion;
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -42,9 +43,10 @@ public class ZombieController : NetworkBehaviour
     public void RPC_RequestDamage(int dmg, RpcInfo info = default)
     {
         if (CurrentHP <= 0) return;
-
         if (!HasStateAuthority) return;
-            CurrentHP = Mathf.Max(CurrentHP - dmg, 0);
+
+        CurrentHP = Mathf.Max(CurrentHP - dmg, 0);
+
 
         Debug.Log($"{name} HP {CurrentHP}");
 
@@ -57,19 +59,24 @@ public class ZombieController : NetworkBehaviour
             Die();                                 // 사망 처리
         }
     }
+
+    
+
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_Hit()
     {
         anim.SetTrigger("Hit");                // Hit 애니
+        ai.SetMoveSpeed(0f);                  // 이동 정지
         ai.ChangeState(new HitState(ai));      // 짧은 경직
+        ai.SetAlert(true);
+        if (Object.HasStateAuthority)
+            ai.IsAlert = true;
     }
 
     /*========== 사망 처리 ==========*/
     void Die()
     {
-        anim?.SetBool("IsDead", true);                       // 죽음 애니 (옵션)
-        var special = GetComponent<SpecialZombieController>();
-        if (special) special.OnDeath();   // 특수 효과 발동
+        anim.SetBool("IsDead", true);                       // 죽음 애니 (옵션)
         agent.enabled = false;                               // 이동정지
 
         StartCoroutine(WaitAndDespawn());
