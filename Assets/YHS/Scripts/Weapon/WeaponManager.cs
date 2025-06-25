@@ -17,7 +17,7 @@ public class WeaponManager : NetworkBehaviour
     public int damage = 10;
 
     [Header("muzzle Effect")]
-    [SerializeField] GameObject muzzleFlash;
+    [SerializeField] public GameObject muzzleFlash;
     [SerializeField] GameObject muzzleSmoke;
 
     [SerializeField] Transform aimpos;
@@ -49,7 +49,7 @@ public class WeaponManager : NetworkBehaviour
         return true;
     }
 
-    public void Fire(Transform aimpos)
+    public void Fire(Transform aimpos,bool isOwner)
     {
         fireRateTimer = 0;
 
@@ -61,8 +61,12 @@ public class WeaponManager : NetworkBehaviour
         for (int i = 0; i < bulletsPerShot; i++)
         {
             GameObject currentBullet = Instantiate(bullet, barrelPos.position, barrelPos.rotation);
-            Instantiate(muzzleFlash, barrelPos.position, barrelPos.rotation);
-            Instantiate(muzzleSmoke, barrelPos.position, barrelPos.rotation);
+            if (!isOwner)
+            {
+                Instantiate(muzzleFlash, barrelPos.position, barrelPos.rotation);
+                Instantiate(muzzleSmoke, barrelPos.position, barrelPos.rotation);
+            }
+            
             Bullet bulletScript = currentBullet.GetComponent<Bullet>();
             //bulletScript.weapon = this;
 

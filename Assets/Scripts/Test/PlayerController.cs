@@ -31,6 +31,7 @@ public class PlayerController : NetworkBehaviour
     [Header("무기 정보")]
     [SerializeField] private WeaponManager weaponManager;
     [SerializeField] private Transform armTransform;
+    [SerializeField] private Transform fpsMuzzleTransform;
     [SerializeField] private Vector3 defaultArmPosition; 
     [SerializeField] private Vector3 armTargetPositon = new Vector3(-0.12f,0f,0f);
     [SerializeField] private float zoomLerpSpeed = 10f;
@@ -163,7 +164,13 @@ public class PlayerController : NetworkBehaviour
         {
             if (weaponManager.ShouldFire())
             {
-                weaponManager.Fire(aimPos);
+                bool isOwner = false;
+                if (HasInputAuthority)
+                {
+                    isOwner = true;
+                    GameObject flash = Instantiate(weaponManager.muzzleFlash, fpsMuzzleTransform.position, fpsMuzzleTransform.rotation,fpsMuzzleTransform);
+                }
+                weaponManager.Fire(aimPos,isOwner);
 
                 // 상하 반동 적용
                 if (PlayerInputs.IsZooming)
