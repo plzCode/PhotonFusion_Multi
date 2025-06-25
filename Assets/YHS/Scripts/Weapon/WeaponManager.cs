@@ -49,31 +49,47 @@ public class WeaponManager : NetworkBehaviour
         return true;
     }
 
-    public void Fire(Transform aimpos,bool isOwner)
+    public void Fire(Transform aimpos,bool isOwner,Transform fpsBarrelPos)
     {
         fireRateTimer = 0;
 
         barrelPos.LookAt(aimpos);
+        fpsBarrelPos.LookAt(aimpos);
         //barrelPos.localEulerAngles = bloom.BloomAngle(barrelPos); //총알 퍼짐현상을 구현
 
 
         // 풀링으로 변환 필요.
         for (int i = 0; i < bulletsPerShot; i++)
         {
-            GameObject currentBullet = Instantiate(bullet, barrelPos.position, barrelPos.rotation);
+            
+
             if (!isOwner)
             {
+                GameObject currentBullet = Instantiate(bullet, barrelPos.position, barrelPos.rotation);
+                Bullet bulletScript = currentBullet.GetComponent<Bullet>();
+                //bulletScript.weapon = this;
+
+                //bulletScript.dir = barrelPos.transform.forward;
+
+                Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
                 Instantiate(muzzleFlash, barrelPos.position, barrelPos.rotation);
                 Instantiate(muzzleSmoke, barrelPos.position, barrelPos.rotation);
+                rb.AddForce(barrelPos.forward * bulletVelocity, ForceMode.Impulse);
+            }
+            else
+            {
+                GameObject currentBullet = Instantiate(bullet, fpsBarrelPos.position, fpsBarrelPos.rotation);
+                Bullet bulletScript = currentBullet.GetComponent<Bullet>();
+                //bulletScript.weapon = this;
+
+                //bulletScript.dir = barrelPos.transform.forward;
+
+                Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
+                rb.AddForce(fpsBarrelPos.forward * bulletVelocity, ForceMode.Impulse);
             }
             
-            Bullet bulletScript = currentBullet.GetComponent<Bullet>();
-            //bulletScript.weapon = this;
-
-            //bulletScript.dir = barrelPos.transform.forward;
-
-            Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
-            rb.AddForce(barrelPos.forward * bulletVelocity, ForceMode.Impulse);
+            
+            
         }
     }
 }

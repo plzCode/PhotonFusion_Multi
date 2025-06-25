@@ -170,7 +170,7 @@ public class PlayerController : NetworkBehaviour
                     isOwner = true;
                     GameObject flash = Instantiate(weaponManager.muzzleFlash, fpsMuzzleTransform.position, fpsMuzzleTransform.rotation,fpsMuzzleTransform);
                 }
-                weaponManager.Fire(aimPos,isOwner);
+                weaponManager.Fire(aimPos,isOwner,fpsMuzzleTransform);
 
                 // 상하 반동 적용
                 if (PlayerInputs.IsZooming)
