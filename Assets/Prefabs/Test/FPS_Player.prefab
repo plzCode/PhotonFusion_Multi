@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 4115730921566571420}
   - component: {fileID: 6715751569870295092}
   - component: {fileID: -3274518401421121225}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FPS_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
