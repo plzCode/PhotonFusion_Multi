@@ -137,7 +137,7 @@ MonoBehaviour:
     - title: Name
       value: "\uC5F4\uC1E0 \uAD00\uB9AC \uBA85\uB2E8\uC744 \uCC3E\uC544\uBCF4\uC790."
       type: 0
-      typeString: CustomFieldType_Text
+      typeString: 
     - title: Pictures
       value: '[]'
       type: 3
@@ -146,33 +146,21 @@ MonoBehaviour:
       value: "\uC5F4\uC1E0\uB97C \uB9C8\uC9C0\uB9C9\uC5D0 \uAD00\uB9AC\uD55C \uC778\uC6D0\uC744
         \uD655\uC778\uD558\uC790."
       type: 0
-      typeString: CustomFieldType_Text
+      typeString: 
     - title: Success Description
       value: 
       type: 0
-      typeString: CustomFieldType_Text
+      typeString: 
     - title: Failure Description
       value: 
       type: 0
-      typeString: CustomFieldType_Text
+      typeString: 
     - title: State
       value: unassigned
       type: 0
-      typeString: CustomFieldType_QuestState
+      typeString: 
     - title: Is Item
       value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 3
@@ -206,18 +194,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: 
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
   - id: 4
     fields:
     - title: Name
@@ -248,18 +224,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: 
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
   - id: 1
     fields:
     - title: Name
@@ -288,18 +252,6 @@ MonoBehaviour:
       typeString: 
     - title: Is Item
       value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: 
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 6
@@ -333,18 +285,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: 
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
   - id: 5
     fields:
     - title: Name
@@ -373,18 +313,6 @@ MonoBehaviour:
       typeString: 
     - title: Is Item
       value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Display Name
-      value: 
-      type: 0
-      typeString: 
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   locations: []
@@ -617,12 +545,6 @@ MonoBehaviour:
         originDialogueID: 0
         destinationConversationID: 1
         destinationDialogueID: 19
-        isConnector: 0
-        priority: 2
-      - originConversationID: 1
-        originDialogueID: 0
-        destinationConversationID: 1
-        destinationDialogueID: 26
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -1702,58 +1624,9 @@ MonoBehaviour:
         y: 464.31805
         width: 160
         height: 30
-    - id: 26
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: "\uC790\uB124\uB97C \uB530\uB77C\uAC00\uACA0\uB124."
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 1
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 973.0662
-        y: 166.52005
-        width: 160
-        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 131.24722, y: 0}
-    canvasZoom: 0.8200002
+    canvasScrollPosition: {x: 19.1781, y: 0}
+    canvasZoom: 0.7300001
   syncInfo:
     syncActors: 0
     syncItems: 0

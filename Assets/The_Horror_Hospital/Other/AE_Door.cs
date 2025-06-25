@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using Fusion;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace Art_Equilibrium
 {
     public class AE_Door : MonoBehaviour
     {
-        bool trig, open;
+        [Networked]
+        bool open { get; set; } = false;
+        bool trig;
         public float smooth = 2.0f;
         public float DoorOpenAngle = 87.0f;
         private Quaternion defaultRot;
@@ -33,6 +37,9 @@ namespace Art_Equilibrium
         public AudioClip closeSound;
         private AudioSource audioSource;
 
+        [SerializeField]
+        NavMeshObstacle doorObstacle;
+
         private void Start()
         {
             defaultRot = transform.rotation;
@@ -42,6 +49,7 @@ namespace Art_Equilibrium
             isKeyPressed = false;
 
             audioSource = gameObject.AddComponent<AudioSource>();
+            doorObstacle = GetComponent<NavMeshObstacle>();
         }
 
         private void Update()
@@ -61,6 +69,7 @@ namespace Art_Equilibrium
             {
                 open = !open;
                 isKeyPressed = true;
+                doorObstacle.carving = !open;
                 PlayDoorSound();
             }
 
