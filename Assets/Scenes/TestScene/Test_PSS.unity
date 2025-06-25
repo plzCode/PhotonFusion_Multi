@@ -248,7 +248,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2041701798501270728, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
       propertyPath: SortKey
-      value: 436283692
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2041701798501270728, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
@@ -260,7 +260,7 @@ PrefabInstance:
       objectReference: {fileID: 131544100}
     - target: {fileID: 3729784499896524509, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
       propertyPath: SortKey
-      value: 2614411039
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3729784499896524509, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
@@ -279,8 +279,16 @@ PrefabInstance:
       value: Map
       objectReference: {fileID: 0}
     - target: {fileID: 6108021822392102525, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6108021822392102525, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6108021822392102525, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
       propertyPath: m_Intensity
-      value: 0.75
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6591517899353011999, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
       propertyPath: m_IsActive
@@ -328,7 +336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8679653386193824920, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
       propertyPath: SortKey
-      value: 1488806399
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8679653386193824920, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
@@ -623,7 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 1896881468
+  SortKey: 0
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []

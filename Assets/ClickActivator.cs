@@ -1,34 +1,59 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class ClickActivator : MonoBehaviour
 {
-    //public LightController lightController;  // LightController ¿¬°á
-    //private bool isPlayerInRange = false;
+    public LightController lightController;
+    public bool isPlayerInRange = false;
+    private bool hasActivated = false;
 
-    //void Update()
-    //{
-    //    if (isPlayerInRange && Input.GetKeyDown(KeyCode.F))
-    //    {
-    //        Debug.Log("ÀåÄ¡ ±ÙÃ³¿¡¼­ F Å° ÀÔ·ÂµÊ");
-    //        lightController.TurnOnLights();
-    //    }
-    //}
+    void Start()
+    {
+        if (lightController == null)
+        {
+            Debug.LogError("âŒ lightControllerê°€ Inspectorì—ì„œ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
+        }
+        else
+        {
+            Debug.Log("âœ… lightController ì—°ê²°ë¨: " + lightController.name);
+        }
+    }
 
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        isPlayerInRange = true;
-    //        Debug.Log("ÇÃ·¹ÀÌ¾î ÀåÄ¡ ¹üÀ§ ¾È¿¡ µé¾î¿È");
-    //    }
-    //}
+    void Update()
+    {
+        //Debug.Log("Update í™•ì¸");
+        /*
+                if (Input.anyKeyDown)
+                    *//*Debug.Log("Key ëˆŒë¦¼");*//*
 
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        isPlayerInRange = false;
-    //        Debug.Log("ÇÃ·¹ÀÌ¾î ÀåÄ¡ ¹üÀ§ ¹ÛÀ¸·Î ³ª°¨");
-    //    }
-    //}
+                if (Input.GetKeyDown(KeyCode.E))
+                   *//* Debug.Log("E í‚¤ ëˆŒë¦¼");*/
+
+        // Debug.Log(" !!! >>> " + gameObject.activeInHierarchy);
+        if (isPlayerInRange && !lightController.isActivated && Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("Eí‚¤ ëˆŒë¦¼");
+            lightController.EnableAllLights();
+            lightController.isActivated = true;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInRange = true;
+
+            Debug.Log("ğŸšª í”Œë ˆì´ì–´ ì¥ì¹˜ ë²”ìœ„ ì•ˆì— ë“¤ì–´ì˜´");
+
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInRange = false;
+            Debug.Log("ğŸšª í”Œë ˆì´ì–´ ì¥ì¹˜ ë²”ìœ„ ë°–ìœ¼ë¡œ ë‚˜ê°");
+        }
+    }
 }
