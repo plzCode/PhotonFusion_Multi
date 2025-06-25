@@ -58,6 +58,7 @@ namespace Art_Equilibrium
 
         public void Update()
         {
+            if(!Runner || !Object || !Object.IsValid) return;
             if (isSlidingDoor)
             {
                 Vector3 targetPos = open ? targetLocalSlidePos : defaultLocalPos;
