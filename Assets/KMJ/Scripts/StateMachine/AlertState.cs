@@ -1,51 +1,47 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using Zombie.States;
 
 public class AlertState : ZombieState
 {
+    const float ALERT_TIME = 2f;  // 실제 체감 시간
+    const float CLIP_LENGTH = 7f;  // 원본 클립 길이
     float timer;
 
     public AlertState(ZombieAIController c) : base(c) { }
 
     public override void Enter()
     {
-        timer = 0f;
-        ctrl.SetMoveSpeed(0f);              // 제자리
-        ctrl.anim.SetBool("IsAlert", true); // 애니메이터 bool ON
+        if (!ctrl.agent.enabled || !ctrl.agent.isOnNavMesh) return;
+
+        // 1) 이동 완전 정지
+        ctrl.agent.isStopped = true;
+        ctrl.agent.speed = 0f;
+        ctrl.anim.SetFloat("Speed", 0f);
+
+        // 2) 경계 애니메이션 배속 조정 (7s → 3s)
+        ctrl.anim.speed = 3f;
+        ctrl.anim.SetBool("IsAlert", true);           // Animator 전이
+        ctrl.anim.CrossFade("Alert", 0.05f);
+
+        timer = 2f;
     }
 
     public override void Update()
     {
-        if (ctrl.Target != null)
+        timer -= Time.deltaTime;
+        if (timer <= 0f)
         {
-            bool canSee = ctrl.CanSeePlayer();
-            Debug.DrawLine(ctrl.transform.position + Vector3.up * 1.2f,
-                           ctrl.Target.position + Vector3.up * 1.2f,
-                           canSee ? Color.green : Color.red , 0.1f);
-            Debug.Log($"[AI] Target={ctrl.TargetNetObj}");
-        }
-        /* ① 플레이어를 계속 보고 있나? */
-        if (ctrl.CanSeePlayer())
-        {
-            timer += Time.deltaTime;        // 시야 유지 시간 누적
-
-            /* ② 2초 이상 감지 유지 → Chase 전환 */
-            if (timer >= 2f)
-            {
-                ctrl.ChangeState(new ChaseState(ctrl));
-            }
-        }
-        else
-        {
-            /* ③ 시야를 잃었다 → IdleWalk(배회)로 복귀 */
+            ctrl.agent.isStopped = false;
             ctrl.anim.SetBool("IsAlert", false);
-            ctrl.ChangeState(new IdleWalkState(ctrl));
+            ctrl.anim.SetFloat("Speed", 1f);
+            ctrl.ChangeState(new ChaseState(ctrl));
         }
     }
 
     public override void Exit()
     {
-        ctrl.anim.SetBool("IsAlert", false);   // 상태 나갈 때 항상 OFF
+        ctrl.anim.SetBool("IsAlert", false);
+        ctrl.anim.speed = 1f;
+        ctrl.agent.isStopped = false;
     }
 }

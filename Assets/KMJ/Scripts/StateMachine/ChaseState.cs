@@ -7,30 +7,30 @@ public class ChaseState : ZombieState
 
     public override void Enter()
     {
-        ctrl.SetMoveSpeed(3.0f);            // Run 속도
-        ctrl.anim.SetBool("IsAlert", true);
+        ctrl.anim.SetFloat("Speed", 1f);          // Run 블렌드
+        if (!ctrl.agent.enabled || !ctrl.agent.isOnNavMesh) return;
+        ctrl.agent.isStopped = false;
+        ctrl.agent.speed = ctrl.runSpeed;     // 2.5 m/s
     }
+
     public override void Update()
     {
-        if (ctrl.Target)
-            ctrl.agent.SetDestination(ctrl.Target.position);
+        if (!ctrl.agent.enabled || !ctrl.agent.isOnNavMesh) return;
 
-        if (ctrl.Target == null)
+        if (!ctrl.Target)
         {
-            // 플레이어를 잃어버리면 Alert → Idle 로 복귀
-            ctrl.ChangeState(new AlertState(ctrl));
+            ctrl.ChangeState(new IdleWalkState(ctrl));
             return;
         }
 
-        // NavMeshAgent 가 초기화 안 됐을 경우도 대비
-        if (ctrl.agent == null) return;
+        if (ctrl.agent.enabled && ctrl.agent.isOnNavMesh)
+            ctrl.agent.SetDestination(ctrl.Target.position);
 
-        ctrl.agent.SetDestination(ctrl.Target.position);
-
-        float dist = Vector3.Distance(ctrl.transform.position, ctrl.Target.position);
-        if (dist < ctrl.Data.attackRange)
+        if (ctrl.InAttackRange)
             ctrl.ChangeState(new AttackState(ctrl));
-        else if (!ctrl.CanSeePlayer())
-            ctrl.ChangeState(new AlertState(ctrl));
+        else if (!ctrl.InAlertRadius && !ctrl.InSightFov)
+            ctrl.ChangeState(new IdleWalkState(ctrl));
     }
+
+    public override void Exit() { }
 }
