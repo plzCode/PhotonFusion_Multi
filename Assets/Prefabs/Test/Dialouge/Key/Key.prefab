@@ -113,8 +113,8 @@ MonoBehaviour:
   setAnotherQuestEntryState: 0
   anotherQuestEntryNumber: 1
   anotherQuestEntryState: 0
-  luaCode: "Variable[\"isKeyGet\"] = true;\nVariable[\"isDoorOpened\"] = true;\nSetQuestState(\"\uC5F4\uC1E0\uB97C
-    \uCC3E\uC790.\", \"success\")\n"
+  luaCode: "Variable[\"isKeyGet\"] = true;\nSetQuestState(\"\uC5F4\uC1E0\uB97C \uCC3E\uC790.\",
+    \"success\")\nSetQuestState(\"2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790.\", \"active\")\n"
   sequence: 
   sequenceSpeaker: {fileID: 0}
   sequenceListener: {fileID: 0}
