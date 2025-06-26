@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 5124727038334499122}
   - component: {fileID: 5108185922802107332}
   m_Layer: 0
-  m_Name: TriggerA
+  m_Name: "\uC5F4\uC1E0 \uAD00\uB9AC \uBA85\uB2E8"
   m_TagString: Usable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 1426897030
+  SortKey: 2336818943
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []

@@ -33,7 +33,7 @@ public class UIScreen : MonoBehaviour
 		Focus(screen);
 	}
 
-	protected virtual void Focus()
+	private void Focus()
 	{
 		if(gameObject)
 			gameObject.SetActive(true);
