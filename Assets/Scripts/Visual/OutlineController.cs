@@ -5,30 +5,29 @@ using Unity.VisualScripting;
 public class OutlineController : MonoBehaviour
 {
     [SerializeField] Material _outlineMat;
-    Material[] _originMats;    // 현재는 단일 머테리얼에만 정상적으로 적용
-
+    List<List<Material>> _originMats;    // 현재는 단일 머테리얼에만 정상적으로 적용
     Renderer[] _renderers;
 
-    public bool Enabled = false;
-    bool _prevEnabled = false;
+    public bool OutlineActive = false;
+    bool _wasOutlineActive = false;
     void Awake()
     {
         _renderers = GetComponentsInChildren<Renderer>();
-        _originMats = new Material[_renderers.Length];
+        _originMats = new List<List<Material>>(_renderers.Length);
 
         for (int i = 0; i < _renderers.Length; i++)
         {
-            _originMats[i] = _renderers[i].material;
+            _originMats.Add(new List<Material>(_renderers[i].materials));
         }
     }
 
     void Update()
     {
-        bool hasChanged = Enabled != _prevEnabled;
+        bool hasChanged = OutlineActive != _wasOutlineActive;
         if (hasChanged)
         {
-            _prevEnabled = Enabled;
-            SetOutline(Enabled);
+            _wasOutlineActive = OutlineActive;
+            SetOutline(OutlineActive);
         }
     }
 
@@ -38,18 +37,28 @@ public class OutlineController : MonoBehaviour
         {
             for (int i = 0; i < _renderers.Length; i++)
             {
+                List<Material> currentMats = _originMats[i];
+
+                if (currentMats[^1] != _outlineMat)
+                    currentMats.Add(_outlineMat);
+
                 _renderers[i].SetMaterials(
-                    new List<Material> { _originMats[i], _outlineMat }
+                    currentMats
                 );
-                gameObject.layer = LayerMask.NameToLayer("Outline");
+                _renderers[i].gameObject.layer = LayerMask.NameToLayer("Outline");
             }
         }
         else
         {
             for (int i = 0; i < _renderers.Length; i++)
             {
-                _renderers[i].SetMaterials(new List<Material> { _originMats[i] });
-                gameObject.layer = LayerMask.NameToLayer("Default");
+                List<Material> currentMats = _originMats[i];
+
+                if (currentMats[^1] == _outlineMat)
+                    currentMats.RemoveAt(currentMats.Count - 1);
+
+                _renderers[i].SetMaterials(currentMats);
+                _renderers[i].gameObject.layer = LayerMask.NameToLayer("Default");
             }
         }
     }
