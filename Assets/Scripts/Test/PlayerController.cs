@@ -164,6 +164,7 @@ public class PlayerController : NetworkBehaviour
                 {
                     InterfaceManager.Instance.characterHUDUnits[i].player = this;
                     characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
+                    break;
                 }
             }
 
