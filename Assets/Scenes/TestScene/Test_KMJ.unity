@@ -653,6 +653,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba0dc7d8e9d60114293fa8306b6a3076, type: 3}
+--- !u!4 &687700112 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5734146711724366800, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+  m_PrefabInstance: {fileID: 1150159075}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &752102351
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1059050732
 Transform:
   m_ObjectHideFlags: 0
@@ -932,6 +937,87 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveMgr: {fileID: 1172126335}
   buildUpCooldown: 10
+--- !u!1001 &1150159075
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8550252493563984870, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: 'TriggerHashes.Array.data[1]'
+      value: 1654612129
+      objectReference: {fileID: 0}
+    - target: {fileID: -8550252493563984870, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: 'TriggerHashes.Array.data[2]'
+      value: 20298039
+      objectReference: {fileID: 0}
+    - target: {fileID: 98267341564595003, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: SortKey
+      value: 2078881993
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177052743261780400, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1913023261730507351, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: eyePoint
+      value: 
+      objectReference: {fileID: 687700112}
+    - target: {fileID: 1913023261730507351, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 16385
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321271475740704852, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_Name
+      value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321271475740704852, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
 --- !u!1 &1172126332
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,9 +1085,6 @@ MonoBehaviour:
   zombiePrefab: {fileID: 98267341564595003, guid: 59f5bd0af0f3aeb4aa4b2fa2de944aaa, type: 3}
   commonPool:
   - {fileID: 11400000, guid: 68d563e5538f6974ebe89e98568e53fa, type: 2}
-  flashCfg: {fileID: 11400000, guid: 13bf3899d4d922e42ba8ba721245307c, type: 2}
-  slowCfg: {fileID: 11400000, guid: 1c9aa13cb17d2394da90ed52df2a4af5, type: 2}
-  alarmCfg: {fileID: 11400000, guid: 509daa04f1e9be04a8bab57d9ee26d79, type: 2}
   maxInterval: 20
   minInterval: 6
   firstDelay: 5
@@ -1313,3 +1396,4 @@ SceneRoots:
   - {fileID: 1594101845}
   - {fileID: 145136801}
   - {fileID: 574691248}
+  - {fileID: 1150159075}

@@ -7,23 +7,32 @@ using Zombie.States;
 [RequireComponent(typeof(ZombieController))]
 public class ZombieAIController : NetworkBehaviour
 {
-    [HideInInspector] public Animator anim;
-    [HideInInspector] public NavMeshAgent agent;
+    [Header("Refs")]
+    public Animator anim { get; private set; }
+    public NavMeshAgent agent { get; private set; }
+    ZombieController zCtrl;
 
-    [Networked, HideInInspector] public NetworkObject TargetNetObj { get; private set; }
+    [Header("Sense Settings")]
+    [SerializeField] float alertRadius = 8f;   // 반경 감지 (m)
+    [SerializeField] float fovDeg = 120f;  // 시야각 (°)
+
+    [Header("Move Speeds")]
+    public float walkSpeed = 1.2f;
+    public float runSpeed = 4.5f;    // 추적 속도
+
+    /* ───── Network-Synced 플래그 ───── */
+    [Networked] public bool InAlertRadius { get; private set; }
+    [Networked] public bool InSightFov { get; private set; }
+    [Networked] public bool InAttackRange { get; private set; }
+    [Networked] public bool IsAttacking { get; set; }
+
+    /* ───── 기타 ───── */
+    [Networked] public NetworkObject TargetNetObj { get; private set; }
     public Transform Target => TargetNetObj ? TargetNetObj.transform : null;
 
-    /* ─ Config 접근 ─ */
-    public ZombieConfig Data => zCtrl.Data;
-
-    /* ─ 내부 ─ */
-    ZombieController zCtrl;
     ZombieState current;
-
-    public bool IsAttacking { get; set; }
-
-    const int REFRESH_TICKS = 30;     // 약 0.5초(60Hz)마다 갱신
-    const float DETECT_RADIUS = 12F;
+    const int REFRESH_TICKS = 30;   // 0.5 s
+    public ZombieState CurrentState => current;
 
     /* ========== 초기화 ========== */
     void Awake()
@@ -31,6 +40,69 @@ public class ZombieAIController : NetworkBehaviour
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         zCtrl = GetComponent<ZombieController>();
+    }
+
+    public override void Spawned()
+    {
+        if (HasStateAuthority)               // Host만 타깃 계산
+            TargetNetObj = GetNearestPlayer();
+
+        ChangeState(new IdleWalkState(this));
+    }
+
+    /* ====================== 메인 루프 ====================== */
+    public override void FixedUpdateNetwork()
+    {
+
+        /* 1) 타깃 재탐색 (서버) */
+        if (HasStateAuthority &&
+            (TargetNetObj == null || Runner.Tick % REFRESH_TICKS == 0))
+            TargetNetObj = GetNearestPlayer();
+
+        /* 2) 센서 플래그 갱신 (서버) */
+        if (HasStateAuthority)
+            SensePlayer();
+
+        if (!(current is AlertState) && Target && agent.enabled && agent.isOnNavMesh)
+            agent.SetDestination(Target.position);
+
+        /* 3) 상태 머신 */
+        current?.Update();
+
+        /* 4) 애니메이터 파라미터 공통 처리 */
+        anim.SetBool("InAttackRange", InAttackRange);
+
+    }
+
+    /* ====================== 센싱 ====================== */
+    void SensePlayer()
+    {
+        if (!Target)
+        {
+            InAlertRadius = InSightFov = InAttackRange = false;
+            return;
+        }
+        Vector3 toT = Target.position - transform.position;
+        float sqr = toT.sqrMagnitude;
+        /* 반경 */
+        InAlertRadius = sqr < alertRadius * alertRadius;
+        /* 시야 + 가림 */
+        float angle = Vector3.Angle(transform.forward, toT);
+        InSightFov = angle < fovDeg * 0.5f && zCtrl.CanSeePlayer(Target, alertRadius, fovDeg);
+
+        /* 근접 사거리 – ZombieConfig 값 사용 */
+        float atkR = zCtrl.Data ? zCtrl.Data.attackRange : 1f;
+        InAttackRange = sqr < atkR * atkR;
+    }
+
+    /* ========== 상태 머신 ========== */
+    public void ChangeState(ZombieState next)
+    {
+        current?.Exit();
+        current = next;
+        current.Enter();
+
+        Debug.Log($"{name} ▶ {next.GetType().Name}");
     }
 
     NetworkObject GetNearestPlayer()
@@ -51,51 +123,6 @@ public class ZombieAIController : NetworkBehaviour
         return nearest;
     }
 
-    public override void Spawned()
-    {
-
-        if (HasStateAuthority)               // Host만 타깃 계산
-            TargetNetObj = GetNearestPlayer();
-
-        ChangeState(new IdleWalkState(this));
-    }
-
-    /* ========== 상태 머신 ========== */
-    public void ChangeState(ZombieState next)
-    {
-        current?.Exit();
-        current = next;
-        current.Enter();
-
-        Debug.Log($"{name} ▶ {next.GetType().Name}");
-    }
-
-    public override void FixedUpdateNetwork()
-    {
-
-        if (HasStateAuthority && Runner.Tick % 30 == 0)
-        {
-            Debug.Log($"{name}  onNav={agent.isOnNavMesh}  vel={agent.velocity.magnitude:0.00}  rem={agent.remainingDistance:0.00}");
-        }
-
-        if (HasStateAuthority && Runner.Tick % 60 == 0)
-            Debug.Log($"{name} Target = {TargetNetObj?.name}");
-
-        current?.Update();
-
-
-        if (HasStateAuthority && Runner.Tick % REFRESH_TICKS == 0 || TargetNetObj == null)
-            TargetNetObj = GetNearestPlayer();
-
-        if (HasStateAuthority && (Runner.Tick % REFRESH_TICKS == 0 || TargetNetObj == null))
-        {
-            TargetNetObj = GetNearestPlayerWithinRadius(DETECT_RADIUS);
-            // 시야로도 보이면 Alert 즉시 Chase
-            if (TargetNetObj && CanSeePlayer())
-                ChangeState(new ChaseState(this));
-        }
-    }
-
     NetworkObject GetNearestPlayerWithinRadius(float radius)
     {
         NetworkObject nearest = null;
@@ -113,41 +140,6 @@ public class ZombieAIController : NetworkBehaviour
         }
         return nearest;
     }
-
-
-    public void SetMoveSpeed(float s) => agent.speed = s;
-
-    public bool CanSeePlayer(float maxDist = 15f, float fov = 120f)
-    {
-        if (Target == null) return false;
-
-        Vector3 dir = (Target.position - transform.position);
-        if (dir.sqrMagnitude > maxDist * maxDist) return false;
-
-        float angle = Vector3.Angle(transform.forward, dir);
-        if (angle > fov * 0.5f) return false;
-
-        // 레이캐스트로 가림 확인
-        if (Physics.Raycast(transform.position + Vector3.up * 1.2f,
-                            dir.normalized, out RaycastHit hit, maxDist,
-                            LayerMask.GetMask("Default", "Environment", "Player")))
-            return hit.transform == Target;
-
-        return true;
-    }
-    public void PlayBlend(float speed01)
-    {
-        anim.SetFloat("Speed", speed01);
-    }
-    /* 소리 감지용 간단 콜백 (선택) */
-    public void OnHearSound(Vector3 pos)
-    {
-        if (!HasStateAuthority) return;
-        float dist = Vector3.Distance(transform.position, pos);
-        if (dist < 20f)                     // 청각 반응 반경
-            ChangeState(new AlertState(this));
-    }
-
     public void HandleAttackHit()
     {
         // 1) 서버(Host)에서만 판정
@@ -158,7 +150,7 @@ public class ZombieAIController : NetworkBehaviour
 
         /* 3) SphereCast 판정 */
         float radius = 0.45f;                   // 팔 두께
-        float maxDist = Data.attackRange;        // SO 사거리
+        float maxDist = zCtrl.Data.attackRange;        // SO 사거리
         Vector3 origin = transform.position + Vector3.up * 1.2f;
 
         if (Physics.SphereCast(origin, radius, transform.forward,
@@ -167,7 +159,7 @@ public class ZombieAIController : NetworkBehaviour
         {
             var pc = hit.collider.GetComponent<PlayerController>();
             if (pc != null)
-                pc.TakeDamage(Data.damage);      // 4) 데미지 적용
+                pc.TakeDamage(zCtrl.Data.damage);      // 4) 데미지 적용
         }
         IsAttacking = false; //중복 방지
     }

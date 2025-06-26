@@ -94,4 +94,13 @@ public class CreateGameUI : MonoBehaviour
 			_lobbyIsValid = false;
 		}
 	}
+
+    public void TryCreateLobbyLJE(GameLauncherLJE launcher)
+    {
+        if (_lobbyIsValid)
+        {
+            launcher.JoinOrCreateLobby();
+            _lobbyIsValid = false;
+        }
+    }
 }
