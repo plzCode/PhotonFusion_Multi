@@ -268,9 +268,7 @@ MonoBehaviour:
   setAnotherQuestEntryState: 0
   anotherQuestEntryNumber: 1
   anotherQuestEntryState: 0
-  luaCode: "Variable[\"isPowerActive\"] = true;\nSetQuestState(\"\uC804\uB825\uC744
-    \uACF5\uAE09\uD558\uC790.\", \"success\");\nSetQuestState(\"\uAD50\uC218\uC5D0\uAC8C
-    \uB3CC\uC544\uAC00\uC790.\", \"active\");"
+  luaCode: Variable["isPowerActive"] = true;
   sequence: 
   sequenceSpeaker: {fileID: 0}
   sequenceListener: {fileID: 0}

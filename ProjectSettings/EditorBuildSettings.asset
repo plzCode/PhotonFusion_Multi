@@ -27,7 +27,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TestScene/Test_KMJ.unity
     guid: 44c006af055eb0940b54ed5f783f7912
   - enabled: 1
-    path: Assets/Scenes/TestScene/Test_YSW_LostTIme.unity
+    path: Assets/Scenes/TestScene/Test_PSS.unity
     guid: 71aee91521fe9e2408f591818987020c
   - enabled: 1
     path: Assets/Scenes/TestScene/Test_YSH.unity

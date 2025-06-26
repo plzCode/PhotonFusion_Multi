@@ -254,37 +254,6 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-  - id: 6
-    fields:
-    - title: Name
-      value: "\uAD50\uC218\uC5D0\uAC8C \uB3CC\uC544\uAC00\uC790."
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: "\uC804\uB825\uC744 \uBB34\uC0AC\uD788 \uACF5\uAE09\uD588\uB2E4. \uAD50\uC218\uC5D0\uAC8C
-        \uB3CC\uC544\uAC00\uC790."
-      type: 0
-      typeString: 
-    - title: Success Description
-      value: 
-      type: 0
-      typeString: 
-    - title: Failure Description
-      value: 
-      type: 0
-      typeString: 
-    - title: State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Is Item
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
   - id: 5
     fields:
     - title: Name
@@ -373,20 +342,6 @@ MonoBehaviour:
       value: "\uC5F4\uC1E0 \uD68D\uB4DD \uC5EC\uBD80"
       type: 0
       typeString: 
-  - id: 8
-    fields:
-    - title: Name
-      value: isConactProfessor
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: "\uB354\uBBF8 \uBCC0\uC218"
-      type: 0
-      typeString: 
   - id: 1
     fields:
     - title: Name
@@ -404,7 +359,7 @@ MonoBehaviour:
   - id: 6
     fields:
     - title: Name
-      value: isDoorConact
+      value: isDoorOpened
       type: 0
       typeString: 
     - title: Initial Value
@@ -427,21 +382,6 @@ MonoBehaviour:
       typeString: CustomFieldType_Boolean
     - title: Description
       value: "\uBB34\uC804 \uC5EC\uBD80"
-      type: 0
-      typeString: 
-  - id: 9
-    fields:
-    - title: Name
-      value: Dummy
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: "\uC804\uC6D0 \uACF5\uAE09 <-> \uAD50\uC218 \uC0AC\uC774\uC758 \uB354\uBBF8
-        \uBCC0\uC218"
       type: 0
       typeString: 
   conversations:
@@ -607,11 +547,10 @@ MonoBehaviour:
         destinationDialogueID: 9
         isConnector: 0
         priority: 2
-      conditionsString: "CurrentQuestState(\"2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790.\")
-        == \"active\""
+      conditionsString: "CurrentQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\")
+        == \"unassigned\""
       userScript: "SetQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\",
-        \"active\");\nSetQuestState(\"2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790.\",
-        \"success\");\nVariable[\"isPowerActive\"] = false;\nShowAlert(\"\uC804\uB825\uC744
+        \"active\");\nVariable[\"isPowerActive\"] = false;\nShowAlert(\"\uC804\uB825\uC744
         \uACF5\uAE09\uD558\uC790.\");"
       onExecute:
         m_PersistentCalls:
@@ -663,7 +602,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 1
+        originDialogueID: 6
+        destinationConversationID: 1
+        destinationDialogueID: 8
+        isConnector: 0
+        priority: 2
       conditionsString: "CurrentQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\")
         == \"active\" "
       userScript: 
@@ -672,8 +617,58 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 554.77106
-        y: 163.17
+        x: 555.9906
+        y: 164.38951
+        width: 160
+        height: 30
+    - id: 8
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: "\uD018\uC2A4\uD2B8 \uC644\uB8CC"
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 1
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: Variable["isPowerActive"] == true
+      userScript: "SetQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\",
+        \"success\");"
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 553.9434
+        y: 227.9616
         width: 160
         height: 30
     - id: 9
@@ -1227,7 +1222,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 272.07358
+        x: 273.44345
         y: 656.78577
         width: 160
         height: 30
@@ -1279,18 +1274,16 @@ MonoBehaviour:
         destinationDialogueID: 20
         isConnector: 0
         priority: 2
-      conditionsString: "CurrentQuestState(\"\uAD50\uC218\uC5D0\uAC8C \uB3CC\uC544\uAC00\uC790.\")
-        == \"active\""
-      userScript: "Variable[\"GoToTarget\"] = true;\nSetQuestState(\"\uAD50\uC218\uC5D0\uAC8C
-        \uB3CC\uC544\uAC00\uC790.\", \"success\");\nSetQuestState(\"\uAD6C\uC870\uB97C
-        \uC694\uCCAD\uD558\uC790.\", \"active\");"
+      conditionsString: "CurrentQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\")
+        == \"success\""
+      userScript: Variable["GoToTarget"] = true;
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 774.3182
-        y: 164.08467
+        y: 165.45454
         width: 160
         height: 30
     - id: 20
@@ -1614,7 +1607,8 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: "SetQuestState(\"\uAD6C\uC870\uB97C \uC694\uCCAD\uD558\uC790.\",
+        \"active\");"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1625,8 +1619,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 19.1781, y: 0}
-    canvasZoom: 0.7300001
+    canvasScrollPosition: {x: 142.94377, y: 7.793814}
+    canvasZoom: 0.9999999
   syncInfo:
     syncActors: 0
     syncItems: 0
