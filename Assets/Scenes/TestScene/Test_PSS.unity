@@ -254,6 +254,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 15.9
       objectReference: {fileID: 0}
+    - target: {fileID: 890264587208183895, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 890264587208183895, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1194472934156930706, guid: 45673c9de9802a64e9a4707dd1d2eb4b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
