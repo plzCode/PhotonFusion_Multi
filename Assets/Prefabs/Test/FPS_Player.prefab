@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 4115730921566571420}
   - component: {fileID: 6715751569870295092}
   - component: {fileID: -3274518401421121225}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FPS_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,6 +521,7 @@ MonoBehaviour:
   inputSmoothSpeed: 5
   weaponManager: {fileID: 3360197090615604105}
   armTransform: {fileID: 5239974456429637099}
+  fpsMuzzleTransform: {fileID: 1358902179287548458}
   defaultArmPosition: {x: 0, y: 0, z: 0}
   armTargetPositon: {x: -0.12, y: 0.012, z: 0}
   zoomLerpSpeed: 10
@@ -1109,6 +1110,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6965368363981148563}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2934649184269171931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1358902179287548458}
+  m_Layer: 8
+  m_Name: fpsMuzzlePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1358902179287548458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2934649184269171931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.097, y: 1.582, z: 1.1218}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3373459827232487432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3152813250923987855
 GameObject:
@@ -3778,7 +3810,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4843286368403822, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1358902179287548458}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
 --- !u!4 &3373459827232487432 stripped
@@ -3948,7 +3983,7 @@ MonoBehaviour:
   bulletVelocity: 100
   bulletsPerShot: 1
   damage: 20
-  muzzleFlash: {fileID: 1000010254994808, guid: bed79ed361384f643b8c7ee4be202837, type: 3}
+  muzzleFlash: {fileID: 100006, guid: 01b7c6863c0a17d46ade805dce9d7cb6, type: 3}
   muzzleSmoke: {fileID: 6631087918505611698, guid: f3aa683335052b347be94db7aa520c8d, type: 3}
   aimpos: {fileID: 3442137627632222918}
   recoilAmount: 2

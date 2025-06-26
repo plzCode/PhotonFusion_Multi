@@ -9,10 +9,13 @@ public class DieState : ZombieState
 
     public override void Enter()
     {
-        ctrl.SetMoveSpeed(0);
-        ctrl.anim.SetBool("IsDead", true);      // Die 애니 Bool
-        ctrl.agent.enabled = false;             // 네비 꺼두기
+        ctrl.anim.CrossFade("Die", 0.05f);
+        if (ctrl.agent.enabled && ctrl.agent.isOnNavMesh)
+        {
+            ctrl.agent.enabled = false;
+        }
+        ctrl.GetComponent<Collider>().enabled = false;
     }
-
-    public override void Update() { }      // 아무것도 안 함
+    public override void Update() { }
+    public override void Exit() { }
 }

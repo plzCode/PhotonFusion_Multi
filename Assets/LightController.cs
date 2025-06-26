@@ -1,45 +1,60 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class LightController : MonoBehaviour
 {
-    public GameObject lightGroup;  // ¹İµå½Ã Inspector¿¡ ¿¬°á
-    private bool isActivated = false;
+    public GameObject lightGroup; 
+    public bool isActivated = false;
 
     void Start()
     {
         if (lightGroup != null)
         {
-            lightGroup.SetActive(false);  // Ã³À½¿¡ ²¨Áü
-            Debug.Log("LightGroup ²¨Áü");
+            DisableAllLights();  // ì²˜ìŒì— êº¼ì§
+            Debug.Log("LightGroup êº¼ì§");
         }
         else
         {
-            Debug.LogError("lightGroup ¿¬°á ¾ÈµÊ"); // ¿©±â¿¡ °É¸®¸é ¿¬°áÀÌ ¾È µÈ °Í
+            Debug.LogError("lightGroup ì—°ê²° ì•ˆë¨"); 
         }
     }
 
-    void Update()
+   /* void Update()
     {
-        if (Input.anyKeyDown) Debug.Log("Å° ÀÔ·Â °¨ÁöµÊ");
 
-        if (!isActivated && Input.GetKeyDown(KeyCode.F))
+        if (Input.anyKeyDown) Debug.Log("í‚¤ ì…ë ¥ ê°ì§€ë¨");
         {
-            Debug.Log("FÅ° ´­¸²");
-            TurnOnLights();
+            if (!isActivated && Input.GetKeyDown(KeyCode.E))
+            {
+
+                Debug.Log("Eí‚¤ ëˆŒë¦¼");
+                EnableAllLights();
+                isActivated = true;
+            }
+        }
+    }*/
+
+
+    public void DisableAllLights()
+    {
+        var lights = lightGroup.GetComponentsInChildren<Light>();
+        Debug.Log($"DisableAllLights ì°¾ì€ ë¼ì´íŠ¸ ê°œìˆ˜: {lights.Length}");
+
+        foreach (var light in lights)
+        {
+            Debug.Log($"ë„ëŠ” ë¼ì´íŠ¸: {light.name}");
+            light.enabled = false;
         }
     }
 
-    public void TurnOnLights()
+    public void EnableAllLights()
     {
-        if (lightGroup != null)
+        var lights = lightGroup.GetComponentsInChildren<Light>();
+        Debug.Log($"EnableAllLights ì°¾ì€ ë¼ì´íŠ¸ ê°œìˆ˜: {lights.Length}");
+
+        foreach (var light in lights)
         {
-            lightGroup.SetActive(true);
-            isActivated = true;
-            Debug.Log("Á¶¸í ÄÑÁü");
-        }
-        else
-        {
-            Debug.LogError("Á¶¸í ±×·ìÀÌ ¿¬°áµÇÁö ¾ÊÀ½");
+            Debug.Log($"ì¼œëŠ” ë¼ì´íŠ¸: {light.name}");
+            light.enabled = true;
         }
     }
 }
