@@ -162,6 +162,7 @@ public class PlayerController : NetworkBehaviour
             {
                 if (InterfaceManager.Instance.characterHUDUnits[i].player == null)
                 {
+                    InterfaceManager.Instance.characterHUDUnits[i].player = this;
                     characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
                 }
             }
