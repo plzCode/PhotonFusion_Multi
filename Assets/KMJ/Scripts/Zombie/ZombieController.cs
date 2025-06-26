@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(ZombieAIController))]
@@ -13,6 +14,11 @@ public class ZombieController : NetworkBehaviour
 
     /* 네트워크 동기화 변수 */
     [Networked] public int CurrentHP { get; set; }
+
+
+    [Header("Vision")]
+    [SerializeField] Transform eyePoint;      // ← 씬/프리팹에서 ‘눈 위치’ 트랜스폼 드래그
+    [SerializeField] LayerMask obstacleMask;  // ← “Default, Environment, Player” 등 가림 레이어
 
     /* ───── 내부 ───── */
     NavMeshAgent agent;
@@ -35,6 +41,22 @@ public class ZombieController : NetworkBehaviour
 
         if (HasStateAuthority && CurrentHP == 0)
             CurrentHP = data.maxHP;
+    }
+    public bool CanSeePlayer(Transform target, float maxDist = 15f, float fov = 120f)
+    {
+        if (!target) return false;
+
+        Vector3 dir = target.position - eyePoint.position;
+        if (dir.sqrMagnitude > maxDist * maxDist) return false;
+
+        if (Vector3.Angle(eyePoint.forward, dir) > fov * 0.5f) return false;
+
+        if (Physics.Raycast(eyePoint.position, dir.normalized, out var hit,
+                            maxDist, obstacleMask,
+                            QueryTriggerInteraction.Ignore))
+            return hit.transform.root == target.root;   // 팔/총 무시
+
+        return true;
     }
 
     /*========== 플레이어가 때릴 때 호출할 메서드 ==========*/
@@ -60,18 +82,13 @@ public class ZombieController : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_Hit()
     {
-        anim.SetTrigger("Hit");                // Hit 애니
         ai.ChangeState(new HitState(ai));      // 짧은 경직
     }
 
     /*========== 사망 처리 ==========*/
     void Die()
     {
-        anim?.SetBool("IsDead", true);                       // 죽음 애니 (옵션)
-        var special = GetComponent<SpecialZombieController>();
-        if (special) special.OnDeath();   // 특수 효과 발동
-        agent.enabled = false;                               // 이동정지
-
+        ai.ChangeState(new DieState(ai));
         StartCoroutine(WaitAndDespawn());
     }
 
@@ -81,4 +98,6 @@ public class ZombieController : NetworkBehaviour
         if (Object && Object.HasStateAuthority)
             Runner.Despawn(Object);
     }
+
+
 }
