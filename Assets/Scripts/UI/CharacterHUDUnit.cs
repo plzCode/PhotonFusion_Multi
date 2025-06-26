@@ -11,8 +11,9 @@ public class CharacterHUDUnit : MonoBehaviour
     [SerializeField] Slider _healthBarSlider;
     [SerializeField] TextMeshProUGUI _nameText;
     [SerializeField] TextMeshProUGUI _healthText;
-    int _maxHealth = 100;
-    int _currentHealth = 100;
+    public PlayerController player;
+    float _maxHealth = 100;
+    float _currentHealth = 100;
 
     float _percent => _maxHealth > 0 ? (float)_currentHealth / _maxHealth : 0f;
 
@@ -20,7 +21,7 @@ public class CharacterHUDUnit : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            OnChangeHealth(_currentHealth - 1);
+            //OnChangeHealth(_currentHealth - 1);
         }
     }
 
@@ -43,7 +44,7 @@ public class CharacterHUDUnit : MonoBehaviour
         _nameText.text = name;
     }
 
-    void OnChangeHealth(int health)
+    public void OnChangeHealth(float health)
     {
         _currentHealth = health;
         _healthBarImage.color = HUDContainer.HealthGradient.Evaluate(_percent);

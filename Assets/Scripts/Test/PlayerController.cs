@@ -91,6 +91,8 @@ public class PlayerController : NetworkBehaviour
 
     #endregion
 
+    [SerializeField] public CharacterHUDUnit characterHUDUnit;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -107,6 +109,8 @@ public class PlayerController : NetworkBehaviour
     public override void Spawned()
     {
         base.Spawned();
+
+        
 
         // 초기 팔 위치값 저장(일반상태 팔위치)
         defaultArmPosition = armTransform.localPosition;
@@ -136,7 +140,11 @@ public class PlayerController : NetworkBehaviour
                 rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             }
 
-                        
+            // 스탯 UI 연결 ( 자신 )
+            characterHUDUnit = InterfaceManager.Instance.characterHUDcontainter.MyPlayerStatus_UI;
+
+
+
         }
         else
         {
@@ -148,6 +156,14 @@ public class PlayerController : NetworkBehaviour
             for (int i = 0; i < fpsBodyCasting.Length; i++)
             {
                 fpsBodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+            // 스탯 UI 연결 ( 다른 플레이어 )
+            for (int i = 0; i < 3; i++)
+            {
+                if (InterfaceManager.Instance.characterHUDUnits[i].player == null)
+                {
+                    characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
+                }
             }
 
         }
@@ -240,7 +256,7 @@ public class PlayerController : NetworkBehaviour
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_ZombieHit(float yaw, float pitch)
     {
-        TakeDamage(0);
+        TakeDamage(1);
 
         Vector3 rayOrigin = playerCamera.transform.position; // 또는 총구 위치
         Quaternion aimRotation = Quaternion.Euler(pitch, yaw, 0f);
@@ -348,9 +364,19 @@ public class PlayerController : NetworkBehaviour
                 rb.linearVelocity = Vector3.zero;
 
             }
+
+            RPC_ChangeHealth(Hp);
+            
         }
                 
     }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_ChangeHealth(float hp)
+    {
+        characterHUDUnit.OnChangeHealth(Hp);
+    }
+
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
     private void RPC_SetArmAnim(string paramName,bool _bool)
