@@ -1,18 +1,10 @@
-﻿using PixelCrushers.DialogueSystem;
-using UnityEngine;
-using Fusion;
-using Fusion.Sockets;
-using System;
-using System.Collections.Generic;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 namespace Art_Equilibrium
 {
-    public class AE_Door : NetworkBehaviour
+    public class AE_Door : MonoBehaviour
     {
-        [Networked]
-        private NetworkBool open { get; set; } = false;
-        bool trig;
+        bool trig, open;
         public float smooth = 2.0f;
         public float DoorOpenAngle = 87.0f;
         private Quaternion defaultRot;
@@ -41,9 +33,6 @@ namespace Art_Equilibrium
         public AudioClip closeSound;
         private AudioSource audioSource;
 
-        [SerializeField]
-        private NavMeshObstacle doorObstacle;
-
         private void Start()
         {
             defaultRot = transform.rotation;
@@ -53,12 +42,10 @@ namespace Art_Equilibrium
             isKeyPressed = false;
 
             audioSource = gameObject.AddComponent<AudioSource>();
-            doorObstacle = GetComponent<NavMeshObstacle>();
         }
 
-        public void Update()
+        private void Update()
         {
-            if(!Runner || !Object || !Object.IsValid) return;
             if (isSlidingDoor)
             {
                 Vector3 targetPos = open ? targetLocalSlidePos : defaultLocalPos;
@@ -70,12 +57,11 @@ namespace Art_Equilibrium
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * smooth);
             }
 
-            //Debug.Log(Object.HasInputAuthority ? "Has Input Authority" : "Does not have Input Authority");
             if (Input.GetKeyDown(KeyCode.E) && trig && !isKeyPressed)
             {
-                Debug.Log("E key pressed, toggling door state.");
-                RPC_ToggleDoor();
+                open = !open;
                 isKeyPressed = true;
+                PlayDoorSound();
             }
 
             if (Input.GetKeyUp(KeyCode.E))
@@ -84,14 +70,6 @@ namespace Art_Equilibrium
             }
 
             doorMessage = trig ? (open ? closeMessage : openMessage) : "";
-        }
-
-        [Rpc(RpcSources.All, RpcTargets.All)]
-        private void RPC_ToggleDoor()
-        {
-            open = !open;
-            doorObstacle.carving = !open;
-            PlayDoorSound();
         }
 
         private void OnGUI()
@@ -124,7 +102,7 @@ namespace Art_Equilibrium
         {
             if (coll.CompareTag("Player"))
             {
-                //doorMessage = open ? closeMessage : openMessage;
+                doorMessage = open ? closeMessage : openMessage;
                 trig = true;
             }
         }
@@ -154,6 +132,5 @@ namespace Art_Equilibrium
                 }
             }
         }
-
     }
 }
