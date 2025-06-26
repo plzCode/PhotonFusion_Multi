@@ -12,15 +12,15 @@ public class Helicopter_Controller : MonoBehaviour
     public AudioSource heliSound;
 
     // 모델이 X+ 방향일 경우 보정용 회전
-    private readonly Quaternion modelRotationOffset = Quaternion.Euler(0f, -90f, 0f);
-
-    public void Start()
-    {
-        StartFlightSequence();
-    }
+    private readonly Quaternion modelRotationOffset = Quaternion.Euler(0f, -90f, 0f);    
 
     public void StartFlightSequence()
     {
+        if (!transform.gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
+
         Vector3 toTarget = (flyTargetPoint.position - transform.position).normalized;
 
         // ✅ 기본 회전 (Z+ 기준 → X+ 보정)
