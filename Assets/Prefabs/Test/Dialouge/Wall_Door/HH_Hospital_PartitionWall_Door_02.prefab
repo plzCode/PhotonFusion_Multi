@@ -251,14 +251,13 @@ GameObject:
   - component: {fileID: 5036536263466299932}
   - component: {fileID: 4382523309545605528}
   - component: {fileID: 1308282505425382539}
-  - component: {fileID: 6733147302181371784}
+  - component: {fileID: 7139018013710811132}
   - component: {fileID: 2121901356785401243}
   - component: {fileID: 6873189557625604723}
   - component: {fileID: 2403074668981726776}
   - component: {fileID: 2413933186818974816}
-  - component: {fileID: 4173422607055282010}
   m_Layer: 0
-  m_Name: "\uBB38"
+  m_Name: HH_Interior_Doors_02_LOD0
   m_TagString: Usable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -446,7 +445,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.14654088, y: 2.3321824, z: 1.3489838}
   m_Center: {x: 0.018481135, y: 1.1660912, z: -0.6744919}
---- !u!114 &6733147302181371784
+--- !u!114 &7139018013710811132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -455,22 +454,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7012912300144772791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51fbc273cf5f8fe419e6dfdd40fbac75, type: 3}
+  m_Script: {fileID: 11500000, guid: b5ec3be05e5c93243a46b10bb0bbd396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   smooth: 2
   DoorOpenAngle: 87
   isSlidingDoor: 0
   slideOffset: {x: 1, y: 0, z: 0}
-  openMessage: Open E
-  closeMessage: Close E
+  openMessage: 
+  closeMessage: 
   messageFont: {fileID: 0}
   fontSize: 24
   fontColor: {r: 1, g: 1, b: 1, a: 1}
   messagePosition: {x: 0.5, y: 0.5}
-  openSound: {fileID: 0}
-  closeSound: {fileID: 0}
-  doorObstacle: {fileID: 0}
+  openSound: {fileID: 8300000, guid: 7eae614257716554b8cb61086e92a4ae, type: 3}
+  closeSound: {fileID: 8300000, guid: 41e1c0e1dd30a5144a430a2961d12824, type: 3}
 --- !u!65 &2121901356785401243
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -531,7 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 253447651
+  SortKey: 864939552
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
@@ -563,22 +561,6 @@ MonoBehaviour:
     onUse:
       m_PersistentCalls:
         m_Calls: []
---- !u!208 &4173422607055282010
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7012912300144772791}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.07300001, y: 1.166, z: 0.674}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0.018000001, y: 1.166, z: -0.674}
-  m_TimeToStationary: 0.5
 --- !u!1 &7682974469204590136
 GameObject:
   m_ObjectHideFlags: 0
