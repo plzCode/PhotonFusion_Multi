@@ -22671,7 +22671,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 328dff2713171c043a144ddf6bda4be0, type: 2}
     - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
       propertyPath: fps_Player.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
       propertyPath: 'fps_Player.Array.data[0]'
@@ -22681,6 +22681,10 @@ PrefabInstance:
       propertyPath: 'fps_Player.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: e065e1291cc17874fa0f5209059b6deb, type: 2}
+    - target: {fileID: 5565203122976307857, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
+      propertyPath: 'fps_Player.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b33a4cc0d0c73e049bd93a085a1afcdf, type: 2}
     - target: {fileID: 5565203122976307858, guid: f87ea1b0d58347047a1995bce4f6c7a5, type: 3}
       propertyPath: m_Name
       value: Resource Manager
