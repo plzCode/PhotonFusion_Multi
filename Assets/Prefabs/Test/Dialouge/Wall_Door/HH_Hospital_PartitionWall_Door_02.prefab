@@ -349,7 +349,7 @@ MonoBehaviour:
     luaConditions: []
     questConditions:
     - questName: "\uC5F4\uC1E0 \uAD00\uB9AC \uBA85\uB2E8\uC744 \uCC3E\uC544\uBCF4\uC790."
-      questState: 3
+      questState: 1
       checkQuestEntry: 0
       entryNumber: 0
       questEntryState: 0
@@ -366,7 +366,7 @@ MonoBehaviour:
   setAnotherQuestEntryState: 0
   anotherQuestEntryNumber: 1
   anotherQuestEntryState: 0
-  luaCode: "Variable[\"isDoorConact\"] = true;\nSetQuestState(\"\uC5F4\uC1E0 \uAD00\uB9AC
+  luaCode: "Variable[\"isDoorOpened\"] = false;\nSetQuestState(\"\uC5F4\uC1E0 \uAD00\uB9AC
     \uBA85\uB2E8\uC744 \uCC3E\uC544\uBCF4\uC790.\", \"active\");"
   sequence: 
   sequenceSpeaker: {fileID: 0}
@@ -534,7 +534,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 0}
+  - {fileID: 7139018013710811132}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &2413933186818974816
 MonoBehaviour:
