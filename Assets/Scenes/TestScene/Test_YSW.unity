@@ -6444,6 +6444,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Professor_2
       objectReference: {fileID: 0}
+    - target: {fileID: 1109600803585967536, guid: f7f8eea8f2dd12d4a8a6d0baf39fcef1, type: 3}
+      propertyPath: Animator
+      value: 
+      objectReference: {fileID: 1756578886}
     - target: {fileID: 2016655462466128038, guid: f7f8eea8f2dd12d4a8a6d0baf39fcef1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.17
@@ -6509,6 +6513,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63bb5658960fc2b4cb41d3117c9160cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1756578886 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5387920309653402328, guid: f7f8eea8f2dd12d4a8a6d0baf39fcef1, type: 3}
+  m_PrefabInstance: {fileID: 1756578883}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1801610463
 PrefabInstance:
   m_ObjectHideFlags: 0
