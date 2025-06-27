@@ -1058,7 +1058,7 @@ MonoBehaviour:
   _Hp: 100
   _isAlive: 1
   moveSpeed: 5
-  jumpForce: 4
+  jumpForce: 5
   groundCheckDistance: 0.2
   inputSmoothSpeed: 5
   weaponManager: {fileID: 4977463452442816518}
@@ -1126,6 +1126,8 @@ MonoBehaviour:
   customGravity: -9.81
   fallMultiplier: 2
   _RoomUser: {fileID: 0}
+  characterHUDUnit: {fileID: 0}
+  stickToGroundForce: 30
   recoilAmount: 1.5
   recoilRecoveryTime: 0.35
   maxYawRecoil: 1.5

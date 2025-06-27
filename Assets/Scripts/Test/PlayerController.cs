@@ -386,17 +386,31 @@ public class PlayerController : NetworkBehaviour
         armAnim.SetBool(paramName, _bool);
     }
 
+    [SerializeField] private float stickToGroundForce = 30f; // 접지 유지 힘
     private void ApplyGravity()
     {
         // 중력 처리 (StateAuthority만 담당)
-        if (HasStateAuthority && !isGrounded)
+        if (HasStateAuthority )
         {
-            Vector3 gravity = Vector3.up * customGravity;
-            if (rb.linearVelocity.y < 0)
-                gravity *= fallMultiplier;
+            if (isGrounded)
+            {
+                
 
-            rb.AddForce(gravity, ForceMode.Acceleration);
+                // 살짝 바닥으로 누르는 힘
+                rb.AddForce(Vector3.down * stickToGroundForce, ForceMode.Acceleration);
+            }
+            else
+            {
+                // 일반 중력
+                Vector3 gravity = Vector3.up * customGravity;
+                if (rb.linearVelocity.y < 0)
+                    gravity *= fallMultiplier;
+
+                rb.AddForce(gravity, ForceMode.Acceleration);
+            }
+
         }
+
     }
 
     private void HandleAnimation(PlayerInput.NetworkInputData input)
@@ -538,24 +552,80 @@ public class PlayerController : NetworkBehaviour
             }
         }
     }
-
+    private Vector3 groundedHitPoint;
 
     private void CheckGrounded()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, ~0);
+        // 캡슐 모양의 접지 검사 (CapsuleCollider처럼)
+        float capsuleRadius = 0.35f; // 발바닥 너비, CapsuleCollider 반지름과 맞추면 좋음
+        float capsuleHeight = 1.8f; // 캐릭터 높이
+        float checkDistance = 0.2f; // 바닥과의 거리 허용치
+
+        // 캡슐의 상단, 하단 구 중심 위치
+        Vector3 point1 = transform.position + Vector3.up * (capsuleHeight * 0.5f - capsuleRadius);
+        Vector3 point2 = transform.position + Vector3.up * capsuleRadius;
+
+        if (Physics.CapsuleCast(
+                point1,
+                point2,
+                capsuleRadius,
+                Vector3.down,
+                out RaycastHit hit,
+                checkDistance + 0.01f, // 약간의 여유
+                ~0
+            ))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
+        // 애니메이션에도 연동
         if (anim != null)
             anim.SetBool("IsGrounded", isGrounded);
+
+        // 디버그용 Gizmo
+        groundedHitPoint = hit.point; // for debug drawing
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = isGrounded ? Color.green : Color.red;
 
-        Vector3 origin = transform.position;
-        Vector3 direction = Vector3.down * groundCheckDistance;
+        float capsuleRadius = 0.35f;
+        float capsuleHeight = 1.8f;
+        float checkDistance = 0.2f;
 
-        Gizmos.DrawLine(origin, origin + direction);
-        Gizmos.DrawSphere(origin + direction, 0.05f); // 끝점에 작은 점도 표시
+        Vector3 point1 = transform.position + Vector3.up * (capsuleHeight * 0.5f - capsuleRadius);
+        Vector3 point2 = transform.position + Vector3.up * capsuleRadius;
+
+        // 기본 캡슐
+        Gizmos.DrawWireSphere(point1, capsuleRadius);
+        Gizmos.DrawWireSphere(point2, capsuleRadius);
+
+        // CapsuleCast 검사 영역을 추가로 시각화
+        Vector3 castDirection = Vector3.down * checkDistance;
+
+        // 끝지점 (checkDistance만큼 아래로 내려간 위치)
+        Vector3 point1End = point1 + castDirection;
+        Vector3 point2End = point2 + castDirection;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(point1End, capsuleRadius);
+        Gizmos.DrawWireSphere(point2End, capsuleRadius);
+
+        // 상단과 하단의 연결선
+        Gizmos.DrawLine(point1, point1End);
+        Gizmos.DrawLine(point2, point2End);
+
+        // 실제 바닥 충돌 위치 디버그
+        if (isGrounded)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawSphere(groundedHitPoint, 0.05f);
+        }
     }
 
 }
