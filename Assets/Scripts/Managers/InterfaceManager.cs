@@ -8,6 +8,8 @@ public class InterfaceManager : MonoBehaviour
 	public UIScreen mainMenu;
 	public UIScreen pauseMenu;
 	public UIScreen lobbyMenu;
+	public CharacterHUDContainer_UI characterHUDcontainter;
+	public CharacterHUDUnit[] characterHUDUnits;
 
 	public static InterfaceManager Instance => Singleton<InterfaceManager>.Instance;
 
