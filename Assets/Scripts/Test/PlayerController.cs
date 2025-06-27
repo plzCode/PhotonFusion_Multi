@@ -1,8 +1,8 @@
 ﻿using Fusion;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.Windows;
 using static Fusion.NetworkBehaviour;
 using static KartInput;
 
@@ -50,11 +50,11 @@ public class PlayerController : NetworkBehaviour
     [SerializeField]
     private Animator armAnim;
     [SerializeField]
-    private SkinnedMeshRenderer[] bodyCasting;
+    public SkinnedMeshRenderer[] bodyCasting;
     [SerializeField]
-    private MeshRenderer[] rifleCasting;
+    public MeshRenderer[] rifleCasting;
     [SerializeField]
-    private SkinnedMeshRenderer[] fpsBodyCasting;
+    public SkinnedMeshRenderer[] fpsBodyCasting;
     #endregion
 
     #region PlayerCamera
@@ -62,8 +62,9 @@ public class PlayerController : NetworkBehaviour
     //카메라 
     [SerializeField] private float mouseSensitivity = 0.5f;
     [SerializeField] private Transform cameraHolder; // 상하 회전용
+    [Networked] private Vector3 cameraVec { get; set; }
     [SerializeField] private Transform aimPos; // 조준점(빈 오브젝트)
-    [SerializeField] private Camera playerCamera; // 플레이어 카메라
+    [SerializeField] public Camera playerCamera; // 플레이어 카메라
     [SerializeField] private float aimDistance = 100f; // 조준 최대 거리
     [SerializeField] private LayerMask aimLayerMask = ~0; // 조준에 사용할 레이어
     private float verticalLookRotation = 0f;
@@ -109,7 +110,8 @@ public class PlayerController : NetworkBehaviour
     {
         base.Spawned();
 
-        
+        if (GameManager.Instance != null)
+            GameManager.RegisterPlayer(this.Object);
 
         // 초기 팔 위치값 저장(일반상태 팔위치)
         defaultArmPosition = armTransform.localPosition;
@@ -149,7 +151,7 @@ public class PlayerController : NetworkBehaviour
             // 다른 플레이어의 1인칭 바디 렌더링 끄기
             for (int i = 0; i < fpsBodyCasting.Length; i++)
             {
-                fpsBodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                fpsBodyCasting[i].enabled=false;
             }
             
 
@@ -160,83 +162,143 @@ public class PlayerController : NetworkBehaviour
     private void Update()
     {
         if (!isAlive)
-            return;
-
-        // 사격
-        if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire)||PlayerInputs.IsDownThisFrame(PlayerInput.NetworkInputData.ButtonFire))
         {
-            if (weaponManager.ShouldFire())
+            
+            if (HasInputAuthority && spectatePlayers.Count > 0)
             {
-                bool isOwner = false;
-                if (HasInputAuthority)
+                if (Input.GetKeyDown(KeyCode.Tab))
                 {
-                    isOwner = true;
-                    GameObject flash = Instantiate(weaponManager.muzzleFlash, fpsMuzzleTransform.position, fpsMuzzleTransform.rotation,fpsMuzzleTransform);
+                    ChangeCamera();   
                 }
-                weaponManager.Fire(aimPos,isOwner,fpsMuzzleTransform);
-
-                // 상하 반동 적용
-                if (PlayerInputs.IsZooming)
-                {
-                    float zoomRecoilAmount = recoilAmount * 0.66f;
-                    Pitch -= zoomRecoilAmount;
-                }
-                else
-                {
-                    Pitch -= recoilAmount;
-                }                    
-
-                currentRecoverTimer = recoilRecoveryTime;
-                currentRecoilOffset = recoilAmount;
-                recoilRecoveryPerSecond = recoilAmount / recoilRecoveryTime;
-
-                // 좌우 반동 랜덤 적용
-                float yawRecoil = Random.Range(-maxYawRecoil, maxYawRecoil);
-                Yaw += yawRecoil;
-
-                currentYawRecoverTimer = recoilRecoveryTime;
-                currentYawRecoilOffset = yawRecoil;
-                yawRecoveryPerSecond = yawRecoil / recoilRecoveryTime;
-
-
-                Debug.Log("쏘는중");
-                armAnim.SetTrigger("Fire");
-                anim.SetTrigger("Fire");
-                SoundManager.Instance.Play("RifleFire");
-                //armAnim.Play("Fire", 0, 0);
-                if (Object.HasInputAuthority)
-                {
-                    RPC_ZombieHit(Yaw, Pitch);
-                }                 
             }
         }
+        else
+        {
+            // 사격
+            if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire) || PlayerInputs.IsDownThisFrame(PlayerInput.NetworkInputData.ButtonFire))
+            {
+                if (weaponManager.ShouldFire())
+                {
+                    bool isOwner = false;
+                    if (HasInputAuthority)
+                    {
+                        isOwner = true;
+                        GameObject flash = Instantiate(weaponManager.muzzleFlash, fpsMuzzleTransform.position, fpsMuzzleTransform.rotation, fpsMuzzleTransform);
+                    }
+                    weaponManager.Fire(aimPos, isOwner, fpsMuzzleTransform);
+
+                    // 상하 반동 적용
+                    if (PlayerInputs.IsZooming)
+                    {
+                        float zoomRecoilAmount = recoilAmount * 0.66f;
+                        Pitch -= zoomRecoilAmount;
+                    }
+                    else
+                    {
+                        Pitch -= recoilAmount;
+                    }
+
+                    currentRecoverTimer = recoilRecoveryTime;
+                    currentRecoilOffset = recoilAmount;
+                    recoilRecoveryPerSecond = recoilAmount / recoilRecoveryTime;
+
+                    // 좌우 반동 랜덤 적용
+                    float yawRecoil = Random.Range(-maxYawRecoil, maxYawRecoil);
+                    Yaw += yawRecoil;
+
+                    currentYawRecoverTimer = recoilRecoveryTime;
+                    currentYawRecoilOffset = yawRecoil;
+                    yawRecoveryPerSecond = yawRecoil / recoilRecoveryTime;
+
+
+                    Debug.Log("쏘는중");
+                    armAnim.SetTrigger("Fire");
+                    anim.SetTrigger("Fire");
+                    SoundManager.Instance.Play("RifleFire");
+                    //armAnim.Play("Fire", 0, 0);
+                    if (Object.HasInputAuthority)
+                    {
+                        RPC_ZombieHit(Yaw, Pitch);
+                    }
+                }
+            }
+
+
+            // 줌 상태일 때 팔 위치 보간
+            Vector3 targetPos = defaultArmPosition;
+            if (PlayerInputs.IsZooming)
+                targetPos += armTargetPositon;
+
+            armTransform.localPosition = Vector3.Lerp(
+                armTransform.localPosition,
+                targetPos,
+                zoomLerpSpeed * Time.deltaTime
+            );
+
+
+            // 카메라 줌 Fov 보간
+            //float targetFOV = defaultFov;
+            float targetFOV = PlayerInputs.IsZooming ? zoomFOV : defaultFov;
+
+
+            playerCamera.fieldOfView = Mathf.Lerp(
+                playerCamera.fieldOfView,
+                targetFOV,
+                zoomLerpSpeed * Time.deltaTime
+            );
+
+
+            UpdateAimPos();
+        }
+
+
+
 
         
-        // 줌 상태일 때 팔 위치 보간
-        Vector3 targetPos = defaultArmPosition;
-        if (PlayerInputs.IsZooming)
-            targetPos += armTargetPositon;
+    }
 
-        armTransform.localPosition = Vector3.Lerp(
-            armTransform.localPosition,
-            targetPos,
-            zoomLerpSpeed * Time.deltaTime
-        );
+    public void ChangeCamera()
+    {
+        // 다음 인덱스 순환
+        int nextIndex = (currentSpectateIndex + 1) % spectatePlayers.Count;
+
+        // 현재 카메라 끈다
+        spectatePlayers[currentSpectateIndex].playerCamera.enabled = false;
+
+        // 현재 캐릭터 1인칭 Off, 3인칭 On
+        for (int i = 0; i < fpsBodyCasting.Length; i++)
+        {
+            spectatePlayers[currentSpectateIndex].fpsBodyCasting[i].enabled = false;
+        }
+        for (int i = 0; i < bodyCasting.Length; i++)
+        {
+            spectatePlayers[currentSpectateIndex].bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+        for (int i = 0; i < rifleCasting.Length; i++)
+        {
+            spectatePlayers[currentSpectateIndex].rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
 
 
-        // 카메라 줌 Fov 보간
-        //float targetFOV = defaultFov;
-        float targetFOV = PlayerInputs.IsZooming ? zoomFOV : defaultFov;
-        
+        // 다음 카메라 먼저 켠다
+        spectatePlayers[nextIndex].playerCamera.enabled = true;
 
-        playerCamera.fieldOfView = Mathf.Lerp(
-            playerCamera.fieldOfView,
-            targetFOV,
-            zoomLerpSpeed * Time.deltaTime
-        );
+        // 다음 관전 플레이어 3인칭 끄고 1인칭 키기
+        for (int i = 0; i < fpsBodyCasting.Length; i++)
+        {
+            spectatePlayers[nextIndex].fpsBodyCasting[i].enabled = true;
+        }
+        for (int i = 0; i < bodyCasting.Length; i++)
+        {
+            spectatePlayers[nextIndex].bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
 
+        for (int i = 0; i < rifleCasting.Length; i++)
+        {
+            spectatePlayers[nextIndex].rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
 
-        UpdateAimPos();
+        currentSpectateIndex = nextIndex;
     }
 
 
@@ -274,6 +336,36 @@ public class PlayerController : NetworkBehaviour
         EffectPoolManager.Instance.GetEffect(point, rotation);
     }
 
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_SetPlayerUI()
+    {       
+    
+        if (Object.HasInputAuthority)
+        {
+            // 스탯 UI 연결 ( 자신 )
+            characterHUDUnit = InterfaceManager.Instance.characterHUDcontainter.MyPlayerStatus_UI;
+            characterHUDUnit.SetName($"{RoomUser.Username}");
+            characterHUDUnit.SetPortraitImage(playerImage);
+        }
+        else
+        {
+            // 스탯 UI 연결 ( 다른 플레이어 )
+            for (int i = 0; i < 3; i++)
+            {
+                if (InterfaceManager.Instance.characterHUDUnits[i].player == null)
+                {
+                    InterfaceManager.Instance.characterHUDUnits[i].player = this;
+                    characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
+                    characterHUDUnit.SetName($"{RoomUser.Username}");
+                    characterHUDUnit.SetPortraitImage(playerImage);
+                    break;
+                }
+            }
+
+        
+        }
+    }
+
 
     public override void FixedUpdateNetwork()
     {
@@ -288,7 +380,7 @@ public class PlayerController : NetworkBehaviour
             HandleInput(PlayerInputs);
         }
 
-
+        cameraHolder.localEulerAngles = new Vector3(Pitch, 0, 0);
 
         ApplyGravity();
 
@@ -349,6 +441,7 @@ public class PlayerController : NetworkBehaviour
                 anim.SetBool("isAlive", isAlive);
                 RPC_SetArmAnim("isAliveBool", isAlive);
                 rb.linearVelocity = Vector3.zero;
+                RPC_cameraOnOff();
 
             }
 
@@ -356,6 +449,74 @@ public class PlayerController : NetworkBehaviour
             
         }
                 
+    }
+
+    // 관전 대상 플레이어 리스트
+    [SerializeField] private List<PlayerController> spectatePlayers = new List<PlayerController>();
+
+    
+
+    // 현재 바라보는 플레이어 인덱스
+    private int currentSpectateIndex = 0;
+
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    private void RPC_cameraOnOff()
+    {
+        // 관전 리스트 초기화
+        spectatePlayers.Clear();
+
+        foreach (var p in GameManager.Players)
+        {
+            var other = p.GetComponent<PlayerController>();
+            if (other != null && other != this )//&& other.isAlive
+            {
+                spectatePlayers.Add(other);
+            }
+        }
+
+        // 내 카메라 끄기
+        playerCamera.enabled = false;
+
+        // 자신의 3인칭 캐릭터 렌더링 키기
+        for (int i = 0; i < bodyCasting.Length; i++)
+        {
+            bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+        for (int i = 0; i < rifleCasting.Length; i++)
+        {
+            rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+
+        // 자신의 1인칭 바디 렌더링 끄기
+        for (int i = 0; i < fpsBodyCasting.Length; i++)
+        {
+            fpsBodyCasting[i].enabled = false;
+        }
+
+        // 관전할 대상이 있으면 첫번째만 켜기
+        if (spectatePlayers.Count > 0)
+        {
+            currentSpectateIndex = 0;
+            spectatePlayers[currentSpectateIndex].playerCamera.enabled = true;
+
+            // 관전 플레이어 3인칭 끄고 1인칭 키기
+            for (int i = 0; i < fpsBodyCasting.Length; i++)
+            {
+                spectatePlayers[currentSpectateIndex].fpsBodyCasting[i].enabled = true;
+            }
+            for (int i = 0; i < bodyCasting.Length; i++)
+            {
+                spectatePlayers[currentSpectateIndex].bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+
+            for (int i = 0; i < rifleCasting.Length; i++)
+            {
+                spectatePlayers[currentSpectateIndex].rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+        }
+
+        
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -482,7 +643,8 @@ public class PlayerController : NetworkBehaviour
         Quaternion targetRot = Quaternion.Euler(0, Yaw, 0);
         rb.MoveRotation(targetRot);
 
-        cameraHolder.localEulerAngles = new Vector3(Pitch, 0, 0);
+        
+        
 
 
 
@@ -494,6 +656,8 @@ public class PlayerController : NetworkBehaviour
         //    cameraHolder.localEulerAngles = new Vector3(verticalLookRotation, 0, 0);
         //}
     }
+
+
     //상하 반동
     [SerializeField] private float recoilAmount = 2f;
     [SerializeField] private float recoilRecoveryTime = 0.35f;
@@ -614,32 +778,7 @@ public class PlayerController : NetworkBehaviour
     }
 
 
-    public void SetPlayerUI()
-    {
-        if (Object.HasInputAuthority)
-        {
-            // 스탯 UI 연결 ( 자신 )
-            characterHUDUnit = InterfaceManager.Instance.characterHUDcontainter.MyPlayerStatus_UI;
-            characterHUDUnit.SetName($"{RoomUser.Username}");
-            characterHUDUnit.SetPortraitImage(playerImage);
-        }
-        else
-        {
-            // 스탯 UI 연결 ( 다른 플레이어 )
-            for (int i = 0; i < 3; i++)
-            {
-                if (InterfaceManager.Instance.characterHUDUnits[i].player == null)
-                {
-                    InterfaceManager.Instance.characterHUDUnits[i].player = this;
-                    characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
-                    characterHUDUnit.SetName(gameObject.name);
-                    characterHUDUnit.SetPortraitImage(playerImage);
-                    break;
-                }
-            }
-
-        }
-    }
     
+
 
 }

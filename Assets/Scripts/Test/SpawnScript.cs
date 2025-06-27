@@ -126,7 +126,7 @@ public class SpawnScript : NetworkBehaviour
 
         Debug.Log($"Spawning player for {player.Username} at {point.name}");
         entity.transform.name = $"{player.Username}";
-        entity.Controller.SetPlayerUI();
+        
     }
 
 

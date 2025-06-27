@@ -123,10 +123,12 @@ public class GameManager : NetworkBehaviour
 		CurrentMap = spawnScript;
 	}
 
-    public static void RegisterPlayer(NetworkObject player)
-    {
+    
+	public static void RegisterPlayer(NetworkObject player)
+	{
         if (!Instance.players.Contains(player))
             Instance.players.Add(player);
+		
     }
 
     public static void UnregisterPlayer(NetworkObject player)
@@ -134,4 +136,7 @@ public class GameManager : NetworkBehaviour
         if (Instance.players.Contains(player))
             Instance.players.Remove(player);
     }
+
+
+    
 }

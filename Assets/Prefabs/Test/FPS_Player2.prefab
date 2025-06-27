@@ -1128,6 +1128,7 @@ MonoBehaviour:
   _RoomUser: {fileID: 0}
   characterHUDUnit: {fileID: 0}
   playerImage: {fileID: 1785206632, guid: 0dd2bb46d1656e64e8d156308339d107, type: 3}
+  spectatePlayers: []
   stickToGroundForce: 30
   recoilAmount: 1.5
   recoilRecoveryTime: 0.35
@@ -7854,20 +7855,40 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: f011635b402773a468e435ec11d5de55, type: 2}
     - target: {fileID: 137117042324385628, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 137117042324385628, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
       propertyPath: m_CastShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137312733025278166, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 137312733025278166, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 137343108572802038, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 137343108572802038, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 137513767181610466, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 137513767181610466, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
       propertyPath: m_CastShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137561483003287004, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 137561483003287004, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
       propertyPath: m_CastShadows
