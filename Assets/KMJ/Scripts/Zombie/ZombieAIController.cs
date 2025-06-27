@@ -20,6 +20,8 @@ public class ZombieAIController : NetworkBehaviour
     public float walkSpeed = 1.2f;
     public float runSpeed = 4.5f;    // 추적 속도
 
+    public Vector3 pendingGoal { get; private set; }
+
     /* ───── Network-Synced 플래그 ───── */
     [Networked] public bool InAlertRadius { get; private set; }
     [Networked] public bool InSightFov { get; private set; }
@@ -29,6 +31,8 @@ public class ZombieAIController : NetworkBehaviour
     /* ───── 기타 ───── */
     [Networked] public NetworkObject TargetNetObj { get; private set; }
     public Transform Target => TargetNetObj ? TargetNetObj.transform : null;
+
+
 
     ZombieState current;
     const int REFRESH_TICKS = 30;   // 0.5 s
@@ -41,6 +45,14 @@ public class ZombieAIController : NetworkBehaviour
         agent = GetComponent<NavMeshAgent>();
         zCtrl = GetComponent<ZombieController>();
     }
+
+    public void ChangeState(ZombieState next)
+    {
+        if (current != null) current.Exit();
+        current = next;
+        if (current != null) current.Enter();
+    }
+
 
     public override void Spawned()
     {
@@ -74,14 +86,23 @@ public class ZombieAIController : NetworkBehaviour
 
     }
 
+    void SetTarget(NetworkObject netObj)
+    {
+        if (!HasStateAuthority) return;        // 서버/호스트에서만
+        TargetNetObj = netObj;                 // ← Networked<PlayerRef> 변수
+    }
+
     /* ====================== 센싱 ====================== */
-    void SensePlayer()
+    public void SensePlayer()
     {
         if (!Target)
         {
             InAlertRadius = InSightFov = InAttackRange = false;
             return;
         }
+
+        if (!InSightFov) InAlertRadius = false;
+
         Vector3 toT = Target.position - transform.position;
         float sqr = toT.sqrMagnitude;
         /* 반경 */
@@ -96,13 +117,14 @@ public class ZombieAIController : NetworkBehaviour
     }
 
     /* ========== 상태 머신 ========== */
-    public void ChangeState(ZombieState next)
+    public void SpawnAggro(Vector3 epicenter)
     {
-        current?.Exit();
-        current = next;
-        current.Enter();
-
-        Debug.Log($"{name} ▶ {next.GetType().Name}");
+        pendingGoal = epicenter;
+        SetTarget(GetNearestPlayer());
+        agent.speed = runSpeed;
+        agent.isStopped = false;
+        anim.SetFloat("Speed", 1f);
+        ChangeState(new ChaseState(this));
     }
 
     NetworkObject GetNearestPlayer()
@@ -140,6 +162,7 @@ public class ZombieAIController : NetworkBehaviour
         }
         return nearest;
     }
+
     public void HandleAttackHit()
     {
         // 1) 서버(Host)에서만 판정

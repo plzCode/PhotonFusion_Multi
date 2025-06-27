@@ -7,30 +7,27 @@ public class ChaseState : ZombieState
 
     public override void Enter()
     {
-        ctrl.anim.SetFloat("Speed", 1f);          // Run 블렌드
-        if (!ctrl.agent.enabled || !ctrl.agent.isOnNavMesh) return;
-        ctrl.agent.isStopped = false;
-        ctrl.agent.speed = ctrl.runSpeed;     // 2.5 m/s
+        ctrl.anim.SetFloat("Speed", 1f);          // Run 애니
+        if (ctrl.Target)                          // 첫 목적지
+            ctrl.agent.SetDestination(ctrl.Target.position);
+        else
+            ctrl.agent.SetDestination(ctrl.pendingGoal);
     }
 
     public override void Update()
     {
-        if (!ctrl.agent.enabled || !ctrl.agent.isOnNavMesh) return;
-
-        if (!ctrl.Target)
+        // 1) 타깃 찾아서 추적
+        if (ctrl.Target)
         {
-            ctrl.ChangeState(new IdleWalkState(ctrl));
+            ctrl.agent.SetDestination(ctrl.Target.position);
             return;
         }
 
-        if (ctrl.agent.enabled && ctrl.agent.isOnNavMesh)
-            ctrl.agent.SetDestination(ctrl.Target.position);
+        // 2) 타깃 없으면 웨이브 epicenter 로 이동
+        ctrl.agent.SetDestination(ctrl.pendingGoal);
 
-        if (ctrl.InAttackRange)
-            ctrl.ChangeState(new AttackState(ctrl));
-        else if (!ctrl.InAlertRadius && !ctrl.InSightFov)
+        // 3) 도착 후에도 타깃 없으면 IdleWalk 복귀
+        if (!ctrl.agent.pathPending && ctrl.agent.remainingDistance < 0.5f)
             ctrl.ChangeState(new IdleWalkState(ctrl));
     }
-
-    public override void Exit() { }
 }

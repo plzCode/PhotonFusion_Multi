@@ -1,47 +1,39 @@
 ﻿using UnityEngine;
 using Zombie.States;
+using System.Linq;
 
 public class AlertState : ZombieState
 {
-    const float ALERT_TIME = 2f;  // 실제 체감 시간
-    const float CLIP_LENGTH = 7f;  // 원본 클립 길이
-    float timer;
+    const string CLIP = "zombie_alert_to_aggro_01";
+    bool clipDone;
 
     public AlertState(ZombieAIController c) : base(c) { }
 
     public override void Enter()
     {
-        if (!ctrl.agent.enabled || !ctrl.agent.isOnNavMesh) return;
-
-        // 1) 이동 완전 정지
         ctrl.agent.isStopped = true;
-        ctrl.agent.speed = 0f;
-        ctrl.anim.SetFloat("Speed", 0f);
+        ctrl.agent.velocity = Vector3.zero;
 
-        // 2) 경계 애니메이션 배속 조정 (7s → 3s)
-        ctrl.anim.speed = 3f;
-        ctrl.anim.SetBool("IsAlert", true);           // Animator 전이
-        ctrl.anim.CrossFade("Alert", 0.05f);
-
-        timer = 2f;
+        ctrl.anim.speed = 1f;
+        ctrl.anim.CrossFade(CLIP, 0.05f);
+        clipDone = false;
     }
 
     public override void Update()
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0f)
+        if (clipDone) return;
+
+        var info = ctrl.anim.GetCurrentAnimatorStateInfo(0);
+        if (info.IsName(CLIP) && info.normalizedTime >= 1f)
         {
+            clipDone = true;
             ctrl.agent.isStopped = false;
-            ctrl.anim.SetBool("IsAlert", false);
-            ctrl.anim.SetFloat("Speed", 1f);
             ctrl.ChangeState(new ChaseState(ctrl));
         }
     }
 
     public override void Exit()
     {
-        ctrl.anim.SetBool("IsAlert", false);
-        ctrl.anim.speed = 1f;
         ctrl.agent.isStopped = false;
     }
 }

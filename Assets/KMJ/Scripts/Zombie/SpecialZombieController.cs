@@ -1,4 +1,5 @@
-﻿using Fusion;
+﻿#if false
+using Fusion;
 using UnityEngine;
 
  
@@ -72,7 +73,8 @@ public class SpecialZombieController : NetworkBehaviour
             case SpecialType.Alarm:
                 CancelInvoke(nameof(CallMiniWave));
                 break;
-            // Enforce·Disarm·Infector 등은 나중에 확장
+                // Enforce·Disarm·Infector 등은 나중에 확장
         }
     }
 }
+#endif

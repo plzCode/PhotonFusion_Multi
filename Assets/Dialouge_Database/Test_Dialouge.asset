@@ -132,6 +132,48 @@ MonoBehaviour:
     alternatePortraits: []
     spritePortraits: []
   items:
+  - id: 7
+    fields:
+    - title: Name
+      value: "\uBCD1\uC6D0\uC744 \uD0D0\uC0AC\uD558\uC790."
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Pictures
+      value: '[]'
+      type: 3
+      typeString: CustomFieldType_Files
+    - title: Description
+      value: "\uBCD1\uC6D0\uC744 \uD0D0\uC0AC\uD574\uBCF4\uC790."
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Success Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Failure Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: State
+      value: active
+      type: 0
+      typeString: CustomFieldType_QuestState
+    - title: Is Item
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Display Name
+      value: "\uBCD1\uC6D0\uC744 \uD0D0\uC0AC\uD558\uC790."
+      type: 0
+      typeString: CustomFieldType_Text
   - id: 2
     fields:
     - title: Name
@@ -163,12 +205,16 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 3
     fields:
     - title: Name
       value: "\uC5F4\uC1E0\uB97C \uCC3E\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Pictures
       value: '[]'
       type: 3
@@ -177,21 +223,25 @@ MonoBehaviour:
       value: "\uC5F4\uC1E0\uB97C \uAD00\uB9AC\uD558\uB358 \"OO\"\uC740 \"OO\"\uC5D0\uC11C
         \uADFC\uBB34\uD558\uB294 \uAC83 \uAC19\uB2E4. "
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Success Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Failure Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: State
       value: unassigned
       type: 0
-      typeString: 
+      typeString: CustomFieldType_QuestState
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 4
@@ -199,7 +249,7 @@ MonoBehaviour:
     - title: Name
       value: "2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Pictures
       value: '[]'
       type: 3
@@ -207,21 +257,25 @@ MonoBehaviour:
     - title: Description
       value: "\uC774\uC81C 2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Success Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Failure Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: State
       value: unassigned
       type: 0
-      typeString: 
+      typeString: CustomFieldType_QuestState
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 1
@@ -254,12 +308,16 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 6
     fields:
     - title: Name
       value: "\uAD50\uC218\uC5D0\uAC8C \uB3CC\uC544\uAC00\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Pictures
       value: '[]'
       type: 3
@@ -268,21 +326,25 @@ MonoBehaviour:
       value: "\uC804\uB825\uC744 \uBB34\uC0AC\uD788 \uACF5\uAE09\uD588\uB2E4. \uAD50\uC218\uC5D0\uAC8C
         \uB3CC\uC544\uAC00\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Success Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Failure Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: State
       value: unassigned
       type: 0
-      typeString: 
+      typeString: CustomFieldType_QuestState
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 5
@@ -290,7 +352,7 @@ MonoBehaviour:
     - title: Name
       value: "\uAD6C\uC870\uB97C \uC694\uCCAD\uD558\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Pictures
       value: '[]'
       type: 3
@@ -298,21 +360,25 @@ MonoBehaviour:
     - title: Description
       value: "\uBB34\uC804\uAE30\uB97C \uCC3E\uC544 \uAD6C\uC870\uB97C \uC694\uCCAD\uD558\uC790."
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Success Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Failure Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: State
       value: unassigned
       type: 0
-      typeString: 
+      typeString: CustomFieldType_QuestState
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   locations: []
@@ -1676,13 +1742,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1003.053
-        y: 170.86354
+        x: 1001.9166
+        y: 160.63628
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 17.808228, y: 0}
-    canvasZoom: 0.7300001
+    canvasScrollPosition: {x: 0, y: 0}
+    canvasZoom: 0.88
   syncInfo:
     syncActors: 0
     syncItems: 0
