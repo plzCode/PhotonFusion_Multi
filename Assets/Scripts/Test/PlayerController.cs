@@ -1,6 +1,7 @@
 ﻿using Fusion;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.Windows;
 using static Fusion.NetworkBehaviour;
 using static KartInput;
@@ -92,6 +93,7 @@ public class PlayerController : NetworkBehaviour
     #endregion
 
     [SerializeField] public CharacterHUDUnit characterHUDUnit;
+    [SerializeField] private Sprite playerImage;
 
     private void Awake()
     {
@@ -100,9 +102,6 @@ public class PlayerController : NetworkBehaviour
         {
             Debug.LogError("Rigidbody is Not Found");
         }
-
-
-
 
 
     }
@@ -138,12 +137,7 @@ public class PlayerController : NetworkBehaviour
             for (int i = 0; i < rifleCasting.Length; i++)
             {
                 rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-            }
-
-            // 스탯 UI 연결 ( 자신 )
-            characterHUDUnit = InterfaceManager.Instance.characterHUDcontainter.MyPlayerStatus_UI;
-
-
+            }                        
 
         }
         else
@@ -157,16 +151,7 @@ public class PlayerController : NetworkBehaviour
             {
                 fpsBodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             }
-            // 스탯 UI 연결 ( 다른 플레이어 )
-            for (int i = 0; i < 3; i++)
-            {
-                if (InterfaceManager.Instance.characterHUDUnits[i].player == null)
-                {
-                    InterfaceManager.Instance.characterHUDUnits[i].player = this;
-                    characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
-                    break;
-                }
-            }
+            
 
         }
 
@@ -627,5 +612,34 @@ public class PlayerController : NetworkBehaviour
             Gizmos.DrawSphere(groundedHitPoint, 0.05f);
         }
     }
+
+
+    public void SetPlayerUI()
+    {
+        if (Object.HasInputAuthority)
+        {
+            // 스탯 UI 연결 ( 자신 )
+            characterHUDUnit = InterfaceManager.Instance.characterHUDcontainter.MyPlayerStatus_UI;
+            characterHUDUnit.SetName($"{RoomUser.Username}");
+            characterHUDUnit.SetPortraitImage(playerImage);
+        }
+        else
+        {
+            // 스탯 UI 연결 ( 다른 플레이어 )
+            for (int i = 0; i < 3; i++)
+            {
+                if (InterfaceManager.Instance.characterHUDUnits[i].player == null)
+                {
+                    InterfaceManager.Instance.characterHUDUnits[i].player = this;
+                    characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
+                    characterHUDUnit.SetName(gameObject.name);
+                    characterHUDUnit.SetPortraitImage(playerImage);
+                    break;
+                }
+            }
+
+        }
+    }
+    
 
 }
