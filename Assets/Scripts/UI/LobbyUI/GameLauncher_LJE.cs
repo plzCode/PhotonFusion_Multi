@@ -158,7 +158,7 @@ public class GameLauncherLJE : MonoBehaviour, INetworkRunnerCallbacks
 
         if (status == ConnectionStatus.Disconnected || status == ConnectionStatus.Failed)
         {
-            SceneManager.LoadScene(LevelManager.LOBBY_SCENE);
+            SceneManager.LoadScene("Lobby_LJE");
             UIScreen.BackToInitial();
         }
     }
