@@ -9,6 +9,8 @@ public class InterfaceManager : MonoBehaviour
 	public UIScreen pauseMenu;
 	public UIScreen lobbyMenu;
 
+	public CountdownTimer countdownTimer;
+
 	public static InterfaceManager Instance => Singleton<InterfaceManager>.Instance;
 
 	private void Start()
