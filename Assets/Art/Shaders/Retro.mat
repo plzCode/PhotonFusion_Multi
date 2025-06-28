@@ -52,7 +52,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Float: 0
-    - _GlitchNoiseAmount: 50
+    - _GlitchNoiseAmount: 500
     - _GlitchNoiseSpeed: 0
     - _GlitchNoiseStrength: 1
     - _NoiseAmount: 0.04
@@ -64,7 +64,7 @@ Material:
     - _ScanningLinesSpeed: 1
     - _SnowNoiseAmount: 0
     m_Colors:
-    - _Color: {r: 0.43771267, g: 1, b: 0.311, a: 1}
+    - _Color: {r: 0.16547167, g: 0.877, b: 0, a: 1}
     - _NoiseSpeed: {r: 0, g: 0.05, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
