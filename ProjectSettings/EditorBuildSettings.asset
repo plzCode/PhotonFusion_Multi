@@ -27,13 +27,13 @@ EditorBuildSettings:
     path: Assets/Scenes/TestScene/Test_KMJ.unity
     guid: 44c006af055eb0940b54ed5f783f7912
   - enabled: 1
-    path: Assets/Scenes/TestScene/Test_YSW_LostTIme.unity
-    guid: 71aee91521fe9e2408f591818987020c
+    path: Assets/Scenes/TestScene/Test_PSS.unity
+    guid: a387e03df33b20745aff8557e306cd2a
   - enabled: 1
     path: Assets/Scenes/TestScene/Test_YSH.unity
     guid: 3e540317f5346ab498f54ceffe99e976
   - enabled: 1
-    path: Assets/Scenes/TestScene/Test_YSW.unity
-    guid: 8f3eae61537920b4fb079631bda7b259
+    path: Assets/Scenes/TestScene/Test_YSW_Test_Scene.unity
+    guid: 71aee91521fe9e2408f591818987020c
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

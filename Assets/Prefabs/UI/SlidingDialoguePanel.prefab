@@ -28,7 +28,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1936202749222440474}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 4
     m_Bottom: 0
-  m_ChildAlignment: 1
+  m_ChildAlignment: 7
   m_Spacing: 4
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
@@ -117,15 +117,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PanelWidth: 650
-  PanelPaddingHeight: 10
   TextContainerWidth: 650
   TextContainerHeight: 35
   TextFadeDuration: 0.3
-  TextDisplayDuration: 2
+  TextDisplayDuration: 2.5
   TextResizeDuration: 0.3
-  _layoutAdjustTime: 0.1
-  DebugText: Dialogue UI Initialized
-  DebugTextColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &-985828854080117598
 MonoBehaviour:
   m_ObjectHideFlags: 0
