@@ -32,10 +32,11 @@ public class BattleScore_UI : Base_UI
     public void OnGainScore(int score)
     {
         _addScoreText.text = score >= 0 ? $"+{score}" : score.ToString();
-
+        _totalScore += score;
         if (_fadeCoroutine != null)
             StopCoroutine(_fadeCoroutine);
         _fadeCoroutine = StartCoroutine(Fade());
+        UpdateTotalScore(_totalScore);
     }
 
     public void UpdateTotalScore(int totalScore)

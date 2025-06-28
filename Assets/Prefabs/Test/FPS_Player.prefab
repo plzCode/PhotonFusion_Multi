@@ -516,7 +516,7 @@ MonoBehaviour:
   _Hp: 100
   _isAlive: 1
   moveSpeed: 5
-  jumpForce: 4
+  jumpForce: 5
   groundCheckDistance: 0.2
   inputSmoothSpeed: 5
   weaponManager: {fileID: 8147502216302715758}
@@ -558,6 +558,10 @@ MonoBehaviour:
   customGravity: -9.81
   fallMultiplier: 2
   _RoomUser: {fileID: 0}
+  characterHUDUnit: {fileID: 0}
+  playerImage: {fileID: -1608744046, guid: a9d38cfd4e5b3914e806147795a6e58f, type: 3}
+  spectatePlayers: []
+  stickToGroundForce: 30
   recoilAmount: 1.5
   recoilRecoveryTime: 0.35
   maxYawRecoil: 1.5
@@ -3783,8 +3787,32 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4843286368403822, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1358902179287548458}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1013363612589426, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7669501942941770913}
   m_SourcePrefab: {fileID: 100100000, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
+--- !u!1 &3369328595387212820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1013363612589426, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
+  m_PrefabInstance: {fileID: 3369214959244736870}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7669501942941770913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3369328595387212820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7043ad41c2c36a46b248aea0588367e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FootSteps:
+  - {fileID: 8300000, guid: 65264d4b5d841094e914f50a687f033a, type: 3}
+  - {fileID: 8300000, guid: 3f50b78a6b15ccc44a75cf437db87c9e, type: 3}
+  footstepCooldown: 0.2
 --- !u!4 &3373459827232487432 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4843286368403822, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
