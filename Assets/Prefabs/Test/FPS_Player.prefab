@@ -560,6 +560,7 @@ MonoBehaviour:
   _RoomUser: {fileID: 0}
   characterHUDUnit: {fileID: 0}
   playerImage: {fileID: -1608744046, guid: a9d38cfd4e5b3914e806147795a6e58f, type: 3}
+  spectatePlayers: []
   stickToGroundForce: 30
   recoilAmount: 1.5
   recoilRecoveryTime: 0.35
