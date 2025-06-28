@@ -95,6 +95,7 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] public CharacterHUDUnit characterHUDUnit;
     [SerializeField] private Sprite playerImage;
+    private float localPitch; // 실제 카메라에 적용할 값
 
     private void Awake()
     {
@@ -180,7 +181,7 @@ public class PlayerController : NetworkBehaviour
                 if (weaponManager.ShouldFire())
                 {
                     bool isOwner = false;
-                    if (HasInputAuthority)
+                    if (HasInputAuthority || GameManager.Instance.observerPlayer == this) // 플레이어 자기자신이거나 관전중인 대상이면
                     {
                         isOwner = true;
                         GameObject flash = Instantiate(weaponManager.muzzleFlash, fpsMuzzleTransform.position, fpsMuzzleTransform.rotation, fpsMuzzleTransform);
@@ -252,50 +253,54 @@ public class PlayerController : NetworkBehaviour
         }
 
 
+        localPitch = Mathf.Lerp(localPitch, Pitch, 10f * Time.deltaTime); // 10f는 원하는 반응속도
+        cameraHolder.localEulerAngles = new Vector3(localPitch, 0, 0);
 
 
-        
+
     }
 
     public void ChangeCamera()
     {
         // 다음 인덱스 순환
         int nextIndex = (currentSpectateIndex + 1) % spectatePlayers.Count;
-
+        PlayerController nextPlayer = spectatePlayers[nextIndex];
+        PlayerController currentPlayer = spectatePlayers[currentSpectateIndex];
+        GameManager.Instance.observerPlayer = nextPlayer;
         // 현재 카메라 끈다
-        spectatePlayers[currentSpectateIndex].playerCamera.enabled = false;
+        currentPlayer.playerCamera.enabled = false;
 
         // 현재 캐릭터 1인칭 Off, 3인칭 On
-        for (int i = 0; i < fpsBodyCasting.Length; i++)
+        for (int i = 0; i < currentPlayer.fpsBodyCasting.Length; i++)
         {
-            spectatePlayers[currentSpectateIndex].fpsBodyCasting[i].enabled = false;
+            currentPlayer.fpsBodyCasting[i].enabled = false;
         }
-        for (int i = 0; i < bodyCasting.Length; i++)
+        for (int i = 0; i < currentPlayer.bodyCasting.Length; i++)
         {
-            spectatePlayers[currentSpectateIndex].bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            currentPlayer.bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         }
-        for (int i = 0; i < rifleCasting.Length; i++)
+        for (int i = 0; i < currentPlayer.rifleCasting.Length; i++)
         {
-            spectatePlayers[currentSpectateIndex].rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            currentPlayer.rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         }
 
 
         // 다음 카메라 먼저 켠다
-        spectatePlayers[nextIndex].playerCamera.enabled = true;
+        nextPlayer.playerCamera.enabled = true;
 
         // 다음 관전 플레이어 3인칭 끄고 1인칭 키기
-        for (int i = 0; i < fpsBodyCasting.Length; i++)
+        for (int i = 0; i < nextPlayer.fpsBodyCasting.Length; i++)
         {
             spectatePlayers[nextIndex].fpsBodyCasting[i].enabled = true;
         }
-        for (int i = 0; i < bodyCasting.Length; i++)
+        for (int i = 0; i < nextPlayer.bodyCasting.Length; i++)
         {
-            spectatePlayers[nextIndex].bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            nextPlayer.bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
         }
 
-        for (int i = 0; i < rifleCasting.Length; i++)
+        for (int i = 0; i < nextPlayer.rifleCasting.Length; i++)
         {
-            spectatePlayers[nextIndex].rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            nextPlayer.rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
         }
 
         currentSpectateIndex = nextIndex;
@@ -438,7 +443,7 @@ public class PlayerController : NetworkBehaviour
                 Debug.Log("죽음");
                 isAlive = false;
 
-                anim.SetBool("isAlive", isAlive);
+                RPC_SetAnim("isAlive", isAlive);
                 RPC_SetArmAnim("isAliveBool", isAlive);
                 rb.linearVelocity = Vector3.zero;
                 RPC_cameraOnOff();
@@ -469,50 +474,55 @@ public class PlayerController : NetworkBehaviour
         foreach (var p in GameManager.Players)
         {
             var other = p.GetComponent<PlayerController>();
-            if (other != null && other != this )//&& other.isAlive
+            if (other != null )// other.isAlive
             {
                 spectatePlayers.Add(other);
             }
         }
 
-        // 내 카메라 끄기
-        playerCamera.enabled = false;
-
-        // 자신의 3인칭 캐릭터 렌더링 키기
-        for (int i = 0; i < bodyCasting.Length; i++)
-        {
-            bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        }
-        for (int i = 0; i < rifleCasting.Length; i++)
-        {
-            rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        }
-
-        // 자신의 1인칭 바디 렌더링 끄기
-        for (int i = 0; i < fpsBodyCasting.Length; i++)
-        {
-            fpsBodyCasting[i].enabled = false;
-        }
+        
 
         // 관전할 대상이 있으면 첫번째만 켜기
         if (spectatePlayers.Count > 0)
         {
-            currentSpectateIndex = 0;
-            spectatePlayers[currentSpectateIndex].playerCamera.enabled = true;
+            // 내 카메라 끄기
+            playerCamera.enabled = false;
 
-            // 관전 플레이어 3인칭 끄고 1인칭 키기
-            for (int i = 0; i < fpsBodyCasting.Length; i++)
-            {
-                spectatePlayers[currentSpectateIndex].fpsBodyCasting[i].enabled = true;
-            }
+            // 자신의 3인칭 캐릭터 렌더링 키기
             for (int i = 0; i < bodyCasting.Length; i++)
             {
-                spectatePlayers[currentSpectateIndex].bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             }
-
             for (int i = 0; i < rifleCasting.Length; i++)
             {
-                spectatePlayers[currentSpectateIndex].rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+
+            // 자신의 1인칭 바디 렌더링 끄기
+            for (int i = 0; i < fpsBodyCasting.Length; i++)
+            {
+                fpsBodyCasting[i].enabled = false;
+            }
+
+            currentSpectateIndex = 0;
+            spectatePlayers[currentSpectateIndex].playerCamera.enabled = true;
+            PlayerController nextPlayer = spectatePlayers[currentSpectateIndex];
+            GameManager.Instance.observerPlayer = nextPlayer;
+
+            // 관전 플레이어 3인칭 끄고 1인칭 키기
+            for (int i = 0; i < nextPlayer.fpsBodyCasting.Length; i++)
+            {
+                nextPlayer.fpsBodyCasting[i].enabled = true;
+            }
+            for (int i = 0; i < nextPlayer.bodyCasting.Length; i++)
+            {
+                nextPlayer.bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                Debug.Log(nextPlayer+ "ㅇ" + nextPlayer.bodyCasting[i] + "현재 " + i + "번째");
+            }
+
+            for (int i = 0; i < nextPlayer.rifleCasting.Length; i++)
+            {
+                nextPlayer.rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             }
         }
 
@@ -526,11 +536,17 @@ public class PlayerController : NetworkBehaviour
     }
 
 
-    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_SetArmAnim(string paramName,bool _bool)
     {
         armAnim.SetBool(paramName, _bool);
     }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_SetAnim(string paramName, bool _bool)
+    {
+        anim.SetBool(paramName, _bool);
+    }
+
 
     [SerializeField] private float stickToGroundForce = 30f; // 접지 유지 힘
     private void ApplyGravity()

@@ -35,6 +35,9 @@ public class GameManager : NetworkBehaviour
 	// 게임 플레이어 목록
 	[SerializeField]
     private List<NetworkObject> players = new List<NetworkObject>();
+
+	// 현재 관전중인 플레이어
+	public PlayerController observerPlayer;
 	
 	// 읽기 참조용
     public static IReadOnlyList<NetworkObject> Players => Instance.players;
