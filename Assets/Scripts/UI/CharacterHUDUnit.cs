@@ -34,12 +34,12 @@ public class CharacterHUDUnit : MonoBehaviour
         // Initialize health values and Invoke OnChangeHealth and OnChangeMaxHealth
     }
 
-    void SetPortraitImage(Sprite sprite)
+    public void SetPortraitImage(Sprite sprite)
     {
         _portraitImage.sprite = sprite;
     }
 
-    void SetName(string name)
+    public void SetName(string name)
     {
         _nameText.text = name;
     }

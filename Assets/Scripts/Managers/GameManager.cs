@@ -35,6 +35,9 @@ public class GameManager : NetworkBehaviour
 	// 게임 플레이어 목록
 	[SerializeField]
     private List<NetworkObject> players = new List<NetworkObject>();
+
+	// 현재 관전중인 플레이어
+	public PlayerController observerPlayer;
 	
 	// 읽기 참조용
     public static IReadOnlyList<NetworkObject> Players => Instance.players;
@@ -123,10 +126,12 @@ public class GameManager : NetworkBehaviour
 		CurrentMap = spawnScript;
 	}
 
-    public static void RegisterPlayer(NetworkObject player)
-    {
+    
+	public static void RegisterPlayer(NetworkObject player)
+	{
         if (!Instance.players.Contains(player))
             Instance.players.Add(player);
+		
     }
 
     public static void UnregisterPlayer(NetworkObject player)
@@ -134,4 +139,7 @@ public class GameManager : NetworkBehaviour
         if (Instance.players.Contains(player))
             Instance.players.Remove(player);
     }
+
+
+    
 }

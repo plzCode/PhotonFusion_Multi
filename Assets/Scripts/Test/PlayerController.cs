@@ -1,7 +1,8 @@
 ﻿using Fusion;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
+using UnityEngine.UI;
 using static Fusion.NetworkBehaviour;
 using static KartInput;
 
@@ -49,11 +50,11 @@ public class PlayerController : NetworkBehaviour
     [SerializeField]
     private Animator armAnim;
     [SerializeField]
-    private SkinnedMeshRenderer[] bodyCasting;
+    public SkinnedMeshRenderer[] bodyCasting;
     [SerializeField]
-    private MeshRenderer[] rifleCasting;
+    public MeshRenderer[] rifleCasting;
     [SerializeField]
-    private SkinnedMeshRenderer[] fpsBodyCasting;
+    public SkinnedMeshRenderer[] fpsBodyCasting;
     #endregion
 
     #region PlayerCamera
@@ -61,8 +62,9 @@ public class PlayerController : NetworkBehaviour
     //카메라 
     [SerializeField] private float mouseSensitivity = 0.5f;
     [SerializeField] private Transform cameraHolder; // 상하 회전용
+    [Networked] private Vector3 cameraVec { get; set; }
     [SerializeField] private Transform aimPos; // 조준점(빈 오브젝트)
-    [SerializeField] private Camera playerCamera; // 플레이어 카메라
+    [SerializeField] public Camera playerCamera; // 플레이어 카메라
     [SerializeField] private float aimDistance = 100f; // 조준 최대 거리
     [SerializeField] private LayerMask aimLayerMask = ~0; // 조준에 사용할 레이어
     private float verticalLookRotation = 0f;
@@ -91,6 +93,10 @@ public class PlayerController : NetworkBehaviour
 
     #endregion
 
+    [SerializeField] public CharacterHUDUnit characterHUDUnit;
+    [SerializeField] private Sprite playerImage;
+    private float localPitch; // 실제 카메라에 적용할 값
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -100,13 +106,13 @@ public class PlayerController : NetworkBehaviour
         }
 
 
-
-
-
     }
     public override void Spawned()
     {
         base.Spawned();
+
+        if (GameManager.Instance != null)
+            GameManager.RegisterPlayer(this.Object);
 
         // 초기 팔 위치값 저장(일반상태 팔위치)
         defaultArmPosition = armTransform.localPosition;
@@ -134,9 +140,8 @@ public class PlayerController : NetworkBehaviour
             for (int i = 0; i < rifleCasting.Length; i++)
             {
                 rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-            }
+            }                        
 
-                        
         }
         else
         {
@@ -147,8 +152,9 @@ public class PlayerController : NetworkBehaviour
             // 다른 플레이어의 1인칭 바디 렌더링 끄기
             for (int i = 0; i < fpsBodyCasting.Length; i++)
             {
-                fpsBodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                fpsBodyCasting[i].enabled=false;
             }
+            
 
         }
 
@@ -157,90 +163,154 @@ public class PlayerController : NetworkBehaviour
     private void Update()
     {
         if (!isAlive)
-            return;
-
-        // 사격
-        if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire)||PlayerInputs.IsDownThisFrame(PlayerInput.NetworkInputData.ButtonFire))
         {
-            if (weaponManager.ShouldFire())
+            
+            if (HasInputAuthority && spectatePlayers.Count > 0)
             {
-                bool isOwner = false;
-                if (HasInputAuthority)
+                if (Input.GetKeyDown(KeyCode.Tab))
                 {
-                    isOwner = true;
-                    GameObject flash = Instantiate(weaponManager.muzzleFlash, fpsMuzzleTransform.position, fpsMuzzleTransform.rotation,fpsMuzzleTransform);
+                    ChangeCamera();   
                 }
-                weaponManager.Fire(aimPos,isOwner,fpsMuzzleTransform);
-
-                // 상하 반동 적용
-                if (PlayerInputs.IsZooming)
-                {
-                    float zoomRecoilAmount = recoilAmount * 0.66f;
-                    Pitch -= zoomRecoilAmount;
-                }
-                else
-                {
-                    Pitch -= recoilAmount;
-                }                    
-
-                currentRecoverTimer = recoilRecoveryTime;
-                currentRecoilOffset = recoilAmount;
-                recoilRecoveryPerSecond = recoilAmount / recoilRecoveryTime;
-
-                // 좌우 반동 랜덤 적용
-                float yawRecoil = Random.Range(-maxYawRecoil, maxYawRecoil);
-                Yaw += yawRecoil;
-
-                currentYawRecoverTimer = recoilRecoveryTime;
-                currentYawRecoilOffset = yawRecoil;
-                yawRecoveryPerSecond = yawRecoil / recoilRecoveryTime;
-
-
-                Debug.Log("쏘는중");
-                armAnim.SetTrigger("Fire");
-                anim.SetTrigger("Fire");
-                SoundManager.Instance.Play("RifleFire");
-                //armAnim.Play("Fire", 0, 0);
-                if (Object.HasInputAuthority)
-                {
-                    RPC_ZombieHit(Yaw, Pitch);
-                }                 
             }
         }
+        else
+        {
+            // 사격
+            if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire) || PlayerInputs.IsDownThisFrame(PlayerInput.NetworkInputData.ButtonFire))
+            {
+                if (weaponManager.ShouldFire())
+                {
+                    bool isOwner = false;
+                    if (HasInputAuthority || GameManager.Instance.observerPlayer == this) // 플레이어 자기자신이거나 관전중인 대상이면
+                    {
+                        isOwner = true;
+                        GameObject flash = Instantiate(weaponManager.muzzleFlash, fpsMuzzleTransform.position, fpsMuzzleTransform.rotation, fpsMuzzleTransform);
+                    }
+                    weaponManager.Fire(aimPos, isOwner, fpsMuzzleTransform);
 
-        
-        // 줌 상태일 때 팔 위치 보간
-        Vector3 targetPos = defaultArmPosition;
-        if (PlayerInputs.IsZooming)
-            targetPos += armTargetPositon;
+                    // 상하 반동 적용
+                    if (PlayerInputs.IsZooming)
+                    {
+                        float zoomRecoilAmount = recoilAmount * 0.66f;
+                        Pitch -= zoomRecoilAmount;
+                    }
+                    else
+                    {
+                        Pitch -= recoilAmount;
+                    }
 
-        armTransform.localPosition = Vector3.Lerp(
-            armTransform.localPosition,
-            targetPos,
-            zoomLerpSpeed * Time.deltaTime
-        );
+                    currentRecoverTimer = recoilRecoveryTime;
+                    currentRecoilOffset = recoilAmount;
+                    recoilRecoveryPerSecond = recoilAmount / recoilRecoveryTime;
+
+                    // 좌우 반동 랜덤 적용
+                    float yawRecoil = Random.Range(-maxYawRecoil, maxYawRecoil);
+                    Yaw += yawRecoil;
+
+                    currentYawRecoverTimer = recoilRecoveryTime;
+                    currentYawRecoilOffset = yawRecoil;
+                    yawRecoveryPerSecond = yawRecoil / recoilRecoveryTime;
 
 
-        // 카메라 줌 Fov 보간
-        //float targetFOV = defaultFov;
-        float targetFOV = PlayerInputs.IsZooming ? zoomFOV : defaultFov;
-        
+                    Debug.Log("쏘는중");
+                    armAnim.SetTrigger("Fire");
+                    anim.SetTrigger("Fire");
+                    SoundManager.Instance.Play("RifleFire");
+                    //armAnim.Play("Fire", 0, 0);
+                    if (Object.HasInputAuthority)
+                    {
+                        RPC_ZombieHit(Yaw, Pitch);
+                    }
+                }
+            }
 
-        playerCamera.fieldOfView = Mathf.Lerp(
-            playerCamera.fieldOfView,
-            targetFOV,
-            zoomLerpSpeed * Time.deltaTime
-        );
+
+            // 줌 상태일 때 팔 위치 보간
+            Vector3 targetPos = defaultArmPosition;
+            if (PlayerInputs.IsZooming)
+                targetPos += armTargetPositon;
+
+            armTransform.localPosition = Vector3.Lerp(
+                armTransform.localPosition,
+                targetPos,
+                zoomLerpSpeed * Time.deltaTime
+            );
 
 
-        UpdateAimPos();
+            // 카메라 줌 Fov 보간
+            //float targetFOV = defaultFov;
+            float targetFOV = PlayerInputs.IsZooming ? zoomFOV : defaultFov;
+
+
+            playerCamera.fieldOfView = Mathf.Lerp(
+                playerCamera.fieldOfView,
+                targetFOV,
+                zoomLerpSpeed * Time.deltaTime
+            );
+
+
+            UpdateAimPos();
+        }
+
+
+        localPitch = Mathf.Lerp(localPitch, Pitch, 10f * Time.deltaTime); // 10f는 원하는 반응속도
+        cameraHolder.localEulerAngles = new Vector3(localPitch, 0, 0);
+
+
+
+    }
+
+    public void ChangeCamera()
+    {
+        // 다음 인덱스 순환
+        int nextIndex = (currentSpectateIndex + 1) % spectatePlayers.Count;
+        PlayerController nextPlayer = spectatePlayers[nextIndex];
+        PlayerController currentPlayer = spectatePlayers[currentSpectateIndex];
+        GameManager.Instance.observerPlayer = nextPlayer;
+        // 현재 카메라 끈다
+        currentPlayer.playerCamera.enabled = false;
+
+        // 현재 캐릭터 1인칭 Off, 3인칭 On
+        for (int i = 0; i < currentPlayer.fpsBodyCasting.Length; i++)
+        {
+            currentPlayer.fpsBodyCasting[i].enabled = false;
+        }
+        for (int i = 0; i < currentPlayer.bodyCasting.Length; i++)
+        {
+            currentPlayer.bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+        for (int i = 0; i < currentPlayer.rifleCasting.Length; i++)
+        {
+            currentPlayer.rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+
+
+        // 다음 카메라 먼저 켠다
+        nextPlayer.playerCamera.enabled = true;
+
+        // 다음 관전 플레이어 3인칭 끄고 1인칭 키기
+        for (int i = 0; i < nextPlayer.fpsBodyCasting.Length; i++)
+        {
+            spectatePlayers[nextIndex].fpsBodyCasting[i].enabled = true;
+        }
+        for (int i = 0; i < nextPlayer.bodyCasting.Length; i++)
+        {
+            nextPlayer.bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
+
+        for (int i = 0; i < nextPlayer.rifleCasting.Length; i++)
+        {
+            nextPlayer.rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
+
+        currentSpectateIndex = nextIndex;
     }
 
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_ZombieHit(float yaw, float pitch)
     {
-        TakeDamage(0);
+        TakeDamage(1);
 
         Vector3 rayOrigin = playerCamera.transform.position; // 또는 총구 위치
         Quaternion aimRotation = Quaternion.Euler(pitch, yaw, 0f);
@@ -271,6 +341,36 @@ public class PlayerController : NetworkBehaviour
         EffectPoolManager.Instance.GetEffect(point, rotation);
     }
 
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_SetPlayerUI()
+    {       
+    
+        if (Object.HasInputAuthority)
+        {
+            // 스탯 UI 연결 ( 자신 )
+            characterHUDUnit = InterfaceManager.Instance.characterHUDcontainter.MyPlayerStatus_UI;
+            characterHUDUnit.SetName($"{RoomUser.Username}");
+            characterHUDUnit.SetPortraitImage(playerImage);
+        }
+        else
+        {
+            // 스탯 UI 연결 ( 다른 플레이어 )
+            for (int i = 0; i < 3; i++)
+            {
+                if (InterfaceManager.Instance.characterHUDUnits[i].player == null)
+                {
+                    InterfaceManager.Instance.characterHUDUnits[i].player = this;
+                    characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
+                    characterHUDUnit.SetName($"{RoomUser.Username}");
+                    characterHUDUnit.SetPortraitImage(playerImage);
+                    break;
+                }
+            }
+
+        
+        }
+    }
+
 
     public override void FixedUpdateNetwork()
     {
@@ -285,7 +385,7 @@ public class PlayerController : NetworkBehaviour
             HandleInput(PlayerInputs);
         }
 
-
+        cameraHolder.localEulerAngles = new Vector3(Pitch, 0, 0);
 
         ApplyGravity();
 
@@ -343,32 +443,136 @@ public class PlayerController : NetworkBehaviour
                 Debug.Log("죽음");
                 isAlive = false;
 
-                anim.SetBool("isAlive", isAlive);
+                RPC_SetAnim("isAlive", isAlive);
                 RPC_SetArmAnim("isAliveBool", isAlive);
                 rb.linearVelocity = Vector3.zero;
+                RPC_cameraOnOff();
 
             }
+
+            RPC_ChangeHealth(Hp);
+            
         }
                 
     }
 
+    // 관전 대상 플레이어 리스트
+    [SerializeField] private List<PlayerController> spectatePlayers = new List<PlayerController>();
+
+    
+
+    // 현재 바라보는 플레이어 인덱스
+    private int currentSpectateIndex = 0;
+
+
     [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    private void RPC_cameraOnOff()
+    {
+        // 관전 리스트 초기화
+        spectatePlayers.Clear();
+
+        foreach (var p in GameManager.Players)
+        {
+            var other = p.GetComponent<PlayerController>();
+            if (other != null )// other.isAlive
+            {
+                spectatePlayers.Add(other);
+            }
+        }
+
+        
+
+        // 관전할 대상이 있으면 첫번째만 켜기
+        if (spectatePlayers.Count > 0)
+        {
+            // 내 카메라 끄기
+            playerCamera.enabled = false;
+
+            // 자신의 3인칭 캐릭터 렌더링 키기
+            for (int i = 0; i < bodyCasting.Length; i++)
+            {
+                bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+            for (int i = 0; i < rifleCasting.Length; i++)
+            {
+                rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+
+            // 자신의 1인칭 바디 렌더링 끄기
+            for (int i = 0; i < fpsBodyCasting.Length; i++)
+            {
+                fpsBodyCasting[i].enabled = false;
+            }
+
+            currentSpectateIndex = 0;
+            spectatePlayers[currentSpectateIndex].playerCamera.enabled = true;
+            PlayerController nextPlayer = spectatePlayers[currentSpectateIndex];
+            GameManager.Instance.observerPlayer = nextPlayer;
+
+            // 관전 플레이어 3인칭 끄고 1인칭 키기
+            for (int i = 0; i < nextPlayer.fpsBodyCasting.Length; i++)
+            {
+                nextPlayer.fpsBodyCasting[i].enabled = true;
+            }
+            for (int i = 0; i < nextPlayer.bodyCasting.Length; i++)
+            {
+                nextPlayer.bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                Debug.Log(nextPlayer+ "ㅇ" + nextPlayer.bodyCasting[i] + "현재 " + i + "번째");
+            }
+
+            for (int i = 0; i < nextPlayer.rifleCasting.Length; i++)
+            {
+                nextPlayer.rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+        }
+
+        
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_ChangeHealth(float hp)
+    {
+        characterHUDUnit.OnChangeHealth(Hp);
+    }
+
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_SetArmAnim(string paramName,bool _bool)
     {
         armAnim.SetBool(paramName, _bool);
     }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_SetAnim(string paramName, bool _bool)
+    {
+        anim.SetBool(paramName, _bool);
+    }
 
+
+    [SerializeField] private float stickToGroundForce = 30f; // 접지 유지 힘
     private void ApplyGravity()
     {
         // 중력 처리 (StateAuthority만 담당)
-        if (HasStateAuthority && !isGrounded)
+        if (HasStateAuthority )
         {
-            Vector3 gravity = Vector3.up * customGravity;
-            if (rb.linearVelocity.y < 0)
-                gravity *= fallMultiplier;
+            if (isGrounded)
+            {
+                
 
-            rb.AddForce(gravity, ForceMode.Acceleration);
+                // 살짝 바닥으로 누르는 힘
+                rb.AddForce(Vector3.down * stickToGroundForce, ForceMode.Acceleration);
+            }
+            else
+            {
+                // 일반 중력
+                Vector3 gravity = Vector3.up * customGravity;
+                if (rb.linearVelocity.y < 0)
+                    gravity *= fallMultiplier;
+
+                rb.AddForce(gravity, ForceMode.Acceleration);
+            }
+
         }
+
     }
 
     private void HandleAnimation(PlayerInput.NetworkInputData input)
@@ -455,7 +659,8 @@ public class PlayerController : NetworkBehaviour
         Quaternion targetRot = Quaternion.Euler(0, Yaw, 0);
         rb.MoveRotation(targetRot);
 
-        cameraHolder.localEulerAngles = new Vector3(Pitch, 0, 0);
+        
+        
 
 
 
@@ -467,6 +672,8 @@ public class PlayerController : NetworkBehaviour
         //    cameraHolder.localEulerAngles = new Vector3(verticalLookRotation, 0, 0);
         //}
     }
+
+
     //상하 반동
     [SerializeField] private float recoilAmount = 2f;
     [SerializeField] private float recoilRecoveryTime = 0.35f;
@@ -510,24 +717,84 @@ public class PlayerController : NetworkBehaviour
             }
         }
     }
-
+    private Vector3 groundedHitPoint;
 
     private void CheckGrounded()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, ~0);
+        // 캡슐 모양의 접지 검사 (CapsuleCollider처럼)
+        float capsuleRadius = 0.35f; // 발바닥 너비, CapsuleCollider 반지름과 맞추면 좋음
+        float capsuleHeight = 1.8f; // 캐릭터 높이
+        float checkDistance = 0.2f; // 바닥과의 거리 허용치
+
+        // 캡슐의 상단, 하단 구 중심 위치
+        Vector3 point1 = transform.position + Vector3.up * (capsuleHeight * 0.5f - capsuleRadius);
+        Vector3 point2 = transform.position + Vector3.up * capsuleRadius;
+
+        if (Physics.CapsuleCast(
+                point1,
+                point2,
+                capsuleRadius,
+                Vector3.down,
+                out RaycastHit hit,
+                checkDistance + 0.01f, // 약간의 여유
+                ~0
+            ))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
+        // 애니메이션에도 연동
         if (anim != null)
             anim.SetBool("IsGrounded", isGrounded);
+
+        // 디버그용 Gizmo
+        groundedHitPoint = hit.point; // for debug drawing
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = isGrounded ? Color.green : Color.red;
 
-        Vector3 origin = transform.position;
-        Vector3 direction = Vector3.down * groundCheckDistance;
+        float capsuleRadius = 0.35f;
+        float capsuleHeight = 1.8f;
+        float checkDistance = 0.2f;
 
-        Gizmos.DrawLine(origin, origin + direction);
-        Gizmos.DrawSphere(origin + direction, 0.05f); // 끝점에 작은 점도 표시
+        Vector3 point1 = transform.position + Vector3.up * (capsuleHeight * 0.5f - capsuleRadius);
+        Vector3 point2 = transform.position + Vector3.up * capsuleRadius;
+
+        // 기본 캡슐
+        Gizmos.DrawWireSphere(point1, capsuleRadius);
+        Gizmos.DrawWireSphere(point2, capsuleRadius);
+
+        // CapsuleCast 검사 영역을 추가로 시각화
+        Vector3 castDirection = Vector3.down * checkDistance;
+
+        // 끝지점 (checkDistance만큼 아래로 내려간 위치)
+        Vector3 point1End = point1 + castDirection;
+        Vector3 point2End = point2 + castDirection;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(point1End, capsuleRadius);
+        Gizmos.DrawWireSphere(point2End, capsuleRadius);
+
+        // 상단과 하단의 연결선
+        Gizmos.DrawLine(point1, point1End);
+        Gizmos.DrawLine(point2, point2End);
+
+        // 실제 바닥 충돌 위치 디버그
+        if (isGrounded)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawSphere(groundedHitPoint, 0.05f);
+        }
     }
+
+
+    
+
 
 }
