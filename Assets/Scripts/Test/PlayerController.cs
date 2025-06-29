@@ -113,11 +113,7 @@ public class PlayerController : NetworkBehaviour
 
         if (GameManager.Instance != null)
             GameManager.RegisterPlayer(this.Object);
-
-        // 초기 팔 위치값 저장(일반상태 팔위치)
-        defaultArmPosition = armTransform.localPosition;
-
-
+        
         //_changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
         //MaxSpeed = maxSpeedNormal;
         if (Object.HasInputAuthority)
@@ -142,6 +138,11 @@ public class PlayerController : NetworkBehaviour
                 rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             }                        
 
+            //자신의 1인칭 바디 렌더링 켜기
+            for (int i=0;i<fpsBodyCasting.Length; i++)
+            {
+                fpsBodyCasting[i].enabled = true;
+            }
         }
         else
         {
@@ -151,7 +152,15 @@ public class PlayerController : NetworkBehaviour
             {
                 cam.enabled = false;
             }
-
+            // 3인칭 캐릭터 렌더링 하기
+            for (int i = 0; i < bodyCasting.Length; i++)
+            {
+                bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+            for (int i = 0; i < rifleCasting.Length; i++)
+            {
+                rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
             // 다른 플레이어의 1인칭 바디 렌더링 끄기
             for (int i = 0; i < fpsBodyCasting.Length; i++)
             {
@@ -871,8 +880,6 @@ public class PlayerController : NetworkBehaviour
 
     private void OnDestroy()
     {
-        if(GameManager.Instance != null)
-            GameManager.UnregisterPlayer(this.Object);
     }
 
     public void Player_Reset()

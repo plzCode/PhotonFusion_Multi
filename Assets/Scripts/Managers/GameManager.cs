@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fusion;
 using UnityEngine;
 
@@ -153,12 +154,14 @@ public class GameManager : NetworkBehaviour
 
         if (Runner.GameMode == GameMode.Host)
         {
-            foreach (var p in Players)
+			foreach (var p in players.ToList())
             {
                 var playerController = p.GetComponent<PlayerController>();
 
                 if (playerController != null && playerController.Object != null)
                 {
+                    if (GameManager.Instance != null)
+                        GameManager.UnregisterPlayer(playerController.Object);
                     Runner.Despawn(playerController.Object);
                 }
             }

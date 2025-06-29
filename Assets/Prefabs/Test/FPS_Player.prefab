@@ -522,7 +522,7 @@ MonoBehaviour:
   weaponManager: {fileID: 8147502216302715758}
   armTransform: {fileID: 5239974456429637099}
   fpsMuzzleTransform: {fileID: 1358902179287548458}
-  defaultArmPosition: {x: 0, y: 0, z: 0}
+  defaultArmPosition: {x: 0.02, y: -1.69, z: -0.2}
   armTargetPositon: {x: -0.12, y: 0.012, z: 0}
   zoomLerpSpeed: 10
   controller: {fileID: 0}
