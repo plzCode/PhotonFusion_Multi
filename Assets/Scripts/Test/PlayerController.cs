@@ -148,7 +148,10 @@ public class PlayerController : NetworkBehaviour
             // 다른 플레이어는 카메라 끔
             Camera cam = GetComponentInChildren<Camera>();
             if (cam != null)
+            {
                 cam.enabled = false;
+            }
+
             // 다른 플레이어의 1인칭 바디 렌더링 끄기
             for (int i = 0; i < fpsBodyCasting.Length; i++)
             {
@@ -253,7 +256,7 @@ public class PlayerController : NetworkBehaviour
         }
 
 
-        localPitch = Mathf.Lerp(localPitch, Pitch, 10f * Time.deltaTime); // 10f는 원하는 반응속도
+        localPitch = Mathf.Lerp(localPitch, Pitch, 150f * Time.deltaTime); // 10f는 원하는 반응속도
         cameraHolder.localEulerAngles = new Vector3(localPitch, 0, 0);
 
 
@@ -310,7 +313,7 @@ public class PlayerController : NetworkBehaviour
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_ZombieHit(float yaw, float pitch)
     {
-        TakeDamage(1);
+        TakeDamage(10);
 
         Vector3 rayOrigin = playerCamera.transform.position; // 또는 총구 위치
         Quaternion aimRotation = Quaternion.Euler(pitch, yaw, 0f);
@@ -351,18 +354,20 @@ public class PlayerController : NetworkBehaviour
             characterHUDUnit = InterfaceManager.Instance.characterHUDcontainter.MyPlayerStatus_UI;
             characterHUDUnit.SetName($"{RoomUser.Username}");
             characterHUDUnit.SetPortraitImage(playerImage);
+            characterHUDUnit.gameObject.SetActive(true);
         }
         else
         {
             // 스탯 UI 연결 ( 다른 플레이어 )
             for (int i = 0; i < 3; i++)
             {
-                if (InterfaceManager.Instance.characterHUDUnits[i].player == null)
+                if (InterfaceManager.Instance.characterHUDUnits[i].player == null || InterfaceManager.Instance.characterHUDUnits[i].playerName == RoomUser.Username)
                 {
                     InterfaceManager.Instance.characterHUDUnits[i].player = this;
                     characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
                     characterHUDUnit.SetName($"{RoomUser.Username}");
                     characterHUDUnit.SetPortraitImage(playerImage);
+                    characterHUDUnit.gameObject.SetActive(true);
                     break;
                 }
             }
@@ -447,6 +452,11 @@ public class PlayerController : NetworkBehaviour
                 RPC_SetArmAnim("isAliveBool", isAlive);
                 rb.linearVelocity = Vector3.zero;
                 RPC_cameraOnOff();
+                GameManager.Instance.PlayerAliveCheck();
+                /*if (GameManager.Instance.PlayerAliveCheck_Bool())
+                {
+                    SpawnScript.Current.ReSpawn();
+                }*/
 
             }
 
@@ -528,6 +538,64 @@ public class PlayerController : NetworkBehaviour
 
         
     }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    private void RPC_cameraON()
+    {
+        // 자신의 카메라 다시 켜기
+        playerCamera.enabled = true;
+
+        // 자신의 3인칭 캐릭터 렌더링 끄기
+        for (int i = 0; i < bodyCasting.Length; i++)
+        {
+            bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
+        for (int i = 0; i < rifleCasting.Length; i++)
+        {
+            rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
+
+        // 자신의 1인칭 바디 렌더링 다시 켜기
+        for (int i = 0; i < fpsBodyCasting.Length; i++)
+        {
+            fpsBodyCasting[i].enabled = true;
+        }
+
+        // 이전에 관전하던 대상의 카메라/렌더링 끄기
+        if (spectatePlayers.Count > 0 && currentSpectateIndex >= 0 && currentSpectateIndex < spectatePlayers.Count)
+        {
+            PlayerController spectatedPlayer = spectatePlayers[currentSpectateIndex];
+
+            // 관전 대상의 카메라 끄기
+            if (spectatedPlayer != null && spectatedPlayer.playerCamera != null)
+            {
+                spectatedPlayer.playerCamera.enabled = false;
+            }
+
+            // 관전 대상의 1인칭 바디 끄기
+            for (int i = 0; i < spectatedPlayer.fpsBodyCasting.Length; i++)
+            {
+                spectatedPlayer.fpsBodyCasting[i].enabled = false;
+            }
+
+            // 관전 대상의 3인칭 바디 다시 보이도록 설정
+            for (int i = 0; i < spectatedPlayer.bodyCasting.Length; i++)
+            {
+                spectatedPlayer.bodyCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+
+            for (int i = 0; i < spectatedPlayer.rifleCasting.Length; i++)
+            {
+                spectatedPlayer.rifleCasting[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+        }
+
+        // 관전자 관련 변수 초기화
+        spectatePlayers.Clear();
+        currentSpectateIndex = -1;
+        GameManager.Instance.observerPlayer = null;
+    }
+
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_ChangeHealth(float hp)
@@ -793,8 +861,22 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if(GameManager.Instance != null)
+            GameManager.UnregisterPlayer(this.Object);
+    }
 
-    
+    public void Player_Reset()
+    {
+        Hp = 100f;
+        isAlive = true;
+        rb.linearVelocity = Vector3.zero;
+
+        RPC_SetAnim("isAlive", isAlive);
+        RPC_SetArmAnim("isAliveBool", isAlive);
+        RPC_cameraON();
+    }
 
 
 }

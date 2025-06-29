@@ -8,6 +8,7 @@ using UnityEngine;
 public class SpawnScript : NetworkBehaviour
 {
     public static SpawnScript Current { get; private set; }
+    public List<PlayerController> players = new List<PlayerController>();
 
     [System.Serializable]
     public class SpawnPointGroup
@@ -16,7 +17,6 @@ public class SpawnScript : NetworkBehaviour
     }
 
     public SpawnPointGroup[] spawnpoints;
-
     public int spawnPointIndex = 0;
 
     public GameObject professor;
@@ -126,7 +126,8 @@ public class SpawnScript : NetworkBehaviour
 
         Debug.Log($"Spawning player for {player.Username} at {point.name}");
         entity.transform.name = $"{player.Username}";
-        
+
+        players.Add(entity.Controller);
     }
 
 
@@ -177,8 +178,11 @@ public class SpawnScript : NetworkBehaviour
         for (i = 0; i < GameManager.Players.Count; i++)
         {
             var player = GameManager.Players[i];
+            PlayerController playerController = player.GetComponent<PlayerController>();
             int spawnIndex = i % currentSpawnPoints.Length; // 오버플로우 방지
             player.transform.position = currentSpawnPoints[spawnIndex].position;
+            //playerController.Player_Reset();
+
         }
 
         if (DialogueLua.GetVariable("GoToTarget").asBool && professor != null)

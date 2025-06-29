@@ -1,3 +1,4 @@
+using Fusion;
 using FusionExamples.Utility;
 using UnityEngine;
 
@@ -41,4 +42,15 @@ public class InterfaceManager : MonoBehaviour
     public void SetVolumeSFX(float value) => AudioManager.SetVolumeSFX(value);
     public void SetVolumeUI(float value) => AudioManager.SetVolumeUI(value);
     public void SetVolumeMusic(float value) => AudioManager.SetVolumeMusic(value);
+
+    
+    public void ResetUI()
+    {
+        // 스탯 UI 연결 ( 다른 플레이어 )
+        for (int i = 0; i < 3; i++)
+        {
+            characterHUDUnits[i].player = null;
+            characterHUDUnits[i].gameObject.SetActive(false);
+        }
+    }
 }

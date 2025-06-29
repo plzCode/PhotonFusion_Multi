@@ -140,6 +140,59 @@ public class GameManager : NetworkBehaviour
             Instance.players.Remove(player);
     }
 
+    public void PlayerAliveCheck()
+    {
+        for (int i = 0; i < Players.Count; i++)
+        {
+            PlayerController player = Players[i].GetComponent<PlayerController>();
+            if (player.isAlive)
+            {
+                return;
+            }
+        }
 
-    
+        if (Runner.GameMode == GameMode.Host)
+        {
+            foreach (var p in Players)
+            {
+                var playerController = p.GetComponent<PlayerController>();
+
+                if (playerController != null && playerController.Object != null)
+                {
+                    Runner.Despawn(playerController.Object);
+                }
+            }
+
+            foreach (var player in RoomPlayer.Players)
+            {
+                player.GameState = RoomPlayer.EGameState.GameCutscene;
+                GameManager.CurrentMap.SpawnPlayer(Runner, player);
+                var networkPlayer = player.Player;
+                //GameManager.Instance.RegisterPlayer(networkPlayer.Object);
+                networkPlayer.RPC_SetPlayerUI();
+            }
+        }
+
+        CurrentMap.ReSpawn();
+
+    }
+
+	public bool PlayerAliveCheck_Bool()
+	{
+		for (int i = 0; i < Players.Count; i++)
+		{
+			PlayerController player = Players[i].GetComponent<PlayerController>();
+			if (player.isAlive)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static void ClearPlayer()
+	{
+		Instance.players.Clear();
+    }
+
 }

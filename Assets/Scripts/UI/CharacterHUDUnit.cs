@@ -12,6 +12,7 @@ public class CharacterHUDUnit : MonoBehaviour
     [SerializeField] TextMeshProUGUI _nameText;
     [SerializeField] TextMeshProUGUI _healthText;
     public PlayerController player;
+    public string playerName;
     float _maxHealth = 100;
     float _currentHealth = 100;
 
@@ -42,6 +43,7 @@ public class CharacterHUDUnit : MonoBehaviour
     public void SetName(string name)
     {
         _nameText.text = name;
+        playerName = name;
     }
 
     public void OnChangeHealth(float health)
