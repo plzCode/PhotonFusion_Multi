@@ -496,6 +496,10 @@ public class PlayerController : NetworkBehaviour
         if (HasStateAuthority)
         {
             Hp -= amount;
+            if(Hp <= 0)
+            {
+                Hp = 0;
+            }
 
             if (Hp <= 0)
             {

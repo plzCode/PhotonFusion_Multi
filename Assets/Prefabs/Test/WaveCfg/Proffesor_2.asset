@@ -15,8 +15,8 @@ MonoBehaviour:
   waveId: Proffesor_2
   minPerPlayer: 2
   maxPerPlayer: 4
-  innerRadius: 3
-  outerRadius: 8
+  innerRadius: 1
+  outerRadius: 1.5
   minEvnet: 10
   maxEvnet: 20
   isContinuous: 0

@@ -102,7 +102,17 @@ public class ZombieAIController : NetworkBehaviour
     {
         /* ❶ 기존 타깃이 null/파괴되면 비우기 */
         if (TargetNetObj == null || !TargetNetObj || !TargetNetObj.IsValid)
+        {
             TargetNetObj = null;
+        }
+        else
+        {
+            var pc = TargetNetObj.GetComponent<PlayerController>();
+            if(pc != null && !pc.isAlive)
+            {
+                TargetNetObj = null;
+            }
+        }
 
         /* ❷ 아직 타깃 없고, 근처에 감지된 플레이어가 있으면 지정 */
         if (TargetNetObj == null)
@@ -126,7 +136,7 @@ public class ZombieAIController : NetworkBehaviour
 
         foreach (var player in GameManager.Players)
         {
-            if (player == null) continue;                   // 누락/파괴 대비
+            if (player == null || !player.GetComponent<PlayerController>().isAlive) continue;                   // 누락/파괴 대비
             float d = (player.transform.position - transform.position).sqrMagnitude;
             if (d < minDist)
             {

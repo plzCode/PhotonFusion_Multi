@@ -114,6 +114,7 @@ public class ZombieController : NetworkBehaviour
     {
         if (!clip) return;
         sfx.pitch = Random.Range(.95f, 1.05f);
+        sfx.volume = .2f;
         sfx.PlayOneShot(clip);
     }
 
