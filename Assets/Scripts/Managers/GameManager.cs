@@ -141,6 +141,8 @@ public class GameManager : NetworkBehaviour
             Instance.players.Remove(player);
     }
 
+   
+
     public bool PlayerAliveCheck()
     {
         for (int i = 0; i < Players.Count; i++)
@@ -159,9 +161,7 @@ public class GameManager : NetworkBehaviour
                 var playerController = p.GetComponent<PlayerController>();
 
                 if (playerController != null && playerController.Object != null)
-                {
-                    if (GameManager.Instance != null)
-                        GameManager.UnregisterPlayer(playerController.Object);
+                {                    
                     Runner.Despawn(playerController.Object);
                 }
             }
@@ -169,7 +169,7 @@ public class GameManager : NetworkBehaviour
             foreach (var player in RoomPlayer.Players)
             {
                 player.GameState = RoomPlayer.EGameState.GameCutscene;
-                GameManager.CurrentMap.SpawnPlayer(Runner, player);
+                CurrentMap.SpawnPlayer(Runner, player);
                 var networkPlayer = player.Player;
                 //GameManager.Instance.RegisterPlayer(networkPlayer.Object);
                 networkPlayer.RPC_SetPlayerUI();

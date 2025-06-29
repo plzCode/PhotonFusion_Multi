@@ -107,6 +107,16 @@ public class PlayerController : NetworkBehaviour
 
 
     }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        GameManager.UnregisterPlayer(Object);
+
+        base.Despawned(runner, hasState);
+
+
+    }
+
     public override void Spawned()
     {
         base.Spawned();
