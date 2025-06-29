@@ -57,8 +57,6 @@ public class ZombieWaveManager : NetworkBehaviour
                        pt.transform.position,
                        cfg.innerRadius, cfg.outerRadius,
                        forceChase);
-
-        //cfg.triggered++;
     }
 
 
@@ -68,7 +66,7 @@ public class ZombieWaveManager : NetworkBehaviour
     {
         if (!HasStateAuthority) return;
         int playerCnt = GameManager.Players.Count;
-        int cnt = Random.Range(pivot.minPerPlayer, pivot.maxPerPlayer + 1) * playerCnt;
+        int cnt = Random.Range(pivot.minPerPlayer + 1, pivot.maxPerPlayer + 1) * playerCnt;
         SpawnGroup(commonPrefab, cnt, pivot.transform.position, 0f, pivot.groupRadius, false);
     }
 
@@ -99,7 +97,6 @@ public class ZombieWaveManager : NetworkBehaviour
                 
                 zombie.GetComponent<NavMeshAgent>().Warp(hit.position);
             }
-
 
             Debug.Log($"[WM] SpawnGroup() {i + 1}/{n} @ {hit.position} ({innerR} ~ {outerR})");
         }

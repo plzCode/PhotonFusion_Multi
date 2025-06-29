@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using Zombie.States;
-using System.Linq;
 
 public class AlertState : ZombieState
 {
-    const string CLIP = "zombie_alert_to_aggro_01";
-    bool clipDone;
+    const string STATE = "Alert";                      // Animator  State
+    const string CLIP = "zombie_alert_to_aggro_01";   // AnimationClip
+    float timer;
 
     public AlertState(ZombieAIController c) : base(c) { }
 
@@ -14,26 +15,18 @@ public class AlertState : ZombieState
         ctrl.agent.isStopped = true;
         ctrl.agent.velocity = Vector3.zero;
 
-        ctrl.anim.speed = 1f;
-        ctrl.anim.CrossFade(CLIP, 0.05f);
-        clipDone = false;
+        // 애니 재생 + 길이만큼 타이머
+        ctrl.anim.CrossFade(STATE, 0.05f, 0);
+        timer = ctrl.anim.runtimeAnimatorController.animationClips
+                .First(x => x.name == CLIP).length;
     }
 
     public override void Update()
     {
-        if (clipDone) return;
+        timer -= Time.deltaTime;
+        if (timer > 0) return;
 
-        var info = ctrl.anim.GetCurrentAnimatorStateInfo(0);
-        if (info.IsName(CLIP) && info.normalizedTime >= 1f)
-        {
-            clipDone = true;
-            ctrl.agent.isStopped = false;
-            ctrl.ChangeState(new ChaseState(ctrl));
-        }
-    }
-
-    public override void Exit()
-    {
         ctrl.agent.isStopped = false;
+        ctrl.ChangeState(new ChaseState(ctrl));
     }
 }

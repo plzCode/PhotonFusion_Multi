@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(ZombieAIController))]
@@ -52,8 +51,7 @@ public class ZombieController : NetworkBehaviour
         if (Vector3.Angle(eyePoint.forward, dir) > fov * 0.5f) return false;
 
         if (Physics.Raycast(eyePoint.position, dir.normalized, out var hit,
-                            maxDist, obstacleMask,
-                            QueryTriggerInteraction.Ignore))
+                            maxDist, obstacleMask, QueryTriggerInteraction.Ignore))
             return hit.transform.root == target.root;   // 팔/총 무시
 
         return true;

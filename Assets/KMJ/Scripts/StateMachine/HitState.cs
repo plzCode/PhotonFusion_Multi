@@ -1,60 +1,32 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using Zombie.States;
 
 
 public class HitState : ZombieState
 {
-    const float HIT_TIME = 0.6f;
-    float t;
+    const string STATE = "Hit";
+    const string CLIP = "zombie_hit_react_F_01";
+    float timer;
 
-    public HitState(ZombieAIController c) : base(c)
-    {
-       
-    }
+    public HitState(ZombieAIController c) : base(c) { }
 
     public override void Enter()
     {
-        t = 0f;
-        ctrl.anim.CrossFade("Hit", 0.05f);
-
-        // 즉시 멈춤
-        if (ctrl.agent.enabled && ctrl.agent.isOnNavMesh)
-        {
-            ctrl.agent.isStopped = true;
-            ctrl.agent.velocity = Vector3.zero;
-        }
+        ctrl.agent.isStopped = true;             // 경직
+        ctrl.agent.velocity = Vector3.zero;     // 미끄러짐 방지
+        ctrl.anim.CrossFade(STATE, 0.05f, 0);
+        timer = ctrl.anim.runtimeAnimatorController.animationClips
+                .First(x => x.name == CLIP).length;   // ≈ 1.1~1.3 s
     }
 
     public override void Update()
     {
-        t += Time.deltaTime;
-        if (t < HIT_TIME) return;
+        timer -= Time.deltaTime;
+        if (timer > 0) return;
 
-        bool shouldChase =
-            ctrl.InAttackRange || ctrl.InSightFov || ctrl.InAlertRadius;
-
-        if (shouldChase)
-        {   // ▶ 추적 상태로 복귀
-            ctrl.anim.SetFloat("Speed", 1f);           // Run 블렌드
-            if (ctrl.agent.enabled && ctrl.agent.isOnNavMesh)
-            {
-                ctrl.agent.isStopped = false;
-                ctrl.agent.speed = ctrl.runSpeed;
-            }
-            ctrl.ChangeState(new ChaseState(ctrl));
-        }
-        else
-        {   // ▶ 순찰(Idle/Walk)로 복귀
-            ctrl.anim.SetFloat("Speed", 0.15f);        // Walk 블렌드
-            if (ctrl.agent.enabled && ctrl.agent.isOnNavMesh)
-            {
-                ctrl.agent.isStopped = false;
-                ctrl.agent.speed = ctrl.walkSpeed;
-            }
-            ctrl.ChangeState(new IdleWalkState(ctrl));
-        }
+        ctrl.agent.isStopped = false;
+        ctrl.ChangeState(ctrl.InSightFov ? new ChaseState(ctrl)
+                                         : new IdleWalkState(ctrl));
     }
-
-    /* ---------- Exit ---------- */
-    public override void Exit() { /* 특수 처리 없음 */ }
 }

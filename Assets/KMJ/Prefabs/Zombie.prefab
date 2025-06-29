@@ -152,7 +152,7 @@ MonoBehaviour:
   eyePoint: {fileID: 5734146711724366800}
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 16385
+    m_Bits: 4210689
 --- !u!114 &-4932920650084939719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,11 +169,11 @@ MonoBehaviour:
   fovDeg: 120
   walkSpeed: 0.6
   runSpeed: 2.5
+  _TargetNetObj: {fileID: 0}
   _InAlertRadius: 0
   _InSightFov: 0
   _InAttackRange: 0
   _IsAttacking: 0
-  _TargetNetObj: {fileID: 0}
 --- !u!95 &-8410313003481707510
 Animator:
   serializedVersion: 7

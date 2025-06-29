@@ -5,10 +5,8 @@ using Zombie.States;
 public class IdleWalkState : ZombieState
 {
     /*──────────────── 설정 값 ────────────────*/
-    const float IDLE_MIN = 1.5f;   //   1.5 ~ 3.0 초
-    const float IDLE_MAX = 3.0f;
-    const float WALK_MIN = 2.5f;   //   2.5 ~ 4.5 초
-    const float WALK_MAX = 4.5f;
+    const float IDLE_MIN = 3f, IDLE_MAX = 5f;
+    const float WALK_MIN = 3f, WALK_MAX = 5f;
     const float WALK_SPEED = 0.5f;   // Animator “Speed” 값 (0 = Idle, 1 = Run)
 
     readonly float idleRadius = 3f;  // 현 위치 기준 걷기 반경(m)
@@ -44,8 +42,7 @@ public class IdleWalkState : ZombieState
             else SwitchToWalk();
         }
 
-        /*── 플레이어 감지 시 즉시 Chase 로 전환 ──*/
-        if (ctrl.InSightFov)
+        if (ctrl.InAlertRadius || ctrl.InSightFov)
         {
             ctrl.ChangeState(new AlertState(ctrl));
             return;
