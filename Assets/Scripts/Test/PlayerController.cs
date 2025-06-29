@@ -354,7 +354,9 @@ public class PlayerController : NetworkBehaviour
             characterHUDUnit = InterfaceManager.Instance.characterHUDcontainter.MyPlayerStatus_UI;
             characterHUDUnit.SetName($"{RoomUser.Username}");
             characterHUDUnit.SetPortraitImage(playerImage);
+            RPC_ChangeHealth(Hp);
             characterHUDUnit.gameObject.SetActive(true);
+
         }
         else
         {
@@ -367,6 +369,7 @@ public class PlayerController : NetworkBehaviour
                     characterHUDUnit = InterfaceManager.Instance.characterHUDUnits[i];
                     characterHUDUnit.SetName($"{RoomUser.Username}");
                     characterHUDUnit.SetPortraitImage(playerImage);
+                    RPC_ChangeHealth(Hp);
                     characterHUDUnit.gameObject.SetActive(true);
                     break;
                 }
@@ -448,11 +451,16 @@ public class PlayerController : NetworkBehaviour
                 Debug.Log("죽음");
                 isAlive = false;
 
+                if (!GameManager.Instance.PlayerAliveCheck())
+                {
+                    return;
+                }
+
                 RPC_SetAnim("isAlive", isAlive);
                 RPC_SetArmAnim("isAliveBool", isAlive);
                 rb.linearVelocity = Vector3.zero;
                 RPC_cameraOnOff();
-                GameManager.Instance.PlayerAliveCheck();
+                
                 /*if (GameManager.Instance.PlayerAliveCheck_Bool())
                 {
                     SpawnScript.Current.ReSpawn();

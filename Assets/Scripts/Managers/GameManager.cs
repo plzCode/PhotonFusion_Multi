@@ -140,14 +140,14 @@ public class GameManager : NetworkBehaviour
             Instance.players.Remove(player);
     }
 
-    public void PlayerAliveCheck()
+    public bool PlayerAliveCheck()
     {
         for (int i = 0; i < Players.Count; i++)
         {
             PlayerController player = Players[i].GetComponent<PlayerController>();
             if (player.isAlive)
             {
-                return;
+                return true;
             }
         }
 
@@ -174,6 +174,8 @@ public class GameManager : NetworkBehaviour
         }
 
         CurrentMap.ReSpawn();
+
+		return false;
 
     }
 
