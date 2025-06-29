@@ -17,6 +17,7 @@ public class AlertState : ZombieState
 
         // 애니 재생 + 길이만큼 타이머
         ctrl.anim.CrossFade(STATE, 0.05f, 0);
+        ctrl.zCtrl.SfxAlert();
         timer = ctrl.anim.runtimeAnimatorController.animationClips
                 .First(x => x.name == CLIP).length;
     }

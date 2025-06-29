@@ -90,7 +90,7 @@ MonoBehaviour:
   - id: 3
     fields:
     - title: Name
-      value: Player
+      value: 'Player '
       type: 0
       typeString: 
     - title: Pictures
@@ -162,6 +162,14 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 2
     fields:
     - title: Name
@@ -191,6 +199,14 @@ MonoBehaviour:
       typeString: CustomFieldType_QuestState
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 3
@@ -224,6 +240,14 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 4
     fields:
     - title: Name
@@ -254,6 +278,14 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 1
     fields:
     - title: Name
@@ -282,6 +314,14 @@ MonoBehaviour:
       typeString: 
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 6
@@ -315,6 +355,14 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 5
     fields:
     - title: Name
@@ -343,6 +391,14 @@ MonoBehaviour:
       typeString: 
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   locations: []
@@ -622,7 +678,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/01)
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -648,7 +704,7 @@ MonoBehaviour:
       userScript: "SetQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\",
         \"active\");\nSetQuestState(\"2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790.\",
         \"success\");\nVariable[\"isPowerActive\"] = false;\nShowAlert(\"\uC804\uB825\uC744
-        \uACF5\uAE09\uD558\uC790.\");"
+        \uACF5\uAE09\uD558\uC790.\");\n"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -685,7 +741,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/12)
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -740,7 +796,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/02)
         type: 0
         typeString: 
       conversationID: 1
@@ -796,7 +852,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/03)
         type: 0
         typeString: 
       conversationID: 1
@@ -851,7 +907,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/04)
         type: 0
         typeString: 
       conversationID: 1
@@ -907,7 +963,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/05)
         type: 0
         typeString: 
       conversationID: 1
@@ -962,7 +1018,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/06)
         type: 0
         typeString: 
       conversationID: 1
@@ -1019,7 +1075,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/07)
         type: 0
         typeString: 
       conversationID: 1
@@ -1074,7 +1130,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/08)
         type: 0
         typeString: 
       conversationID: 1
@@ -1098,8 +1154,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 273.44345
-        y: 506.78574
+        x: 272.0149
+        y: 505.3572
         width: 160
         height: 30
     - id: 16
@@ -1132,7 +1188,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/09)
         type: 0
         typeString: 
       conversationID: 1
@@ -1188,7 +1244,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/10)
         type: 0
         typeString: 
       conversationID: 1
@@ -1245,7 +1301,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/11)
         type: 0
         typeString: 
       conversationID: 1
@@ -1294,7 +1350,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/13)
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1326,7 +1382,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 774.3182
-        y: 164.08467
+        y: 162.86516
         width: 160
         height: 30
     - id: 20
@@ -1354,12 +1410,11 @@ MonoBehaviour:
       - title: Dialogue Text
         value: "\uC815\uB9D0\uC785\uB2C8\uAE4C? \u2026\uC88B\uC544\uC694, \uC774\uC81C
           \uB370\uC774\uD130\uB97C \uBCF5\uC0AC\uD560 \uC218 \uC788\uC5B4\uC694.
-          \uC870\uAE08\uB9CC \uAE30\uB2E4\uB9AC\uC138\uC694.\n(\uD0C0\uC774\uD551
-          \uBC0F USB \uC0BD\uC785 \uC18C\uB9AC)"
+          \uC870\uAE08\uB9CC \uAE30\uB2E4\uB9AC\uC138\uC694."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/14)
         type: 0
         typeString: 
       conversationID: 1
@@ -1373,7 +1428,7 @@ MonoBehaviour:
       - originConversationID: 1
         originDialogueID: 20
         destinationConversationID: 1
-        destinationDialogueID: 21
+        destinationDialogueID: 27
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -1415,7 +1470,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/15)
         type: 0
         typeString: 
       conversationID: 1
@@ -1439,8 +1494,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 265.45453
+        x: 780.8971
+        y: 306.24402
         width: 160
         height: 30
     - id: 22
@@ -1470,7 +1525,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/16)
         type: 0
         typeString: 
       conversationID: 1
@@ -1494,8 +1549,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 315.45447
+        x: 780.8971
+        y: 356.24396
         width: 160
         height: 30
     - id: 23
@@ -1527,7 +1582,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/17)
         type: 0
         typeString: 
       conversationID: 1
@@ -1551,8 +1606,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 365.45447
+        x: 780.8971
+        y: 406.24396
         width: 160
         height: 30
     - id: 24
@@ -1582,7 +1637,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/18)
         type: 0
         typeString: 
       conversationID: 1
@@ -1606,8 +1661,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 415.45447
+        x: 780.8971
+        y: 456.24396
         width: 160
         height: 30
     - id: 25
@@ -1638,7 +1693,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/19)
         type: 0
         typeString: 
       conversationID: 1
@@ -1656,8 +1711,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 775.4546
-        y: 464.31805
+        x: 782.0335
+        y: 505.10754
         width: 160
         height: 30
     - id: 26
@@ -1687,7 +1742,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/20)
         type: 0
         typeString: 
       conversationID: 1
@@ -1706,13 +1761,68 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1003.053
-        y: 170.86354
+        x: 983.5408
+        y: 164.76598
+        width: 160
+        height: 30
+    - id: 27
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: "(\uD0C0\uC774\uD551 \uBC0F USB \uC0BD\uC785 \uC18C\uB9AC)"
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: AudioWait(keyboard-typing-sound-effect-335503 (mp3cut.net))
+        type: 0
+        typeString: 
+      conversationID: 1
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 1
+        originDialogueID: 27
+        destinationConversationID: 1
+        destinationDialogueID: 21
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 778.2654
+        y: 258.87564
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 17.808228, y: 0}
-    canvasZoom: 0.7300001
+    canvasScrollPosition: {x: 0, y: 89.19209}
+    canvasZoom: 0.82000005
   syncInfo:
     syncActors: 0
     syncItems: 0

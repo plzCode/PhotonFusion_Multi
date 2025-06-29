@@ -14,6 +14,7 @@ public class HitState : ZombieState
     public override void Enter()
     {
         ctrl.agent.isStopped = true;             // 경직
+        ctrl.zCtrl.SfxHit();                // 맞았을 때 사운드
         ctrl.agent.velocity = Vector3.zero;     // 미끄러짐 방지
         ctrl.anim.CrossFade(STATE, 0.05f, 0);
         timer = ctrl.anim.runtimeAnimatorController.animationClips

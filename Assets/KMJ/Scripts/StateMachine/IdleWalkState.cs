@@ -21,6 +21,7 @@ public class IdleWalkState : ZombieState
     public override void Enter()
     {
         SwitchToIdle();                    // 최초 = Idle
+        ctrl.zCtrl.SfxIdleWalk();
     }
 
     public override void Exit()

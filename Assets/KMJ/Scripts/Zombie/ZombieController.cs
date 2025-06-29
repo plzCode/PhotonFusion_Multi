@@ -14,6 +14,17 @@ public class ZombieController : NetworkBehaviour
     /* 네트워크 동기화 변수 */
     [Networked] public int CurrentHP { get; set; }
 
+    /* ─────────── Audio Clips (Inspector) ─────────── */
+    [Header("SFX")]
+    public AudioClip idleWalkLoop;     // Idle & Walk 숨소리 (Loop)
+    public AudioClip chaseLoop;        // Chase 숨소리  (Loop)
+    public AudioClip alertClip;        // Alert 포효  (One-shot)
+    public AudioClip attackClip;       // Swing
+    public AudioClip hitClip;          // 피격
+    public AudioClip deathClip;        // 사망
+
+    AudioSource amb;   // 루프 전용
+    AudioSource sfx;   // One-shot
 
     [Header("Vision")]
     [SerializeField] Transform eyePoint;      // ← 씬/프리팹에서 ‘눈 위치’ 트랜스폼 드래그
@@ -30,17 +41,76 @@ public class ZombieController : NetworkBehaviour
         data = cfg;
         CurrentHP = cfg.maxHP;
     }
+    void _SetupAudio()
+    {
+        amb = gameObject.AddComponent<AudioSource>();
+        amb.loop = true; amb.spatialBlend = 1; amb.minDistance = 2; amb.maxDistance = 20;
 
-
+        sfx = gameObject.AddComponent<AudioSource>();
+        sfx.loop = false; sfx.spatialBlend = 1; sfx.minDistance = 2; sfx.maxDistance = 25;
+    }
     public override void Spawned()
     {
         agent = GetComponent<NavMeshAgent>();
         ai = GetComponent<ZombieAIController>();
         anim = GetComponentInChildren<Animator>();
 
+        _SetupAudio();
+        PlayIdleLoop();
+
         if (HasStateAuthority && CurrentHP == 0)
             CurrentHP = data.maxHP;
+
+        var smr = GetComponentInChildren<SkinnedMeshRenderer>();
+        if (!smr) return;
+
+        Material[] mats = smr.materials;      // 자동 복제
+        Color body = new Color(0.7f, 0.85f, 0.8f);   // 청록빛 피부
+        Color cloths = new Color(0.25f, 0.2f, 0.15f);    // 거무스름 옷
+
+        if (mats.Length > 0) mats[0].SetColor("_BaseColor", body);
+        if (mats.Length > 1) mats[1].SetColor("_BaseColor", cloths);
+
+        smr.materials = mats;
     }
+
+    public void SfxIdleWalk() => PlayIdleLoop();
+    public void SfxAlert() { PlayOneShot(alertClip); PlayChaseLoop(); }
+    public void SfxChase() => PlayChaseLoop();
+    public void SfxHit() => PlayOneShot(hitClip);
+    public void SfxAttack() => PlayOneShot(attackClip);
+    public void SfxDie()
+    {
+        amb.Stop();
+        PlayOneShot(deathClip);
+    }
+
+    /* ─────────── 내부 재생 헬퍼 ─────────── */
+    void PlayIdleLoop()
+    {
+        if (!idleWalkLoop) return;
+        amb.clip = idleWalkLoop;
+        amb.pitch = Random.Range(.95f, 1.05f);
+        amb.volume = .25f;
+        amb.Play();
+    }
+
+    void PlayChaseLoop()
+    {
+        if (!chaseLoop) return;
+        amb.clip = chaseLoop;
+        amb.pitch = Random.Range(.95f, 1.05f);
+        amb.volume = .35f;
+        amb.Play();
+    }
+
+    void PlayOneShot(AudioClip clip)
+    {
+        if (!clip) return;
+        sfx.pitch = Random.Range(.95f, 1.05f);
+        sfx.PlayOneShot(clip);
+    }
+
     public bool CanSeePlayer(Transform target, float maxDist = 15f, float fov = 120f)
     {
         if (!target) return false;

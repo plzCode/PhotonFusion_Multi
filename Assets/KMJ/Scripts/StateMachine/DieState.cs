@@ -10,6 +10,7 @@ public class DieState : ZombieState
     public override void Enter()
     {
         ctrl.anim.CrossFade("Die", 0.05f);
+        ctrl.zCtrl.SfxDie();
         if (ctrl.agent.enabled && ctrl.agent.isOnNavMesh)
         {
             ctrl.agent.enabled = false;

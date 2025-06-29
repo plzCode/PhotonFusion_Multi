@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using Fusion;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,6 +9,10 @@ public class ZombieWaveManager : NetworkBehaviour
 {
     [Header("Prefabs")]
     [SerializeField] GameObject commonPrefab;
+
+    [Header("SFX")]
+    [SerializeField] AudioClip eventWaveRoar;   // EventWaveSound.wav
+    [SerializeField] float eventWaveVol = .9f;
 
     [Header("Default WaveConfig")]
     public WaveConfig defaultCfg;
@@ -38,7 +43,6 @@ public class ZombieWaveManager : NetworkBehaviour
     public void TriggerEventWave(string id, WaveConfig cfg, bool forceChase = true)
     {
         if (!HasStateAuthority) return;
-        if (cfg.maxTriggerTimes > 0 && cfg.triggered >= cfg.maxTriggerTimes) return;
 
         var points = FindObjectsByType<EventSpawnPoint>(
                         FindObjectsInactive.Exclude,
@@ -46,20 +50,60 @@ public class ZombieWaveManager : NetworkBehaviour
                     .Where(p => p.waveId == id)
                     .ToArray();
 
-        int players = Mathf.Max(1, Runner.ActivePlayers.Count());
-        int total = Random.Range(cfg.minCount, cfg.maxCount + 1) * players;
-        int perPt = Mathf.CeilToInt((float)total / Mathf.Max(1, points.Length));
+        if (points.Length == 0)
+        {
+            Debug.LogWarning($"[WM] No spawn points for id:{id}");
+            return;
+        }
 
-        Debug.Log($"[WaveMgr] FixedWave '{id}' {total} zombies");
-
-        foreach (var pt in points)
-            SpawnGroup(commonPrefab, perPt,
-                       pt.transform.position,
-                       cfg.innerRadius, cfg.outerRadius,
-                       forceChase);
+        /* ② 1회 or 지속 웨이브 분기 */
+        if (!cfg.isContinuous)
+        {
+            SpawnOnce(points, cfg, forceChase);
+        }
+        else
+        {
+            StartCoroutine(ContinuousWave(points, cfg, forceChase));
+        }
     }
 
+    void SpawnOnce(EventSpawnPoint[] pts, WaveConfig cfg, bool forceChase)
+    {
+        int players = Mathf.Max(1, Runner.ActivePlayers.Count());
+        int total = Random.Range(cfg.minPerPlayer, cfg.maxPerPlayer + 1) * players;
+        int perPt = Mathf.CeilToInt((float)total / pts.Length);
 
+        foreach (var pt in pts)
+        {
+            PlayRoar(pt.transform.position);                       // ★ 포효
+            SpawnGroup(commonPrefab, perPt, pt.transform.position,
+                       cfg.innerRadius, cfg.outerRadius, forceChase);
+        }
+    }
+
+    IEnumerator ContinuousWave(EventSpawnPoint[] pts, WaveConfig cfg, bool forceChase)
+    {
+        float endTime = Time.time + cfg.duration;
+
+        while (Time.time < endTime)
+        {
+            foreach (var pt in pts)
+            {
+                PlayRoar(pt.transform.position);                   // ★ 매 주기마다 포효
+                SpawnGroup(commonPrefab,
+                           Random.Range(cfg.minPerPlayer, cfg.maxPerPlayer + 1),
+                           pt.transform.position,
+                           cfg.innerRadius, cfg.outerRadius, forceChase);
+            }
+            yield return new WaitForSeconds(cfg.interval);
+        }
+    }
+
+    void PlayRoar(Vector3 pos)
+    {
+        if (eventWaveRoar)
+            AudioSource.PlayClipAtPoint(eventWaveRoar, pos + Vector3.up * 1.5f, eventWaveVol);
+    }
 
     /* ───────── 지역 리스폰 (필요한 경우 쓰기) ───────── */
     public void RespawnArea(ZombieSpawnPivot pivot)
@@ -76,9 +120,9 @@ public class ZombieWaveManager : NetworkBehaviour
         for (int i = 0; i < n; i++)
         {
             if (!HasStateAuthority) return;
-            // 🔹 각 좀비마다 반경 내 랜덤 오프셋
+
             Vector2 cir = Random.insideUnitCircle.normalized *
-                          Random.Range(innerR, outerR);          // ← 추가
+                          Random.Range(innerR, outerR);
             Vector3 raw = center + new Vector3(cir.x, 0f, cir.y);
 
             if (!NavMesh.SamplePosition(raw, out var hit, 2f, NavMesh.AllAreas))
@@ -98,7 +142,7 @@ public class ZombieWaveManager : NetworkBehaviour
                 zombie.GetComponent<NavMeshAgent>().Warp(hit.position);
             }
 
-            Debug.Log($"[WM] SpawnGroup() {i + 1}/{n} @ {hit.position} ({innerR} ~ {outerR})");
+            //Debug.Log($"[WM] SpawnGroup() {i + 1}/{n} @ {hit.position} ({innerR} ~ {outerR})");
         }
     }
 }

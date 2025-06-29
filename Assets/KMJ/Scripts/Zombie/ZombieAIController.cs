@@ -13,11 +13,11 @@ public class ZombieAIController : NetworkBehaviour
     /* ────────── 캐시 ────────── */
     public Animator anim { get; private set; }
     public NavMeshAgent agent { get; private set; }
-    ZombieController zCtrl;
+    public ZombieController zCtrl;
 
     /* ────────── 설정 ────────── */
-    [Header("Sense")] public float alertRadius = 10f;
-    [Range(30f, 180f)] public float fovDeg = 140f;
+    [Header("Sense")] public float alertRadius = 8f;
+    [Range(30f, 180f)] public float fovDeg = 120f;
     [Header("Speed")] public float walkSpeed = 1.2f;
     public float runSpeed = 4.5f;
 
@@ -56,7 +56,7 @@ public class ZombieAIController : NetworkBehaviour
         current?.Exit();
         current = next;
         current.Enter();
-        Debug.Log($"{name} ▶ {next.GetType().Name}");
+        //Debug.Log($"{name} ▶ {next.GetType().Name}");
     }
 
     // ---------- 센싱 ----------

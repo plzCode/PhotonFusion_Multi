@@ -26,6 +26,7 @@ public class SpawnScript : NetworkBehaviour
 
     List<string> questNames = new List<string>()
     {
+        "병원을 탐사하자.",
         "열쇠 관리 명단을 찾아보자.",
         "열쇠를 찾자.",
         "2층을 탐사하자.",

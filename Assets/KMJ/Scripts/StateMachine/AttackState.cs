@@ -12,6 +12,7 @@ public class AttackState : ZombieState
     {
         if (!ctrl.agent.enabled || !ctrl.agent.isOnNavMesh) return;
         ctrl.IsAttacking = true;
+        ctrl.zCtrl.SfxAttack();
         ctrl.agent.isStopped = true;
         ctrl.agent.speed = 0f;
         ctrl.anim.SetFloat("Speed", 0f);
