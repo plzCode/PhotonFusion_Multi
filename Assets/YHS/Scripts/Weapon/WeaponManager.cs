@@ -14,6 +14,10 @@ public class WeaponManager : NetworkBehaviour
     [SerializeField] Transform barrelPos;
     [SerializeField] float bulletVelocity;
     [SerializeField] int bulletsPerShot;
+    [SerializeField] private int currentBulletCount= 30;
+    [SerializeField] private int maxEquipBulletCount = 30;
+    [SerializeField] private int totalBulletCount= 999999;
+    int defaultTotalBulletCount=999999;
     public int damage = 10;
 
     [Header("muzzle Effect")]
@@ -36,12 +40,51 @@ public class WeaponManager : NetworkBehaviour
         
     }
 
-    
+    public bool NoBullet()
+    {
+        if(currentBulletCount==0)
+        {
+            return true;
+        }
+        return false;
+    }
 
+    public void ResetWeapon()
+    {
+        totalBulletCount = defaultTotalBulletCount;
+        currentBulletCount = maxEquipBulletCount;
+        UpdateAmmoUI();
+    }
+
+    public void Reloading()
+    {
+        if (totalBulletCount >= maxEquipBulletCount)
+        {
+            totalBulletCount = totalBulletCount - maxEquipBulletCount;
+            currentBulletCount = maxEquipBulletCount;
+        }
+        else
+        {
+            currentBulletCount = totalBulletCount;
+            totalBulletCount = 0;
+        }
+
+        UpdateAmmoUI();
+    }
+
+    private void UpdateAmmoUI()
+    {
+        if (HasInputAuthority)
+        {
+            InterfaceManager.Instance.ammoDisplay.OnChangeCurrentAmmo(currentBulletCount);
+            InterfaceManager.Instance.ammoDisplay.OnChangeReserveAmmo(totalBulletCount);
+        }
+    }
     public bool ShouldFire()
     {
         fireRateTimer += Time.deltaTime;
         if (fireRateTimer < fireRate) return false;
+        if (currentBulletCount < 0) return false;
         //if (semiAuto && Input.GetKeyDown(KeyCode.Mouse0)) return true;
         //if (!semiAuto && Input.GetKey(KeyCode.Mouse0)) return true;
         //return false;
@@ -51,6 +94,8 @@ public class WeaponManager : NetworkBehaviour
 
     public void Fire(Transform aimpos,bool isOwner,Transform fpsBarrelPos)
     {
+        currentBulletCount--;
+        UpdateAmmoUI();
         fireRateTimer = 0;
 
         barrelPos.LookAt(aimpos);

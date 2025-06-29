@@ -30,7 +30,7 @@ public class PlayerController : NetworkBehaviour
 
     #region Weapon
     [Header("무기 정보")]
-    [SerializeField] private WeaponManager weaponManager;
+    [SerializeField] public WeaponManager weaponManager;
     [SerializeField] private Transform armTransform;
     [SerializeField] private Transform fpsMuzzleTransform;
     [SerializeField] private Vector3 defaultArmPosition; 
@@ -46,9 +46,9 @@ public class PlayerController : NetworkBehaviour
     [SerializeField]
     private CharacterController controller;
     [SerializeField]
-    private Animator anim;
+    public Animator anim;
     [SerializeField]
-    private Animator armAnim;
+    public Animator armAnim;
     [SerializeField]
     public SkinnedMeshRenderer[] bodyCasting;
     [SerializeField]
@@ -95,7 +95,11 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] public CharacterHUDUnit characterHUDUnit;
     [SerializeField] private Sprite playerImage;
+    //[SerializeField] public AmmoDisplay_UI ammoDisplay;
     private float localPitch; // 실제 카메라에 적용할 값
+
+    public bool canInput = true;
+    public bool isReloading = false;
 
     private void Awake()
     {
@@ -180,10 +184,14 @@ public class PlayerController : NetworkBehaviour
 
         }
 
+        weaponManager.ResetWeapon();
+
         Runner.SetIsSimulated(Object, true);
     }
     private void Update()
     {
+        if (!canInput)
+            return;
         if (!isAlive)
         {
             
@@ -200,6 +208,7 @@ public class PlayerController : NetworkBehaviour
             // 사격
             if (PlayerInputs.IsDown(PlayerInput.NetworkInputData.ButtonFire) || PlayerInputs.IsDownThisFrame(PlayerInput.NetworkInputData.ButtonFire))
             {
+                
                 if (weaponManager.ShouldFire())
                 {
                     bool isOwner = false;
@@ -244,12 +253,17 @@ public class PlayerController : NetworkBehaviour
                         RPC_ZombieHit(Yaw, Pitch);
                     }
                 }
+
+                if (weaponManager.NoBullet())
+                {
+                    WeaponReload();
+                }
             }
 
 
             // 줌 상태일 때 팔 위치 보간
             Vector3 targetPos = defaultArmPosition;
-            if (PlayerInputs.IsZooming)
+            if (PlayerInputs.IsZooming&&!isReloading)
                 targetPos += armTargetPositon;
 
             armTransform.localPosition = Vector3.Lerp(
@@ -261,7 +275,7 @@ public class PlayerController : NetworkBehaviour
 
             // 카메라 줌 Fov 보간
             //float targetFOV = defaultFov;
-            float targetFOV = PlayerInputs.IsZooming ? zoomFOV : defaultFov;
+            float targetFOV = PlayerInputs.IsZooming&&!isReloading ? zoomFOV : defaultFov;
 
 
             playerCamera.fieldOfView = Mathf.Lerp(
@@ -286,6 +300,12 @@ public class PlayerController : NetworkBehaviour
     {
         // 다음 인덱스 순환
         int nextIndex = (currentSpectateIndex + 1) % spectatePlayers.Count;
+        while (true)
+        {
+            if (spectatePlayers[nextIndex] != null)
+                break;
+            nextIndex++;
+        }
         PlayerController nextPlayer = spectatePlayers[nextIndex];
         PlayerController currentPlayer = spectatePlayers[currentSpectateIndex];
         GameManager.Instance.observerPlayer = nextPlayer;
@@ -375,6 +395,8 @@ public class PlayerController : NetworkBehaviour
             characterHUDUnit.SetPortraitImage(playerImage);
             RPC_ChangeHealth(Hp);
             characterHUDUnit.gameObject.SetActive(true);
+            //ammoDisplay = InterfaceManager.Instance.ammoDisplay;
+            
 
         }
         else
@@ -403,7 +425,8 @@ public class PlayerController : NetworkBehaviour
     {
         base.FixedUpdateNetwork();
 
-        
+        if (!canInput)
+            return;
 
         if (GetInput(out PlayerInput.NetworkInputData input))
         {
@@ -418,14 +441,23 @@ public class PlayerController : NetworkBehaviour
 
         CheckGrounded();
 
-
+        if (PlayerInputs.IsDownThisFrame(PlayerInput.NetworkInputData.ButtonReload))
+        {
+            WeaponReload();
+        }
 
     }
 
+    private void WeaponReload()
+    {        
+        armAnim.SetBool("isReload", true);
+        anim.SetBool("isReload", true);
+        isReloading = true;
+    }
 
     private void HandleInput(PlayerInput.NetworkInputData input)
     {
-        if (!isAlive)
+        if (!isAlive||!canInput)
             return;
 
         HandleAnimation(input);
@@ -632,12 +664,24 @@ public class PlayerController : NetworkBehaviour
 
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_SetArmAnim(string paramName,bool _bool)
+    public void RPC_SetArmAnim(string paramName,bool _bool)
     {
         armAnim.SetBool(paramName, _bool);
     }
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+
+    public void RPC_SetArmAnimAll(string paramName, bool _bool)
+    {
+        armAnim.SetBool(paramName, _bool);
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
     private void RPC_SetAnim(string paramName, bool _bool)
+    {
+        anim.SetBool(paramName, _bool);
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    private void RPC_SetAnimAll(string paramName, bool _bool)
     {
         anim.SetBool(paramName, _bool);
     }
@@ -716,7 +760,7 @@ public class PlayerController : NetworkBehaviour
 
 
         currentInput = Vector2.Lerp(currentInput, input.MoveDirection, inputSmoothSpeed * Runner.DeltaTime);
-        float targetSpeedMultiplier = moveSpeed * (input.IsRunning ? runSpeed : walkSpeed);
+        float targetSpeedMultiplier = moveSpeed * (input.IsRunning&&!isReloading ? runSpeed : walkSpeed);
         currentSpeedMultiplier = Mathf.Lerp(currentSpeedMultiplier, targetSpeedMultiplier, inputSmoothSpeed * Runner.DeltaTime);
 
         Vector3 moveDir = new Vector3(currentInput.x, 0, currentInput.y);

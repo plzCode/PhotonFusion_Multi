@@ -12,6 +12,7 @@ public class InterfaceManager : MonoBehaviour
     public CharacterHUDContainer_UI characterHUDcontainter;
     public CharacterHUDUnit[] characterHUDUnits;
     public CountdownTimer countdownTimer;
+    public AmmoDisplay_UI ammoDisplay;
 
     public static InterfaceManager Instance => Singleton<InterfaceManager>.Instance;
 

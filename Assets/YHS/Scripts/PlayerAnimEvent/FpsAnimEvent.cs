@@ -9,9 +9,12 @@ public class FpsAnimEvent : MonoBehaviour
     [SerializeField] private float footstepCooldown = 0.2f; // 최소 발소리 간격
     private bool canPlayFootstep = true;
 
+    [SerializeField] private PlayerController player;
+
     private void Awake()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
+        player = GetComponentInParent<PlayerController>();
     }
 
     private void PlayFootstep(int index)
@@ -40,5 +43,14 @@ public class FpsAnimEvent : MonoBehaviour
     public void FootStepSound_2()
     {
         PlayFootstep(1);
+    }
+
+    private void ReloadingEnd()
+    {
+        player.weaponManager.Reloading();
+        player.isReloading = false;
+        player.armAnim.SetBool("isReload", false);
+        player.anim.SetBool("isReload", false);
+        
     }
 }

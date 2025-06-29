@@ -1043,6 +1043,23 @@ MonoBehaviour:
       m_Action: Zoom
       m_Flags: 0
     m_Flags: 0
+  Reload:
+    m_Name: Reload
+    m_Type: 0
+    m_ExpectedControlType: Button
+    m_Id: e3eccea2-14b4-4dd7-aa62-4aec031821c3
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: cdd889e3-4e41-4ed8-b572-bee8316fd606
+      m_Path: <Keyboard>/r
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Reload
+      m_Flags: 0
+    m_Flags: 0
 --- !u!114 &990254650208211767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,6 +1145,8 @@ MonoBehaviour:
   _RoomUser: {fileID: 0}
   characterHUDUnit: {fileID: 0}
   playerImage: {fileID: 1785206632, guid: 0dd2bb46d1656e64e8d156308339d107, type: 3}
+  canInput: 1
+  isReloading: 0
   spectatePlayers: []
   stickToGroundForce: 30
   recoilAmount: 1.5
@@ -7934,6 +7953,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 65264d4b5d841094e914f50a687f033a, type: 3}
   - {fileID: 8300000, guid: 3f50b78a6b15ccc44a75cf437db87c9e, type: 3}
   footstepCooldown: 0.2
+  player: {fileID: 0}
 --- !u!4 &3373459827232487432 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4843286368403822, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
