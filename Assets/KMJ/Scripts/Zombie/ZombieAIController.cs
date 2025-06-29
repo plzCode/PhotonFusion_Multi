@@ -115,14 +115,9 @@ public class ZombieAIController : NetworkBehaviour
 
     public void SpawnAggro(Vector3 epicenter)
     {
-        if (!HasStateAuthority) return;
-
-        TargetNetObj = null;         // 기존 타깃 제거 → 플레이어 만나면 다시 세팅
-        pendingGoal = epicenter;    // ChaseState 가 사용하는 목적지
-
-        // 이미 Chase 중이면 Goal만 바꾸고, 아니면 바로 Chase로 전환
-        if (current is not ChaseState)
-            ChangeState(new ChaseState(this));
+        pendingGoal = epicenter;              
+        TargetNetObj = null;                      
+        ChangeState(new ChaseState(this));
     }
 
     NetworkObject GetNearestPlayerWithinRadius(float radius)
@@ -146,45 +141,46 @@ public class ZombieAIController : NetworkBehaviour
     public void HandleAttackHit()
     {
         // 1) 서버(Host)에서만 판정
-        if (!HasStateAuthority || !IsAttacking) return;
-
+        if (!HasStateAuthority || !IsAttacking) 
+        {
+            Debug.Log("[Hit] skipped (authority|flag)"); return;
+        }
+        
         // 2) 타깃 플레이어 존재
         if (Target == null) return;
 
-        /* 3) SphereCast 판정 */
-        float radius = 0.45f;                   // 팔 두께
-        float maxDist = zCtrl.Data.attackRange;        // SO 사거리
         Vector3 origin = transform.position + Vector3.up * 1.2f;
+        Debug.DrawRay(origin, transform.forward * zCtrl.Data.attackRange, Color.red, 1f);
 
-        if (Physics.SphereCast(origin, radius, transform.forward,
-                               out RaycastHit hit, maxDist,
+        if (Physics.SphereCast(origin, 0.6f, transform.forward,
+                               out var hit, zCtrl.Data.attackRange,
                                LayerMask.GetMask("Player")))
         {
-            var pc = hit.collider.GetComponent<PlayerController>();
-            if (pc != null)
-                pc.TakeDamage(zCtrl.Data.damage);      // 4) 데미지 적용
+            Debug.Log($"[Hit] hit {hit.collider.name}");
+            var pc = hit.collider.GetComponentInParent<PlayerController>();
+            if (pc) pc.TakeDamage(zCtrl.Data.damage);
         }
-        IsAttacking = false; //중복 방지
+        IsAttacking = false;
     }
-#if UNITY_EDITOR
-    void OnDrawGizmosSelected()
-    {
-        // ➊ Alert 반경 (녹색)
-        Gizmos.color = new Color(0, 1, 0, 0.25f);
-        Gizmos.DrawWireSphere(transform.position, alertRadius);
+//#if UNITY_EDITOR
+//    void OnDrawGizmosSelected()
+//    {
+//        // ➊ Alert 반경 (녹색)
+//        Gizmos.color = new Color(0, 1, 0, 0.25f);
+//        Gizmos.DrawWireSphere(transform.position, alertRadius);
 
-        // ➋ 공격 반경 (빨강)
-        float atkR = zCtrl && zCtrl.Data ? zCtrl.Data.attackRange : 1f;
-        Gizmos.color = new Color(1, 0, 0, 0.25f);
-        Gizmos.DrawWireSphere(transform.position, atkR);
+//        // ➋ 공격 반경 (빨강)
+//        float atkR = zCtrl && zCtrl.Data ? zCtrl.Data.attackRange : 1f;
+//        Gizmos.color = new Color(1, 0, 0, 0.25f);
+//        Gizmos.DrawWireSphere(transform.position, atkR);
 
-        // ➌ 시야 원뿔 (노랑)
-        Handles.color = Color.yellow;
-        Vector3 forward = transform.forward;
-        Vector3 left = Quaternion.Euler(0, -fovDeg * 0.5f, 0) * forward;
-        Vector3 right = Quaternion.Euler(0, fovDeg * 0.5f, 0) * forward;
-        Handles.DrawSolidArc(transform.position + Vector3.up * 1.2f,
-                             Vector3.up, left, fovDeg, alertRadius);
-    }
-#endif
+//        // ➌ 시야 원뿔 (노랑)
+//        Handles.color = Color.yellow;
+//        Vector3 forward = transform.forward;
+//        Vector3 left = Quaternion.Euler(0, -fovDeg * 0.5f, 0) * forward;
+//        Vector3 right = Quaternion.Euler(0, fovDeg * 0.5f, 0) * forward;
+//        Handles.DrawSolidArc(transform.position + Vector3.up * 1.2f,
+//                             Vector3.up, left, fovDeg, alertRadius);
+//    }
+//#endif
 }

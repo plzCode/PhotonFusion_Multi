@@ -12,6 +12,7 @@ public class ZombieAnimEventRelay : MonoBehaviour
     // ─── Animation Event 에서 호출할 메서드 ───
     public void OnAttackHitEvent()     // Animation Event에서 호출
     {
+        Debug.Log($"[Z-Attack] {name} AnimationEvent");
         if (ctrl != null && ctrl.IsAttacking)
             ctrl.HandleAttackHit();    // 실제 데미지 & isAttacking=false
     }

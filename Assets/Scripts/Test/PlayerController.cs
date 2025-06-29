@@ -352,7 +352,7 @@ public class PlayerController : NetworkBehaviour
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_ZombieHit(float yaw, float pitch)
     {
-        TakeDamage(10);
+        //TakeDamage(10);
 
         Vector3 rayOrigin = playerCamera.transform.position; // 또는 총구 위치
         Quaternion aimRotation = Quaternion.Euler(pitch, yaw, 0f);

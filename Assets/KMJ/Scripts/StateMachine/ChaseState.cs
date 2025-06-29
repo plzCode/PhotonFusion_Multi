@@ -7,12 +7,11 @@ public class ChaseState : ZombieState
 
     public override void Enter()
     {
-        ctrl.anim.SetFloat("Speed", 1f);          // Run 애니
+        ctrl.anim.SetFloat("Speed", 1f);
+        ctrl.agent.isStopped = false;
+        Vector3 goal = ctrl.Target ? ctrl.Target.position : ctrl.pendingGoal;
+        ctrl.agent.SetDestination(goal);
         ctrl.zCtrl.SfxChase();
-        if (ctrl.Target)                          // 첫 목적지
-            ctrl.agent.SetDestination(ctrl.Target.position);
-        else
-            ctrl.agent.SetDestination(ctrl.pendingGoal);
     }
 
     public override void Update()

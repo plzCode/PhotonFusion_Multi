@@ -36,10 +36,17 @@ public class ZombieController : NetworkBehaviour
     Animator anim;
 
     /*========== 초기화(웨이브 스폰 시) ==========*/
+
+    void Awake()
+    {
+        _SetupAudio();
+    }
+
     public void Init(ZombieConfig cfg)
     {
         data = cfg;
         CurrentHP = cfg.maxHP;
+        PlayIdleLoop();
     }
     void _SetupAudio()
     {
@@ -54,9 +61,6 @@ public class ZombieController : NetworkBehaviour
         agent = GetComponent<NavMeshAgent>();
         ai = GetComponent<ZombieAIController>();
         anim = GetComponentInChildren<Animator>();
-
-        _SetupAudio();
-        PlayIdleLoop();
 
         if (HasStateAuthority && CurrentHP == 0)
             CurrentHP = data.maxHP;
@@ -88,7 +92,7 @@ public class ZombieController : NetworkBehaviour
     /* ─────────── 내부 재생 헬퍼 ─────────── */
     void PlayIdleLoop()
     {
-        if (!idleWalkLoop) return;
+        if (!idleWalkLoop || amb == null) return;
         amb.clip = idleWalkLoop;
         amb.pitch = Random.Range(.95f, 1.05f);
         amb.volume = .25f;
@@ -97,7 +101,7 @@ public class ZombieController : NetworkBehaviour
 
     void PlayChaseLoop()
     {
-        if (!chaseLoop) return;
+        if (!chaseLoop || amb == null) return;
         amb.clip = chaseLoop;
         amb.pitch = Random.Range(.95f, 1.05f);
         amb.volume = .35f;

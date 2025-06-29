@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using Fusion;
+using System.Collections.Generic;
 
 public class GeneratorTrigger : NetworkBehaviour
 {
     [Header("Wave Settings")]
     public string waveId = "Generator";     // 이 발전기와 연결된 웨이브 이름
-    public WaveConfig waveCfg;              // 웨이브 규모·횟수 설정
+    public List<WaveConfig> waveCfg = new List<WaveConfig>();              // 웨이브 규모·횟수 설정
     public ZombieWaveManager waveMgr;       // 씬의 WaveManager Drag
 
     bool activated;
@@ -13,21 +14,31 @@ public class GeneratorTrigger : NetworkBehaviour
     /// <summary>발전기를 작동시켜 웨이브를 호출</summary>
     public void Interact()
     {
-        if (activated || !HasStateAuthority) return;
+        /*if (activated || !HasStateAuthority) return;
         activated = true;
+
+        
 
         if (waveMgr == null)
             Debug.LogWarning("[GeneratorTrigger] WaveManager가 할당되지 않았습니다.");
         else
-            waveMgr.TriggerEventWave(waveId, waveCfg, true);
+            waveMgr.TriggerEventWave(waveId, waveCfg, true);*/
     }
-    public void _Interact(string _waveId)
+    public void Interact(string _waveId)
     {
         if (!HasStateAuthority) return;
 
-        if (waveMgr == null)
+        foreach (var cfg in waveCfg)
+        {
+            if (cfg.waveId == _waveId)
+            {
+                waveMgr.TriggerEventWave(_waveId, cfg, true);
+                return;
+            }
+        }
+        /*if (waveMgr == null)
             Debug.LogWarning("[GeneratorTrigger] WaveManager가 할당되지 않았습니다.");
         else
-            waveMgr.TriggerEventWave(_waveId, waveCfg, true);
+            waveMgr.TriggerEventWave(_waveId, waveCfg, true);*/
     }
 }

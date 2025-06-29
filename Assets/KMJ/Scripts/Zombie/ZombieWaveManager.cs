@@ -70,7 +70,7 @@ public class ZombieWaveManager : NetworkBehaviour
     void SpawnOnce(EventSpawnPoint[] pts, WaveConfig cfg, bool forceChase)
     {
         int players = Mathf.Max(1, Runner.ActivePlayers.Count());
-        int total = Random.Range(cfg.minPerPlayer, cfg.maxPerPlayer + 1) * players;
+        int total = Random.Range(cfg.minEvnet, cfg.maxEvnet + 1) * players;
         int perPt = Mathf.CeilToInt((float)total / pts.Length);
 
         foreach (var pt in pts)
@@ -85,13 +85,15 @@ public class ZombieWaveManager : NetworkBehaviour
     {
         float endTime = Time.time + cfg.duration;
 
+        int players = Mathf.Max(1, Runner.ActivePlayers.Count());
+
         while (Time.time < endTime)
         {
             foreach (var pt in pts)
             {
                 PlayRoar(pt.transform.position);                   // ★ 매 주기마다 포효
                 SpawnGroup(commonPrefab,
-                           Random.Range(cfg.minPerPlayer, cfg.maxPerPlayer + 1),
+                           Random.Range(cfg.minEvnet, cfg.maxEvnet + 1) * players,
                            pt.transform.position,
                            cfg.innerRadius, cfg.outerRadius, forceChase);
             }
