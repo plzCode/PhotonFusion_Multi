@@ -155,7 +155,7 @@ MonoBehaviour:
       type: 0
       typeString: CustomFieldType_Text
     - title: State
-      value: unassigned
+      value: active
       type: 0
       typeString: CustomFieldType_QuestState
     - title: Is Item
