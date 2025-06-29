@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(ZombieAIController))]
@@ -86,6 +87,7 @@ public class ZombieController : NetworkBehaviour
     public void SfxDie()
     {
         amb.Stop();
+        amb.volume = 0.1f;
         PlayOneShot(deathClip);
     }
 
@@ -95,7 +97,7 @@ public class ZombieController : NetworkBehaviour
         if (!idleWalkLoop || amb == null) return;
         amb.clip = idleWalkLoop;
         amb.pitch = Random.Range(.95f, 1.05f);
-        amb.volume = .25f;
+        amb.volume = .2f;
         amb.Play();
     }
 
@@ -104,7 +106,7 @@ public class ZombieController : NetworkBehaviour
         if (!chaseLoop || amb == null) return;
         amb.clip = chaseLoop;
         amb.pitch = Random.Range(.95f, 1.05f);
-        amb.volume = .35f;
+        amb.volume = .3f;
         amb.Play();
     }
 

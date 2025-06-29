@@ -1,7 +1,4 @@
-﻿#if UNITY_EDITOR
-using UnityEditor;
-#endif
-using Fusion;
+﻿using Fusion;
 using UnityEngine;
 using UnityEngine.AI;
 using Zombie.States;
@@ -14,11 +11,13 @@ public class ZombieAIController : NetworkBehaviour
     public Animator anim { get; private set; }
     public NavMeshAgent agent { get; private set; }
     public ZombieController zCtrl;
+    int hitCount = 0;
 
     /* ────────── 설정 ────────── */
     [Header("Sense")] public float alertRadius = 8f;
     [Range(30f, 180f)] public float fovDeg = 120f;
-    [Header("Speed")] public float walkSpeed = 1.2f;
+    [Header("Speed")] 
+    public float walkSpeed = 1.2f;
     public float runSpeed = 4.5f;
 
     public Vector3 pendingGoal { get; private set; } // 웨이브 스폰 시 이동 목표
@@ -140,47 +139,34 @@ public class ZombieAIController : NetworkBehaviour
 
     public void HandleAttackHit()
     {
-        // 1) 서버(Host)에서만 판정
-        if (!HasStateAuthority || !IsAttacking) 
+        Debug.Log($"[HandleAttackHit] 호출 #{++hitCount}");
+
+        if (!HasStateAuthority || !IsAttacking)
         {
-            Debug.Log("[Hit] skipped (authority|flag)"); return;
+            return;
         }
-        
-        // 2) 타깃 플레이어 존재
-        if (Target == null) return;
+
+        if (Target == null)
+        {
+            return;
+        }
 
         Vector3 origin = transform.position + Vector3.up * 1.2f;
-        Debug.DrawRay(origin, transform.forward * zCtrl.Data.attackRange, Color.red, 1f);
+        float range = zCtrl.Data?.attackRange ?? 1f;
 
-        if (Physics.SphereCast(origin, 0.6f, transform.forward,
-                               out var hit, zCtrl.Data.attackRange,
+        if (Physics.SphereCast(origin, 0.45f, transform.forward,
+                               out RaycastHit hit, range,
                                LayerMask.GetMask("Player")))
         {
-            Debug.Log($"[Hit] hit {hit.collider.name}");
             var pc = hit.collider.GetComponentInParent<PlayerController>();
-            if (pc) pc.TakeDamage(zCtrl.Data.damage);
+            if (pc != null)
+            {
+                pc.TakeDamage(zCtrl.Data.damage);
+            }
+
         }
-        IsAttacking = false;
+
+        IsAttacking = false;  // 중복 방지
     }
-//#if UNITY_EDITOR
-//    void OnDrawGizmosSelected()
-//    {
-//        // ➊ Alert 반경 (녹색)
-//        Gizmos.color = new Color(0, 1, 0, 0.25f);
-//        Gizmos.DrawWireSphere(transform.position, alertRadius);
 
-//        // ➋ 공격 반경 (빨강)
-//        float atkR = zCtrl && zCtrl.Data ? zCtrl.Data.attackRange : 1f;
-//        Gizmos.color = new Color(1, 0, 0, 0.25f);
-//        Gizmos.DrawWireSphere(transform.position, atkR);
-
-//        // ➌ 시야 원뿔 (노랑)
-//        Handles.color = Color.yellow;
-//        Vector3 forward = transform.forward;
-//        Vector3 left = Quaternion.Euler(0, -fovDeg * 0.5f, 0) * forward;
-//        Vector3 right = Quaternion.Euler(0, fovDeg * 0.5f, 0) * forward;
-//        Handles.DrawSolidArc(transform.position + Vector3.up * 1.2f,
-//                             Vector3.up, left, fovDeg, alertRadius);
-//    }
-//#endif
 }
