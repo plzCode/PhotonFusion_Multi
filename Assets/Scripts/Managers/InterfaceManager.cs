@@ -1,6 +1,7 @@
 using Fusion;
 using FusionExamples.Utility;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InterfaceManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class InterfaceManager : MonoBehaviour
     public CharacterHUDUnit[] characterHUDUnits;
     public CountdownTimer countdownTimer;
     public AmmoDisplay_UI ammoDisplay;
+    public Image fadeImage;
 
     public static InterfaceManager Instance => Singleton<InterfaceManager>.Instance;
 

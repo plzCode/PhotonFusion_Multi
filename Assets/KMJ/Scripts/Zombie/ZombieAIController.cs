@@ -108,7 +108,7 @@ public class ZombieAIController : NetworkBehaviour
         else
         {
             var pc = TargetNetObj.GetComponent<PlayerController>();
-            if(pc != null && !pc.isAlive)
+            if(pc != null && (!pc.isAlive || pc.isClear))
             {
                 TargetNetObj = null;
             }
@@ -136,7 +136,7 @@ public class ZombieAIController : NetworkBehaviour
 
         foreach (var player in GameManager.Players)
         {
-            if (player == null || !player.GetComponent<PlayerController>().isAlive) continue;                   // 누락/파괴 대비
+            if (player == null || !player.GetComponent<PlayerController>().isAlive || player.GetComponent<PlayerController>().isClear) continue;                   // 누락/파괴 대비
             float d = (player.transform.position - transform.position).sqrMagnitude;
             if (d < minDist)
             {

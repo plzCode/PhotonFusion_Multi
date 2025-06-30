@@ -5,14 +5,14 @@ public class HelicopterEnter : MonoBehaviour
 {
     int alivePlayerCount;
     int helicopterEnterCount;
+    public Helicoptor_Controller heli_Control;
     [SerializeField]public Camera helicopterCamera;
 
     private void Start()
     {
         StartCoroutine(DelayedStart());
-
-
     }
+
     private IEnumerator DelayedStart()
     {
         yield return new WaitForSeconds(10f); // 10초 대기
@@ -34,6 +34,7 @@ public class HelicopterEnter : MonoBehaviour
 
             if (alivePlayerCount <= helicopterEnterCount)
             {
+                heli_Control.ReturnFlightSequence();
                 Debug.Log("생존인원 : " + alivePlayerCount + "탑승 인원 : " + helicopterEnterCount);
                 Debug.Log("게임클리어");
 
@@ -49,6 +50,7 @@ public class HelicopterEnter : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             PlayerController player = other.GetComponentInParent<PlayerController>();
+            player.isClear= true; 
             player.gameObject.SetActive(false);
             player.playerCamera = helicopterCamera;
             helicopterEnterCount++; 

@@ -100,6 +100,7 @@ public class PlayerController : NetworkBehaviour
 
     public bool canInput = true;
     public bool isReloading = false;
+    public bool isClear = false;
 
     private void Awake()
     {
@@ -678,7 +679,7 @@ public class PlayerController : NetworkBehaviour
         armAnim.SetBool(paramName, _bool);
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_SetAnim(string paramName, bool _bool)
     {
         anim.SetBool(paramName, _bool);
