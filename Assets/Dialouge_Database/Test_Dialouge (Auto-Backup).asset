@@ -90,7 +90,7 @@ MonoBehaviour:
   - id: 3
     fields:
     - title: Name
-      value: Player
+      value: 'Player '
       type: 0
       typeString: 
     - title: Pictures
@@ -143,7 +143,7 @@ MonoBehaviour:
       type: 3
       typeString: CustomFieldType_Files
     - title: Description
-      value: "\uBCD1\uC6D0\uC744 \uC870\uC0AC\uD574\uBCF4\uC790."
+      value: "\uBCD1\uC6D0\uC744 \uD0D0\uC0AC\uD558\uC790."
       type: 0
       typeString: CustomFieldType_Text
     - title: Success Description
@@ -201,6 +201,14 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 3
     fields:
     - title: Name
@@ -230,6 +238,14 @@ MonoBehaviour:
       typeString: 
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 4
@@ -262,6 +278,14 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 1
     fields:
     - title: Name
@@ -290,6 +314,14 @@ MonoBehaviour:
       typeString: 
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   - id: 6
@@ -323,6 +355,14 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   - id: 5
     fields:
     - title: Name
@@ -351,6 +391,14 @@ MonoBehaviour:
       typeString: 
     - title: Is Item
       value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
   locations: []
@@ -625,12 +673,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "\uAC70\uAE30... \uB204, \uB204\uAD6C\uC694? \uC880\uBE44\uB294...
-          \uC544\uB2C8\uACA0\uC9C0?"
+        value: "\uAC70\uAE30\u2026 \uB204, \uB204\uAD6C\uC8E0? \uC880\uBE44\u2026
+          \uC544\uB2C8\uC8E0?"
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/01)
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -656,14 +704,14 @@ MonoBehaviour:
       userScript: "SetQuestState(\"\uC804\uB825\uC744 \uACF5\uAE09\uD558\uC790.\",
         \"active\");\nSetQuestState(\"2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790.\",
         \"success\");\nVariable[\"isPowerActive\"] = false;\nShowAlert(\"\uC804\uB825\uC744
-        \uACF5\uAE09\uD558\uC790.\");"
+        \uACF5\uAE09\uD558\uC790.\");\n"
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 273.50003
-        y: 159.78574
+        y: 158.56622
         width: 160
         height: 30
     - id: 6
@@ -689,11 +737,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "\uC804\uAE30\uC2E4\uC5D0\uC11C \uC804\uB825\uC744 \uB2E4\uC2DC \uB123\uC5B4\uC8FC\uAC8C\uB098."
+        value: "\uC804\uAE30\uC2E4\uC5D0\uC11C \uC804\uC6D0\uC744 \uACF5\uAE09\uD574\uC8FC\uAC8C."
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/12)
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -743,12 +791,12 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uAC71\uC815 \uB9C8\uC138\uC694, \uC800\uD770 \uC0B4\uC544 \uC788\uB294
+        value: "\uAC71\uC815 \uB9C8\uC138\uC694, \uC6B0\uB9B0 \uC0B4\uC544\uC788\uB294
           \uC0AC\uB78C\uB4E4\uC774\uC5D0\uC694. \uAD50\uC218\uB2D8\uC774\uC2E0\uAC00\uC694?"
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/02)
         type: 0
         typeString: 
       conversationID: 1
@@ -799,12 +847,12 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uD5C8\uC5B4, \uB4DC\uB514\uC5B4 \uC0AC\uB78C\uC774 \uC654\uAD6C\uBA3C...
-          \uAFC8\uC778 \uC904 \uC54C\uC558\uC5B4\uC694."
+        value: "\uC544, \uB4DC\uB514\uC5B4 \uC0AC\uB78C\uC774 \uC654\uAD70\uC694\u2026
+          \uBBFF\uC744 \uC218\uAC00 \uC5C6\uAD70."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/03)
         type: 0
         typeString: 
       conversationID: 1
@@ -859,7 +907,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/04)
         type: 0
         typeString: 
       conversationID: 1
@@ -910,13 +958,12 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uADF8\uB824, \uCB48\uC6B1 \uC5EC\uAE30 \uC228\uC8FD\uC774\uACE0
-          \uC788\uC5C8\uC9C0. \uC911\uC694\uD55C \uC5F0\uAD6C \uB370\uC774\uD130\uB97C
-          \uC9C0\uCF1C\uC57C \uD588\uAC70\uB4E0."
+        value: "\uB124, \uC5EC\uAE30 \uC228\uC5B4 \uC788\uC5C8\uC5B4\uC694. \uC911\uC694\uD55C
+          \uC5F0\uAD6C \uB370\uC774\uD130\uB97C \uC9C0\uD0A4\uACE0 \uC788\uC5C8\uAC70\uB4E0\uC694."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/05)
         type: 0
         typeString: 
       conversationID: 1
@@ -967,11 +1014,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC5F0\uAD6C \uB370\uC774\uD130\uC694?"
+        value: "\uB370\uC774\uD130\uC694?"
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/06)
         type: 0
         typeString: 
       conversationID: 1
@@ -1022,13 +1069,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uADF8\uB807\uC9C0. \uC774 \uBC14\uC774\uB7EC\uC2A4 \uC0AC\uD0DC\uC758
-          \uC6D0\uC778\uC744 \uBD84\uC11D\uD55C \uC790\uB8CC\uC694. \uBC18\uB4DC\uC2DC
-          \uBC16\uC73C\uB85C \uB098\uAC00\uC57C \uD574."
+        value: "\uADF8\uB798\uC694. \uC774 \uBC14\uC774\uB7EC\uC2A4 \uC0AC\uD0DC\uC758
+          \uC6D0\uC778\uC744 \uBD84\uC11D\uD55C \uC790\uB8CC\uC5D0\uC694. \uBC18\uB4DC\uC2DC
+          \uBCF8\uBD80\uC5D0 \uC804\uB2EC\uD574\uC57C \uD569\uB2C8\uB2E4."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/07)
         type: 0
         typeString: 
       conversationID: 1
@@ -1052,7 +1099,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 271.13016
+        x: 272.50003
         y: 456.78574
         width: 160
         height: 30
@@ -1079,11 +1126,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uADF8\uB7FC \uC9C0\uAE08 \uBC14\uB85C \uAC00\uC838\uAC00\uC2DC\uC8E0."
+        value: "\uBC14\uB85C \uAC00\uC838\uAC00\uC2DC\uC8E0."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/08)
         type: 0
         typeString: 
       conversationID: 1
@@ -1107,8 +1154,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 273.44345
-        y: 506.78574
+        x: 272.0149
+        y: 505.3572
         width: 160
         height: 30
     - id: 16
@@ -1134,14 +1181,14 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uD5C8\uD5C8, \uADF8\uAC8C... \uC544\uC27D\uAC8C\uB3C4 \uC804\uAE30\uAC00
-          \uB098\uAC00\uBC84\uB838\uC5B4. \uCEF4\uD4E8\uD130\uAC00 \uAEBC\uC838\uBC84\uB824\uC11C
-          \uB9D0\uC774\uC57C. \uC678\uBD80 \uC804\uAE30\uC2E4\uC5D0\uC11C \uC804\uB825\uC744
-          \uBCF5\uAD6C\uD574\uC57C USB\uC5D0 \uBCF5\uC0AC\uD560 \uC218 \uC788\uB124."
+        value: "\uC548\uD0C0\uAE5D\uAC8C\uB3C4 \uCEF4\uD4E8\uD130 \uC804\uC6D0\uC774
+          \uB098\uAC00\uBC84\uB838\uC5B4\uC694. \uC678\uBD80 \uC804\uAE30\uC2E4\uC5D0\uC11C
+          \uC804\uB825\uC744 \uBCF5\uAD6C\uD574\uC57C USB\uC5D0 \uBCF5\uC0AC\uD560
+          \uC218 \uC788\uC5B4\uC694."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/09)
         type: 0
         typeString: 
       conversationID: 1
@@ -1165,7 +1212,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 272.07358
+        x: 273.44345
         y: 555.7548
         width: 160
         height: 30
@@ -1192,12 +1239,12 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC704\uCE58\uB97C \uC54C\uB824\uC8FC\uC138\uC694. \uC800\uD76C\uAC00
-          \uB2E4\uB140\uC624\uACA0\uC2B5\uB2C8\uB2E4."
+        value: "\uC704\uCE58\uB97C \uC54C\uB824\uC8FC\uC138\uC694. \uC6B0\uB9AC\uAC00
+          \uB2E4\uB140\uC62C\uAC8C\uC694."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/10)
         type: 0
         typeString: 
       conversationID: 1
@@ -1248,13 +1295,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uBCD1\uC6D0 \uB05D \uCABD\uC5D0 \uC804\uAE30\uC2E4\uC774 \uC788\uC744
-          \uAC70\uC57C. \uC870\uC2EC\uD558\uAC8C\uB098. \uADF8\uCABD\uB3C4 \uC880\uBE44\uB4E4\uC774
-          \uC5B4\uC2AC\uB801\uAC70\uB9B4 \uAC70\uC57C\u2026"
+        value: "\uBCD1\uC6D0 \uB05D\uC5D0 \uC788\uB294 \uC804\uAE30\uC2E4\uC774\uC5D0\uC694.
+          \uC870\uC2EC\uD558\uC138\uC694. \uADF8 \uCABD\uC5D0\uB3C4 \uC880\uBE44\uB4E4\uC774
+          \uC788\uC744 \uAC81\uB2C8\uB2E4\u2026"
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/11)
         type: 0
         typeString: 
       conversationID: 1
@@ -1272,7 +1319,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 270.75778
+        x: 272.07358
         y: 656.78577
         width: 160
         height: 30
@@ -1299,11 +1346,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: "\uAD50\uC218\uB2D8, \uC804\uAE30 \uBCF5\uAD6C\uB410\uC2B5\uB2C8\uB2E4."
+        value: "\uAD50\uC218\uB2D8, \uC804\uAE30 \uBCF5\uAD6C \uC644\uB8CC\uB410\uC5B4\uC694."
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/13)
         type: 0
         typeString: CustomFieldType_Text
       - title: EventGuid
@@ -1335,7 +1382,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 774.3182
-        y: 164.08467
+        y: 160.42613
         width: 160
         height: 30
     - id: 20
@@ -1361,13 +1408,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC624\uC624, \uC815\uB9D0\uC778\uAC00? \u2026\uC88B\uB124, \uC774\uC81C
-          \uB370\uC774\uD130\uB97C \uBCF5\uC0AC\uD560 \uC218 \uC788\uACA0\uAD70.
-          \uC7A0\uAE50\uB9CC \uAE30\uB2E4\uB824\uBCF4\uAC8C."
+        value: "\uC815\uB9D0\uC785\uB2C8\uAE4C? \u2026\uC88B\uC544\uC694, \uC774\uC81C
+          \uB370\uC774\uD130\uB97C \uBCF5\uC0AC\uD560 \uC218 \uC788\uC5B4\uC694.
+          \uC870\uAE08\uB9CC \uAE30\uB2E4\uB9AC\uC138\uC694."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/14)
         type: 0
         typeString: 
       conversationID: 1
@@ -1392,7 +1439,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 774.3182
-        y: 216.77034
+        y: 215.45454
         width: 160
         height: 30
     - id: 21
@@ -1418,12 +1465,12 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uB410\uB124. \uC774 \uC548\uC5D0 \uBAA8\uB4E0 \uC815\uBCF4\uAC00
-          \uB2F4\uACA8 \uC788\uB124."
+        value: "\uB410\uC2B5\uB2C8\uB2E4. \uC774 \uC548\uC5D0 \uBAA8\uB4E0 \uC815\uBCF4\uAC00
+          \uB4E4\uC5B4\uC788\uC5B4\uC694."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/15)
         type: 0
         typeString: 
       conversationID: 1
@@ -1447,8 +1494,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 341.71625
+        x: 780.8971
+        y: 306.24402
         width: 160
         height: 30
     - id: 22
@@ -1478,7 +1525,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/16)
         type: 0
         typeString: 
       conversationID: 1
@@ -1502,8 +1549,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 393.08606
+        x: 780.8971
+        y: 356.24396
         width: 160
         height: 30
     - id: 23
@@ -1529,13 +1576,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uBB34\uC804\uAE30\uB97C \uCC3E\uC544 \uD5EC\uAE30\uB97C \uBD80\uB974\uAC8C.
-          \uBCF8\uBD80\uC640 \uC5F0\uB77D\uC774 \uB2FF\uC73C\uBA74, \uAD6C\uCD9C\uD558\uB7EC
-          \uC62C \uAC8C\uC57C."
+        value: "\uC625\uC0C1\uC5D0\uC11C \uD5EC\uAE30\uB97C \uBD80\uB974\uC138\uC694.
+          \uBCF8\uBD80\uC5D0 \uC5F0\uB77D\uC774 \uB2FF\uC73C\uBA74, \uADF8\uB4E4\uC774
+          \uC62C \uAC81\uB2C8\uB2E4."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/17)
         type: 0
         typeString: 
       conversationID: 1
@@ -1559,8 +1606,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 443.08606
+        x: 780.8971
+        y: 406.24396
         width: 160
         height: 30
     - id: 24
@@ -1586,12 +1633,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC54C\uACA0\uC2B5\uB2C8\uB2E4. \uAD50\uC218\uB2D8\uB3C4 \uAC19\uC774
-          \uAC00\uC2DC\uC8E0.\r"
+        value: "\uC54C\uACA0\uC2B5\uB2C8\uB2E4. \uAC19\uC774 \uAC00\uC2DC\uC8E0."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/18)
         type: 0
         typeString: 
       conversationID: 1
@@ -1615,8 +1661,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 774.3182
-        y: 493.08606
+        x: 780.8971
+        y: 456.24396
         width: 160
         height: 30
     - id: 25
@@ -1642,12 +1688,12 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC88B\uC544. \uB354\uB294 \uC774\uACF3\uC5D0 \uC228\uC5B4 \uC788\uC744
-          \uC218\uB3C4 \uC5C6\uACA0\uC9C0\u2026"
+        value: "\uC88B\uC544\uC694. \uB354 \uC774\uC0C1 \uC5EC\uAE30\uC11C \uC228\uC744
+          \uC218\uB3C4 \uC5C6\uC73C\uB2C8\u2026"
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/19)
         type: 0
         typeString: 
       conversationID: 1
@@ -1665,8 +1711,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 775.4546
-        y: 541.9497
+        x: 782.0335
+        y: 505.10754
         width: 160
         height: 30
     - id: 26
@@ -1692,11 +1738,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: "\uC88B\uB124. \uB0B4\uAC00 \uC790\uB124\uB97C \uB530\uB77C\uAC00\uACA0\uB124."
+        value: "\uC790\uB124\uB97C \uB530\uB77C\uAC00\uACA0\uB124."
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(TTS/20)
         type: 0
         typeString: 
       conversationID: 1
@@ -1715,8 +1761,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1001.73706
-        y: 170.86354
+        x: 984.7604
+        y: 163.54646
         width: 160
         height: 30
     - id: 27
@@ -1746,7 +1792,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: AudioWait(keyboard-typing-sound-effect-335503 (mp3cut.net))
         type: 0
         typeString: 
       conversationID: 1
@@ -1770,13 +1816,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 773.0024
-        y: 275.98083
+        x: 778.2654
+        y: 258.87564
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 69.67778, y: 220.19958}
-    canvasZoom: 0.76000005
+    canvasScrollPosition: {x: 0, y: 89.19209}
+    canvasZoom: 0.82000005
   syncInfo:
     syncActors: 0
     syncItems: 0
