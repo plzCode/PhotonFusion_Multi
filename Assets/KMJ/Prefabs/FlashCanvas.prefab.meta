@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/KMJ/Prefabs/FlashCanvas.prefab.meta
 guid: 069b280838ae54941b5bec82da36c3f2
 PrefabImporter:
+========
+guid: 1e5a40476df1ce04f9055a93f3f38aa3
+DefaultImporter:
+>>>>>>>> 1a8d4388e24f6dc290182e0cb032cf99cc28b8ff:Assets/The_Horror_Hospital/The_Horror_Hospital_HDRP.unitypackage.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

@@ -8,6 +8,7 @@ using UnityEngine;
 public class SpawnScript : NetworkBehaviour
 {
     public static SpawnScript Current { get; private set; }
+    public List<PlayerController> players = new List<PlayerController>();
 
     [System.Serializable]
     public class SpawnPointGroup
@@ -16,7 +17,6 @@ public class SpawnScript : NetworkBehaviour
     }
 
     public SpawnPointGroup[] spawnpoints;
-
     public int spawnPointIndex = 0;
 
     public GameObject professor;
@@ -26,6 +26,7 @@ public class SpawnScript : NetworkBehaviour
 
     List<string> questNames = new List<string>()
     {
+        "병원을 탐사하자.",
         "열쇠 관리 명단을 찾아보자.",
         "열쇠를 찾자.",
         "2층을 탐사하자.",
@@ -125,7 +126,9 @@ public class SpawnScript : NetworkBehaviour
         player.Player = entity.Controller;
 
         Debug.Log($"Spawning player for {player.Username} at {point.name}");
-        entity.transform.name = $"Player ({player.Username})";
+        entity.transform.name = $"{player.Username}";
+
+        players.Add(entity.Controller);
     }
 
 
@@ -176,8 +179,11 @@ public class SpawnScript : NetworkBehaviour
         for (i = 0; i < GameManager.Players.Count; i++)
         {
             var player = GameManager.Players[i];
+            PlayerController playerController = player.GetComponent<PlayerController>();
             int spawnIndex = i % currentSpawnPoints.Length; // 오버플로우 방지
             player.transform.position = currentSpawnPoints[spawnIndex].position;
+            //playerController.Player_Reset();
+
         }
 
         if (DialogueLua.GetVariable("GoToTarget").asBool && professor != null)

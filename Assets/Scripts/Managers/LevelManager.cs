@@ -4,6 +4,7 @@ using Fusion;
 using FusionExamples.Utility;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace Managers
 {
@@ -61,7 +62,8 @@ namespace Managers
                         player.GameState = RoomPlayer.EGameState.GameCutscene;
                         GameManager.CurrentMap.SpawnPlayer(Runner, player);
 						var networkPlayer = player.Player;
-						GameManager.RegisterPlayer(networkPlayer.Object);
+						//GameManager.Instance.RegisterPlayer(networkPlayer.Object);
+                        networkPlayer.RPC_SetPlayerUI();
                     }
                 }
             }

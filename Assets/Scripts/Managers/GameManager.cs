@@ -37,6 +37,9 @@ public class GameManager : NetworkBehaviour
 	// ê²Œì„ í”Œë ˆì´ì–´ ëª©ë¡
 	[SerializeField]
     private List<NetworkObject> players = new List<NetworkObject>();
+
+	// ÇöÀç °üÀüÁßÀÎ ÇÃ·¹ÀÌ¾î
+	public PlayerController observerPlayer;
 	
 	// ì½ê¸° ì°¸ì¡°ìš©
     public static IReadOnlyList<NetworkObject> Players => Instance.players;
@@ -125,10 +128,12 @@ public class GameManager : NetworkBehaviour
 		CurrentMap = spawnScript;
 	}
 
-    public static void RegisterPlayer(NetworkObject player)
-    {
+    
+	public static void RegisterPlayer(NetworkObject player)
+	{
         if (!Instance.players.Contains(player))
             Instance.players.Add(player);
+		
     }
 
     public static void UnregisterPlayer(NetworkObject player)
@@ -136,4 +141,64 @@ public class GameManager : NetworkBehaviour
         if (Instance.players.Contains(player))
             Instance.players.Remove(player);
     }
+
+   
+
+    public bool PlayerAliveCheck()
+    {
+        for (int i = 0; i < Players.Count; i++)
+        {
+            PlayerController player = Players[i].GetComponent<PlayerController>();
+            if (player.isAlive)
+            {
+                return true;
+            }
+        }
+
+        if (Runner.GameMode == GameMode.Host)
+        {
+			foreach (var p in players.ToList())
+            {
+                var playerController = p.GetComponent<PlayerController>();
+
+                if (playerController != null && playerController.Object != null)
+                {                    
+                    Runner.Despawn(playerController.Object);
+                }
+            }
+
+            foreach (var player in RoomPlayer.Players)
+            {
+                player.GameState = RoomPlayer.EGameState.GameCutscene;
+                CurrentMap.SpawnPlayer(Runner, player);
+                var networkPlayer = player.Player;
+                //GameManager.Instance.RegisterPlayer(networkPlayer.Object);
+                networkPlayer.RPC_SetPlayerUI();
+            }
+        }
+
+        CurrentMap.ReSpawn();
+
+		return false;
+
+    }
+
+	public bool PlayerAliveCheck_Bool()
+	{
+		for (int i = 0; i < Players.Count; i++)
+		{
+			PlayerController player = Players[i].GetComponent<PlayerController>();
+			if (player.isAlive)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static void ClearPlayer()
+	{
+		Instance.players.Clear();
+    }
+
 }

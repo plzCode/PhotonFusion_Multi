@@ -1,36 +1,33 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem.XR;
+﻿using System.Linq;
+using UnityEngine;
 using Zombie.States;
 
 public class AlertState : ZombieState
 {
-    const float REPATH = 0.25f;
-    float elapsed;
+    const string STATE = "Alert";                      // Animator  State
+    const string CLIP = "zombie_alert_to_aggro_01";   // AnimationClip
+    float timer;
 
     public AlertState(ZombieAIController c) : base(c) { }
 
     public override void Enter()
     {
-        ctrl.IsAlert = true;
-        ctrl.SetMoveSpeed(1f);
-        elapsed = REPATH;
+        ctrl.agent.isStopped = true;
+        ctrl.agent.velocity = Vector3.zero;
+
+        // 애니 재생 + 길이만큼 타이머
+        ctrl.anim.CrossFade(STATE, 0.05f, 0);
+        ctrl.zCtrl.SfxAlert();
+        timer = ctrl.anim.runtimeAnimatorController.animationClips
+                .First(x => x.name == CLIP).length;
     }
 
     public override void Update()
     {
-        if (ctrl.Target == null)
-        {
-            ctrl.ChangeState(new IdleState(ctrl));
-            return;
-        }
+        timer -= Time.deltaTime;
+        if (timer > 0) return;
 
-        elapsed += Time.deltaTime;
-        if (elapsed >= REPATH)
-        {
-            elapsed = 0;
-            ctrl.agent.SetDestination(ctrl.Target.position); // 계속 추적
-        }
+        ctrl.agent.isStopped = false;
+        ctrl.ChangeState(new ChaseState(ctrl));
     }
-
-    //public override void Exit() => ctrl.IsAlert = false; // ★ Bool OFF
 }

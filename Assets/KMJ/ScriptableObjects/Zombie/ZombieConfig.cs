@@ -10,7 +10,7 @@ public class ZombieConfig : ScriptableObject
     public int damage = 10;
     public float attackRate = 1.0f;   // 초당 공격 횟수
     public float moveSpeed = 2.5f;   // NavMeshAgent.speed
-    public float attackRange = 1.3f;   // 근접 공격 거리
+    public float attackRange = 1.2f;   // 근접 공격 거리
     public float detectRange = 10f;    // ZombieDetection.range
 
     /*──────── 특수 타입 ────────*/

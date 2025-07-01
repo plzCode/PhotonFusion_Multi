@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 1ba4e84bca561c84c8d99a954fc0ae70
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 156638
+  packageName: Shapes FX Pack
+  packageVersion: 1.7
+  assetPath: Assets/ShapesFX_Pack/Script/ExampleTarget.cs
+  uploadId: 677549

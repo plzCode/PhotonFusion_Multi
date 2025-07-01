@@ -4,6 +4,7 @@ using Fusion;
 using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 namespace Art_Equilibrium
 {
@@ -40,6 +41,9 @@ namespace Art_Equilibrium
         public AudioClip closeSound;
         private AudioSource audioSource;
 
+        [SerializeField]
+        private NavMeshObstacle doorObstacle;
+
         private void Start()
         {
             defaultRot = transform.rotation;
@@ -49,14 +53,12 @@ namespace Art_Equilibrium
             isKeyPressed = false;
 
             audioSource = gameObject.AddComponent<AudioSource>();
+            doorObstacle = GetComponent<NavMeshObstacle>();
         }
 
         public void Update()
         {
-            bool hasKey = DialogueLua.GetVariable("isKeyGet").asBool;
-            //Debug.Log($"Has Key: {hasKey}");
-            if(!hasKey) return;
-
+            if(!Runner || !Object || !Object.IsValid) return;
             if (isSlidingDoor)
             {
                 Vector3 targetPos = open ? targetLocalSlidePos : defaultLocalPos;
@@ -88,6 +90,7 @@ namespace Art_Equilibrium
         private void RPC_ToggleDoor()
         {
             open = !open;
+            doorObstacle.carving = !open;
             PlayDoorSound();
         }
 

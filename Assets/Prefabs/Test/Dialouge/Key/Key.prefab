@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4877688411763582593}
   - component: {fileID: 1834497305743188496}
   m_Layer: 0
-  m_Name: TriggerB
+  m_Name: "\uACC4\uB2E8 \uC5F4\uC1E0"
   m_TagString: Usable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 797853176
+  SortKey: 3860282127
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
@@ -113,8 +113,8 @@ MonoBehaviour:
   setAnotherQuestEntryState: 0
   anotherQuestEntryNumber: 1
   anotherQuestEntryState: 0
-  luaCode: "Variable[\"isKeyGet\"] = true;\nVariable[\"isDoorOpened\"] = true;\nSetQuestState(\"\uC5F4\uC1E0\uB97C
-    \uCC3E\uC790.\", \"success\")\n"
+  luaCode: "Variable[\"isKeyGet\"] = true;\nSetQuestState(\"\uC5F4\uC1E0\uB97C \uCC3E\uC790.\",
+    \"success\")\nSetQuestState(\"2\uCE35\uC744 \uD0D0\uC0AC\uD558\uC790.\", \"active\")\n"
   sequence: 
   sequenceSpeaker: {fileID: 0}
   sequenceListener: {fileID: 0}
@@ -177,6 +177,18 @@ MonoBehaviour:
           m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Get_Key
           m_BoolArgument: 0
         m_CallState: 2
   useConversationTitlePicker: 1

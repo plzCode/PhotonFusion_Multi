@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7722390f23de27b4f8d4859212f12e06
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Art/Materials/ElectricWallBoxesWires.mat
+  uploadId: 415333

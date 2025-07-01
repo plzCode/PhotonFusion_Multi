@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Track07
   m_EditorClassIdentifier: 
   trackName: Test_PSS
-  trackIcon: {fileID: 7374845061861626600, guid: 5043777b087f5b24e9ad94864a8b3718, type: 3}
+  trackIcon: {fileID: 21300000, guid: 75964b08ca95ae648b6c5e4c9130b5f2, type: 3}
   buildIndex: 7

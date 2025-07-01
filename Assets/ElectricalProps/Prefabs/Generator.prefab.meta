@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: dc168049ebb816e4b81f58a3c114804c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 188484
+  packageName: Electricprops models for enviroment
+  packageVersion: 1.0
+  assetPath: Assets/ElectricalProps/Prefabs/Generator.prefab
+  uploadId: 415333
