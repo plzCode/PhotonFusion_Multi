@@ -102,11 +102,16 @@ public class WeaponManager : NetworkBehaviour
         fpsBarrelPos.LookAt(aimpos);
         //barrelPos.localEulerAngles = bloom.BloomAngle(barrelPos); //총알 퍼짐현상을 구현
 
+        if (!isOwner)
+        {
+            Instantiate(muzzleFlash, barrelPos.position, barrelPos.rotation);
+            Instantiate(muzzleSmoke, barrelPos.position, barrelPos.rotation);
+        }
 
         // 풀링으로 변환 필요.
-        for (int i = 0; i < bulletsPerShot; i++)
+        /*for (int i = 0; i < bulletsPerShot; i++)
         {
-            
+
 
             if (!isOwner)
             {
@@ -132,9 +137,9 @@ public class WeaponManager : NetworkBehaviour
                 Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
                 rb.AddForce(fpsBarrelPos.forward * bulletVelocity, ForceMode.Impulse);
             }
-            
-            
-            
-        }
+
+
+
+        }*/
     }
 }

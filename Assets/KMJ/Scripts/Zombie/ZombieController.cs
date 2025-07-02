@@ -62,6 +62,8 @@ public class ZombieController : NetworkBehaviour
         agent = GetComponent<NavMeshAgent>();
         ai = GetComponent<ZombieAIController>();
         anim = GetComponentInChildren<Animator>();
+        Collider col = GetComponent<CapsuleCollider>();
+        col.enabled = true;  
 
         if (HasStateAuthority && CurrentHP == 0)
             CurrentHP = data.maxHP;
