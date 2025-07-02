@@ -55,8 +55,8 @@ public class IdleWalkState : ZombieState
     {
         isWalking = false;
         timer = Random.Range(IDLE_MIN, IDLE_MAX);
-
-        ctrl.agent.isStopped = true;
+        if (ctrl.agent.enabled)
+            ctrl.agent.isStopped = true;
         ctrl.anim.SetFloat("Speed", 0f);     // BlendTree → Idle
     }
 

@@ -107,7 +107,7 @@ public class ZombieController : NetworkBehaviour
         amb.clip = chaseLoop;
         amb.pitch = Random.Range(.95f, 1.05f);
         amb.volume = .3f;
-        amb.Play();
+        //amb.Play();
     }
 
     void PlayOneShot(AudioClip clip)

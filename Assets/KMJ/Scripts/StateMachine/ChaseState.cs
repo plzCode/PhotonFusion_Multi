@@ -14,7 +14,11 @@ public class ChaseState : ZombieState
             ctrl.agent.isStopped = false;
         }
         Vector3 goal = ctrl.Target ? ctrl.Target.position : ctrl.pendingGoal;
-        ctrl.agent.SetDestination(goal);
+        if (ctrl.agent.enabled)
+        {
+            ctrl.agent.SetDestination(goal);
+
+        }
         
     }
 

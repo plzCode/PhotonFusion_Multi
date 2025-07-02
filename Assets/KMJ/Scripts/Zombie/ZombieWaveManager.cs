@@ -129,19 +129,22 @@ public class ZombieWaveManager : NetworkBehaviour
 
             if (!NavMesh.SamplePosition(raw, out var hit, 2f, NavMesh.AllAreas))
                 continue;
-
+            
             NetworkObject zombie = Runner.Spawn(prefab, hit.position, Quaternion.identity,
                 onBeforeSpawned: (r, obj) =>
                 {
                     if (forceChase)
                         obj.GetComponent<ZombieAIController>()
                            .SpawnAggro(center);   // 목표는 웨이브 중심
+                    obj.GetComponent<NavMeshAgent>().enabled = false;
+                    
                 });
-
-            if (zombie.GetComponent<NavMeshAgent>() != null)
+            NavMeshAgent agent = zombie.GetComponent<NavMeshAgent>();
+            if (agent != null)
             {
-                
-                zombie.GetComponent<NavMeshAgent>().Warp(hit.position);
+                agent.enabled = false;
+                agent.Warp(hit.position);
+                agent.enabled = true; // NavMeshAgent가 비활성화된 경우 활성화
             }
 
             //Debug.Log($"[WM] SpawnGroup() {i + 1}/{n} @ {hit.position} ({innerR} ~ {outerR})");
