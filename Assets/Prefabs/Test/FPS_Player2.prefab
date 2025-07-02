@@ -1137,7 +1137,7 @@ MonoBehaviour:
   aimDistance: 100
   aimLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16383
   defaultFov: 60
   zoomFOV: 50
   customGravity: -9.81
@@ -1147,6 +1147,7 @@ MonoBehaviour:
   playerImage: {fileID: 1785206632, guid: 0dd2bb46d1656e64e8d156308339d107, type: 3}
   canInput: 1
   isReloading: 0
+  isClear: 0
   spectatePlayers: []
   stickToGroundForce: 30
   recoilAmount: 1.5
