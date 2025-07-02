@@ -212,6 +212,7 @@ public class PlayerController : NetworkBehaviour
                 
                 if (weaponManager.ShouldFire())
                 {
+                    WeaponReload(false);
                     bool isOwner = false;
                     if (HasInputAuthority || GameManager.Instance.observerPlayer == this) // 플레이어 자기자신이거나 관전중인 대상이면
                     {
@@ -257,7 +258,7 @@ public class PlayerController : NetworkBehaviour
 
                 if (weaponManager.NoBullet())
                 {
-                    WeaponReload();
+                    WeaponReload(true);
                 }
             }
 
@@ -444,16 +445,16 @@ public class PlayerController : NetworkBehaviour
 
         if (PlayerInputs.IsDownThisFrame(PlayerInput.NetworkInputData.ButtonReload))
         {
-            WeaponReload();
+            WeaponReload(true);
         }
 
     }
 
-    private void WeaponReload()
+    private void WeaponReload(bool _bool)
     {        
-        armAnim.SetBool("isReload", true);
-        anim.SetBool("isReload", true);
-        isReloading = true;
+        armAnim.SetBool("isReload", _bool);
+        anim.SetBool("isReload", _bool);
+        isReloading = _bool;
     }
 
     private void HandleInput(PlayerInput.NetworkInputData input)
